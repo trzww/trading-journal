@@ -72,6 +72,7 @@ tbody tr:hover{background:#151922}
 .day-cell.selected{border-color:#f0f2f7;box-shadow:inset 0 0 0 1px #f0f2f7}
 .day-cell.win{background:linear-gradient(150deg,rgba(34,197,94,.13),#0c0f14 70%)}
 .day-cell.loss{background:linear-gradient(150deg,rgba(239,68,68,.13),#0c0f14 70%)}
+.day-cell.flat{background:linear-gradient(150deg,rgba(139,147,162,.09),#0c0f14 70%)}
 .day-num{font-size:11px;color:#9ba3b2;font-weight:700}
 .day-pnl{font-size:13px;font-weight:800;margin-top:13px;white-space:nowrap}
 .day-count{font-size:10px;color:#7e8796;margin-top:5px}
@@ -79,18 +80,24 @@ tbody tr:hover{background:#151922}
 .fingerprint i{display:block;flex:1;min-width:2px;border-radius:2px 2px 0 0;background:var(--green)}
 .day-cell.loss .fingerprint i{background:var(--red)}
 .matrix-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
-/* Performance Orb: visual layer, driven by actual logged trades */
-.orb-panel{display:grid;grid-template-columns:minmax(180px,.75fr) minmax(0,1.25fr);align-items:center;gap:24px;overflow:hidden;min-height:260px}
-.orb-stage{min-height:220px;display:grid;place-items:center;position:relative;isolation:isolate}
-.performance-orb{--orb-color:var(--green);width:156px;height:156px;border-radius:50%;position:relative;display:grid;place-items:center;background:radial-gradient(circle at 35% 28%,rgba(255,255,255,.85) 0%,rgba(255,255,255,.18) 5%,color-mix(in srgb,var(--orb-color) 65%,transparent) 17%,rgba(10,13,18,.94) 62%);box-shadow:0 0 25px color-mix(in srgb,var(--orb-color) 45%,transparent),inset 0 0 25px color-mix(in srgb,var(--orb-color) 35%,transparent);animation:orb-float 5s ease-in-out infinite}
-.performance-orb::before,.performance-orb::after{content:"";position:absolute;inset:-17px;border:1px solid color-mix(in srgb,var(--orb-color) 60%,transparent);border-radius:50%;transform:rotateX(68deg) rotateZ(-22deg);animation:orb-spin 12s linear infinite}
-.performance-orb::after{inset:-29px;transform:rotateX(68deg) rotateZ(42deg);animation-duration:17s;animation-direction:reverse;opacity:.55}
-.orb-core{position:relative;z-index:1;text-align:center;text-shadow:0 2px 10px #000;font-weight:800}.orb-core strong{display:block;font-size:21px;letter-spacing:-.6px}.orb-core span{display:block;font-size:10px;color:#e1e6ed;margin-top:5px;letter-spacing:1.4px}
-.orb-ring{position:absolute;inset:-40px;border:1px dashed color-mix(in srgb,var(--orb-color) 28%,transparent);border-radius:50%;animation:orb-spin 28s linear infinite}
-.orb-particle{position:absolute;width:5px;height:5px;border-radius:50%;background:var(--orb-color);box-shadow:0 0 12px var(--orb-color)}.orb-particle.p1{top:17%;left:22%}.orb-particle.p2{right:15%;top:32%}.orb-particle.p3{bottom:17%;left:29%}.orb-copy h2{font-size:18px;margin-bottom:8px}.orb-copy .orb-net{font-size:30px;font-weight:900;letter-spacing:-1px;margin:6px 0}.orb-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:17px}.orb-metric{padding:11px;border:1px solid var(--border);border-radius:9px;background:#0c0f14}.orb-metric span{display:block;color:var(--muted);font-size:10px;letter-spacing:.8px}.orb-metric strong{display:block;font-size:16px;margin-top:7px}
-@keyframes orb-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}@keyframes orb-spin{to{transform:rotate(360deg)}}
-@media(max-width:700px){.orb-panel{grid-template-columns:1fr;gap:5px}.orb-stage{min-height:205px}.orb-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(prefers-reduced-motion:reduce){.performance-orb,.performance-orb::before,.performance-orb::after,.orb-ring{animation:none!important}}
+/* Performance Orb — layered plasma core, orbital telemetry and responsive motion */
+.orb-panel{display:grid;grid-template-columns:minmax(220px,.82fr) minmax(0,1.18fr);align-items:center;gap:25px;overflow:hidden;min-height:300px;position:relative;background:radial-gradient(ellipse at 18% 50%,rgba(50,85,130,.12),transparent 42%),var(--panel)}
+.orb-stage{min-height:270px;display:grid;place-items:center;position:relative;isolation:isolate;overflow:visible;--orb-color:var(--green)}
+.orb-stage:before{content:"";position:absolute;width:210px;height:210px;border-radius:50%;background:var(--orb-color);opacity:.08;filter:blur(35px);animation:orb-breathe 4s ease-in-out infinite}
+.orb-stage:after{content:"LIVE PERFORMANCE SIGNAL";position:absolute;bottom:2px;font:800 8px/1.4 ui-monospace,monospace;letter-spacing:2.2px;color:color-mix(in srgb,var(--orb-color) 70%,#8c96a8);opacity:.85}
+.performance-orb{--orb-color:var(--green);width:146px;height:146px;border-radius:50%;position:relative;display:grid;place-items:center;isolation:isolate;background:radial-gradient(circle at 33% 25%,#fff 0%,color-mix(in srgb,var(--orb-color) 75%,white) 3%,color-mix(in srgb,var(--orb-color) 80%,transparent) 10%,rgba(8,12,18,.94) 43%,#030508 72%);box-shadow:0 0 14px color-mix(in srgb,var(--orb-color) 70%,transparent),0 0 42px color-mix(in srgb,var(--orb-color) 48%,transparent),0 0 95px color-mix(in srgb,var(--orb-color) 20%,transparent),inset 0 0 24px color-mix(in srgb,var(--orb-color) 55%,transparent);animation:orb-float 5s ease-in-out infinite;transition:box-shadow .5s,filter .5s}
+.performance-orb:before{content:"";position:absolute;inset:-7px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0 9%,var(--orb-color) 14%,transparent 22% 43%,color-mix(in srgb,var(--orb-color) 45%,white) 48%,transparent 54% 78%,var(--orb-color) 85%,transparent 92%);filter:blur(1px);opacity:.9;animation:orb-spin 7s linear infinite;z-index:-1}
+.performance-orb:after{content:"";position:absolute;inset:8px;border:1px solid color-mix(in srgb,var(--orb-color) 55%,transparent);border-radius:50%;box-shadow:inset 0 0 18px color-mix(in srgb,var(--orb-color) 22%,transparent);animation:orb-breathe 3s ease-in-out infinite}
+.orb-core{position:relative;z-index:2;text-align:center;text-shadow:0 2px 10px #000;font-weight:800}.orb-core strong{display:block;font-size:20px;letter-spacing:-.7px}.orb-core span{display:block;font-size:9px;color:#e1e6ed;margin-top:5px;letter-spacing:1.6px}
+.orb-ring{position:absolute;width:184px;height:184px;border:1px solid color-mix(in srgb,var(--orb-color) 35%,transparent);border-radius:50%;transform:rotateX(67deg) rotateZ(-25deg);box-shadow:0 0 16px color-mix(in srgb,var(--orb-color) 14%,transparent);animation:orb-spin 15s linear infinite}
+.orb-ring:before,.orb-ring:after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:var(--orb-color);box-shadow:0 0 13px 3px color-mix(in srgb,var(--orb-color) 70%,transparent)}.orb-ring:before{top:18%;left:12%}.orb-ring:after{right:8%;bottom:22%;width:4px;height:4px}
+.orb-ring-secondary{position:absolute;width:220px;height:220px;border:1px dashed color-mix(in srgb,var(--orb-color) 23%,transparent);border-radius:50%;transform:rotateX(70deg) rotateZ(38deg);animation:orb-spin 24s linear infinite reverse}
+.orb-ring-tertiary{position:absolute;width:240px;height:130px;border:1px solid color-mix(in srgb,var(--orb-color) 15%,transparent);border-radius:50%;transform:rotateX(65deg) rotateZ(75deg);animation:orb-spin 31s linear infinite}
+.orb-particle{position:absolute;width:4px;height:4px;border-radius:50%;background:var(--orb-color);box-shadow:0 0 12px 2px var(--orb-color);animation:orb-pulse 2s ease-in-out infinite}.orb-particle.p1{top:18%;left:22%}.orb-particle.p2{right:13%;top:32%;animation-delay:-.7s}.orb-particle.p3{bottom:19%;left:28%;animation-delay:-1.3s}.orb-particle.p4{top:28%;right:25%;width:3px;height:3px;animation-delay:-.4s}.orb-particle.p5{bottom:27%;right:20%;width:3px;height:3px;animation-delay:-1s}
+.orb-copy{min-width:0}.orb-copy h2{font-size:18px;margin-bottom:8px}.orb-copy .orb-net{font-size:clamp(28px,3vw,36px);font-weight:900;letter-spacing:-1.2px;margin:6px 0;text-shadow:0 0 22px color-mix(in srgb,var(--orb-color,var(--green)) 25%,transparent)}.orb-statusline{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:9px 0 4px}.orb-status{display:inline-flex;align-items:center;gap:6px;padding:5px 8px;border-radius:999px;border:1px solid color-mix(in srgb,var(--orb-color,var(--green)) 40%,transparent);background:color-mix(in srgb,var(--orb-color,var(--green)) 9%,transparent);color:var(--orb-color,var(--green));font:800 9px/1.2 ui-monospace,monospace;letter-spacing:1px}.orb-status:before{content:"";width:5px;height:5px;border-radius:50%;background:currentColor;box-shadow:0 0 9px currentColor}.orb-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin-top:17px}.orb-metric{padding:11px;border:1px solid var(--border);border-radius:10px;background:linear-gradient(145deg,rgba(255,255,255,.035),#0c0f14 70%);min-width:0}.orb-metric span{display:block;color:var(--muted);font-size:9px;letter-spacing:.8px}.orb-metric strong{display:block;font-size:16px;margin-top:7px;overflow-wrap:anywhere}.orb-footnote{font:9px/1.5 ui-monospace,monospace;color:#737d8d;margin-top:12px;letter-spacing:.5px}
+@keyframes orb-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-5px) scale(1.015)}}@keyframes orb-spin{to{rotate:360deg}}@keyframes orb-breathe{0%,100%{opacity:.55;scale:.94}50%{opacity:1;scale:1.05}}@keyframes orb-pulse{0%,100%{opacity:.35;transform:scale(.7)}50%{opacity:1;transform:scale(1.35)}}
+@media(max-width:700px){.orb-panel{grid-template-columns:1fr;gap:6px}.orb-stage{min-height:260px}.orb-metrics{grid-template-columns:repeat(3,minmax(0,1fr))}.orb-copy .orb-net{font-size:29px}}
+@media(prefers-reduced-motion:reduce){.performance-orb,.performance-orb:before,.performance-orb:after,.orb-ring,.orb-ring-secondary,.orb-ring-tertiary,.orb-stage:before,.orb-particle{animation:none!important;transition:none!important}}
 .detail-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
 .day-trades{display:grid;gap:9px}
 .trade-mini{padding:12px;background:#0c0f14;border:1px solid var(--border);border-radius:9px}
@@ -106,39 +113,7 @@ tbody tr:hover{background:#151922}
 #settingsPanel[hidden]{display:none!important}
 @media(max-width:1000px){.layout{grid-template-columns:180px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.propstats,.matrix-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}}
 @media(max-width:700px){header{height:60px;padding:0 15px}.layout{display:block}.sidebar{position:sticky;top:60px;z-index:9;display:flex;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--border);padding:7px;gap:4px}.side-label,.side-bottom{display:none}.nav-btn{width:auto;min-width:max-content;padding:10px;font-size:11px;gap:7px}.nav-btn .nav-icon{width:auto}.workspace{padding:20px 12px}.day-cell{min-height:76px;padding:5px}.day-pnl{font-size:10px;margin-top:9px}.day-count{font-size:9px}.fingerprint{height:10px;margin-top:5px}.calendar{gap:3px}.weekday{font-size:9px}.value{font-size:22px}.simu-result{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:460px){.authform,form.gridform{grid-template-columns:1fr}.full{grid-column:auto}.stats.three{grid-template-columns:repeat(2,minmax(0,1fr))}.panel{padding:14px}.calendar-title{font-size:16px}.day-cell{min-height:68px}.day-num{font-size:10px}.day-pnl{font-size:9px}.day-count{display:none}}
-/* Mobile-first polish: keep desktop unchanged, make the workspace thumb-friendly. */
-@media(max-width:700px){
-  html,body{width:100%;max-width:100%;overflow-x:hidden}
-  header{height:58px;padding:0 12px;gap:8px}
-  .logo{font-size:16px;letter-spacing:.7px;white-space:nowrap}
-  .top-right{gap:6px;min-width:0}.top-right .muted{max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  #logout{padding:8px 10px;font-size:11px}
-  .layout{display:block;min-height:calc(100vh - 58px)}
-  .sidebar{position:fixed;top:auto;bottom:0;left:0;right:0;height:68px;z-index:30;display:flex;flex-direction:row;align-items:center;gap:5px;padding:7px 9px calc(7px + env(safe-area-inset-bottom));overflow-x:auto;overflow-y:hidden;background:rgba(12,14,18,.97);backdrop-filter:blur(14px);border-right:0;border-top:1px solid var(--border);border-bottom:0;scrollbar-width:none;overscroll-behavior-x:contain}
-  .sidebar::-webkit-scrollbar{display:none}
-  .side-label,.side-bottom{display:none}
-  .nav-btn{width:auto;min-width:72px;flex:0 0 auto;min-height:48px;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:6px 9px;font-size:10px;line-height:1.1;text-align:center;white-space:nowrap;border-radius:9px}
-  .nav-btn .nav-icon{width:auto;font-size:16px;line-height:1}
-  .workspace{padding:18px 11px calc(88px + env(safe-area-inset-bottom));max-width:100%;overflow:hidden}
-  .page-head{gap:10px;margin-bottom:16px}.page-head h1{font-size:23px}.page-head .tag{max-width:100%;white-space:normal}
-  .stats,.stats.three,.propstats,.matrix-summary{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin-bottom:12px}
-  .card{padding:12px;min-width:0}.label{font-size:9px;letter-spacing:.7px}.value{font-size:21px;margin-top:8px}.smallvalue{font-size:16px;margin-top:7px}
-  .muted{font-size:11px;line-height:1.5;overflow-wrap:anywhere}
-  .panel{padding:13px;border-radius:11px;margin-bottom:12px}.sectionhead{align-items:flex-start;gap:8px}.sectionhead>*{min-width:0}
-  .chart-wrap{height:220px}.chart-value{font-size:17px}
-  .orb-panel{grid-template-columns:minmax(0,1fr);gap:0;padding:12px}.orb-stage{min-height:178px;overflow:hidden}.performance-orb{width:125px;height:125px}.orb-copy h2{font-size:16px}.orb-copy .orb-net{font-size:26px}.orb-metrics{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:12px}.orb-metric{padding:9px 7px;min-width:0}.orb-metric span{font-size:8px;letter-spacing:.3px}.orb-metric strong{font-size:13px;overflow-wrap:anywhere}
-  .calendar-head{gap:8px}.calendar-head .toolbar{gap:6px}.calendar-head button{padding:8px 10px}.calendar-title{font-size:15px}.calendar{gap:3px}.weekday{font-size:8px;letter-spacing:0;padding:4px 0}.day-cell{min-width:0;min-height:64px;padding:4px;border-radius:6px}.day-num{font-size:9px}.day-pnl{font-size:9px;margin-top:8px;letter-spacing:-.2px}.day-count{display:none}.fingerprint{height:8px;margin-top:4px}
-  .detail-grid{grid-template-columns:minmax(0,1fr);gap:0}.metric-row{grid-template-columns:minmax(60px,1fr) minmax(45px,1.4fr) auto;gap:7px;font-size:11px}
-  form.gridform,.authform{grid-template-columns:minmax(0,1fr);gap:11px}.full{grid-column:1/-1}label{min-width:0}input,select,textarea{min-height:43px;font-size:16px}input[type=file]{font-size:12px;padding:9px}textarea{min-height:85px}
-  button{min-height:42px}form.gridform button,form.authform button{width:100%}.toolbar{gap:6px}.toolbar button{padding:9px 10px;font-size:12px}
-  .table-wrap{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:8px}.table-wrap table{min-width:620px}th,td{padding:10px 8px}
-  .sectionhead input#tradeSearch{max-width:none!important;width:100%;flex:1 1 100%;margin-top:4px!important}
-  .simu-result{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-  #auth{margin:5vh 12px;padding:20px 16px;border-radius:13px}#auth h1{font-size:23px}
-}
-@media(max-width:360px){.workspace{padding-left:8px;padding-right:8px}.stats,.stats.three,.propstats,.matrix-summary{gap:6px}.card{padding:10px}.value{font-size:19px}.nav-btn{min-width:66px;padding:6px 7px}.day-cell{min-height:58px}.day-pnl{font-size:8px}.orb-metric strong{font-size:12px}}
-@media(prefers-reduced-motion:reduce){.sidebar{scroll-behavior:auto}}
+@media(max-width:460px){.authform,form.gridform{grid-template-columns:1fr}.full{grid-column:auto}.stats.three{grid-template-columns:1fr}.panel{padding:14px}.calendar-title{font-size:16px}.day-cell{min-height:68px}.day-num{font-size:10px}.day-pnl{font-size:9px}.day-count{display:none}}
 </style>
 </head>
 <body>
@@ -197,8 +172,8 @@ tbody tr:hover{background:#151922}
       <section class="page" id="page-matrix">
         <div class="page-head"><div><h1>Performance Map</h1><div class="muted">A daily fingerprint of your actual logged performance.</div></div></div>
         <section class="panel orb-panel" aria-label="Performance Orb">
-          <div class="orb-stage"><div class="orb-ring"></div><div class="performance-orb" id="performanceOrb"><div class="orb-core"><strong id="orbCorePnl">$0.00</strong><span>NET P&amp;L</span></div></div><i class="orb-particle p1"></i><i class="orb-particle p2"></i><i class="orb-particle p3"></i></div>
-          <div class="orb-copy"><h2>Performance Orb</h2><p class="muted">A live visual snapshot of your logged trading results.</p><div class="orb-net" id="orbNetPnl">$0.00</div><div class="muted" id="orbCaption">Log trades to activate your performance orb.</div><div class="orb-metrics"><div class="orb-metric"><span>WIN RATE</span><strong id="orbWinRate">0%</strong></div><div class="orb-metric"><span>TRADES</span><strong id="orbTradeCount">0</strong></div><div class="orb-metric"><span>WINS / LOSSES</span><strong id="orbWinsLosses">0 / 0</strong></div></div></div>
+          <div class="orb-stage" id="orbStage" aria-label="Animated performance orb"><div class="orb-ring"></div><div class="orb-ring-secondary"></div><div class="orb-ring-tertiary"></div><div class="performance-orb" id="performanceOrb"><div class="orb-core"><strong id="orbCorePnl">$0.00</strong><span>NET P&amp;L</span></div></div><i class="orb-particle p1"></i><i class="orb-particle p2"></i><i class="orb-particle p3"></i><i class="orb-particle p4"></i><i class="orb-particle p5"></i></div>
+          <div class="orb-copy"><h2>Performance Orb</h2><p class="muted">Your trading history, rendered as a live performance signal.</p><div class="orb-net" id="orbNetPnl">$0.00</div><div class="orb-statusline"><span class="orb-status" id="orbStatus">AWAITING DATA</span><span class="muted" id="orbPower">POWER 0</span></div><div class="muted" id="orbCaption">Log trades to activate your performance orb.</div><div class="orb-metrics"><div class="orb-metric"><span>WIN RATE</span><strong id="orbWinRate">0%</strong></div><div class="orb-metric"><span>TRADES LOGGED</span><strong id="orbTradeCount">0</strong></div><div class="orb-metric"><span>WINS / LOSSES</span><strong id="orbWinsLosses">0 / 0</strong></div></div><div class="orb-footnote" id="orbFootnote">SIGNAL SOURCE · YOUR SAVED JOURNAL DATA</div></div>
         </section>
         <div class="matrix-summary">
           <div class="card"><div class="label">MONTH P&L</div><div class="value" id="monthPnl">$0.00</div></div>
@@ -472,13 +447,17 @@ function renderPerformanceOrb(){
   const wins=tradesCache.filter(t=>Number(t.pnl)>0).length;
   const losses=tradesCache.filter(t=>Number(t.pnl)<0).length;
   const rate=tradesCache.length?wins/tradesCache.length*100:0;
-  const color=total>0?"var(--green)":total<0?"var(--red)":"#8b93a2";
-  const orb=$("performanceOrb");if(orb)orb.style.setProperty("--orb-color",color);
-  setText("orbCorePnl",money(total));setText("orbNetPnl",money(total));
-  $("orbNetPnl").style.color=color;
+  const color=total>0?"#22c55e":total<0?"#ef4444":"#8b93a2";
+  const orb=$("performanceOrb"),stage=$("orbStage"),net=$("orbNetPnl");
+  if(orb)orb.style.setProperty("--orb-color",color);if(stage)stage.style.setProperty("--orb-color",color);
+  setText("orbCorePnl",money(total));setText("orbNetPnl",money(total));if(net)net.style.color=color;
   setText("orbWinRate",rate.toFixed(1)+"%");setText("orbTradeCount",tradesCache.length);
   setText("orbWinsLosses",wins+" / "+losses);
-  setText("orbCaption",!tradesCache.length?"Log trades to activate your performance orb.":total>0?"Your logged results are currently net positive.":total<0?"Your logged results are currently net negative.":"Your logged results are currently break-even.");
+  const status=!tradesCache.length?"AWAITING DATA":total>0?"POSITIVE MOMENTUM":total<0?"DRAWDOWN MODE":"BALANCED";
+  const power=!tradesCache.length?0:Math.round(Math.min(100,Math.max(0,rate*.65+Math.min(tradesCache.length,30)*1.15+(total>0?12:total<0?-8:0))));
+  setText("orbStatus",status);setText("orbPower","POWER "+power);
+  setText("orbCaption",!tradesCache.length?"Log trades to activate your performance orb.":total>0?"Your saved trades are net positive. Keep risk consistent.":total<0?"Your saved trades are net negative. Protect capital and review execution.":"Your saved results are at break-even.");
+  setText("orbFootnote",tradesCache.length?"LIVE DATA · "+tradesCache.length+" SAVED TRADE"+(tradesCache.length===1?"":"S")+" · NO PREDICTIONS":"SIGNAL SOURCE · YOUR SAVED JOURNAL DATA");
 }
 
 function renderMatrix(){
@@ -494,14 +473,16 @@ function renderMatrix(){
   const greenDays=Object.entries(days).filter(([d,v])=>d.startsWith(year+"-"+String(month+1).padStart(2,"0"))&&v>0).length;setText("monthGreenDays",greenDays);
   for(let day=1;day<=daysInMonth;day++){
     const date=year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0"),dayTrades=tradesCache.filter(t=>t.trade_date===date),pnl=days[date]||0;
-    const cell=document.createElement("button");cell.type="button";cell.className="day-cell"+(dayTrades.length?(pnl>=0?" win":" loss"):"")+(selectedDate===date?" selected":"");cell.style.color="var(--text)";
+    const cell=document.createElement("button");cell.type="button";cell.className="day-cell"+(dayTrades.length?(pnl>0?" win":pnl<0?" loss":" flat"):"")+(selectedDate===date?" selected":"");cell.style.color="var(--text)";
     const num=document.createElement("div");num.className="day-num";num.textContent=day;cell.appendChild(num);
-    if(dayTrades.length){const val=document.createElement("div");val.className="day-pnl "+pnlClass(pnl);val.textContent=(pnl<0?"−":"+")+money(Math.abs(pnl));cell.appendChild(val);
+    if(dayTrades.length){const val=document.createElement("div");val.className="day-pnl "+pnlClass(pnl);val.textContent=pnl===0?money(0):(pnl<0?"−":"+")+money(Math.abs(pnl));cell.appendChild(val);
       const count=document.createElement("div");count.className="day-count";count.textContent=dayTrades.length+" trade"+(dayTrades.length===1?"":"s");cell.appendChild(count);
       const fp=document.createElement("div");fp.className="fingerprint";const bars=Math.min(9,Math.max(3,dayTrades.length+2));for(let j=0;j<bars;j++){const bar=document.createElement("i");const t=dayTrades[j%dayTrades.length],v=Math.abs(Number(t.pnl||0)),height=4+Math.min(13,Math.log10(v+1)*4+((j*7+day)%6));bar.style.height=height+"px";bar.style.opacity=String(.45+(j%4)*.15);fp.appendChild(bar)}cell.appendChild(fp)
     }else{const empty=document.createElement("div");empty.className="day-count";empty.style.marginTop="22px";empty.textContent="—";cell.appendChild(empty)}
-    cell.addEventListener("click",()=>{selectedDate=date;renderMatrix();renderSelectedDay(date)});grid.appendChild(cell);
+    cell.setAttribute("aria-label",date+": "+(dayTrades.length?money(pnl)+", "+dayTrades.length+" trades":"no trades"));
+    cell.addEventListener("click",()=>{selectedDate=date;renderMatrix()});grid.appendChild(cell);
   }
+  const usedCells=first.getDay()+daysInMonth;for(let i=usedCells;i<Math.ceil(usedCells/7)*7;i++){const blank=document.createElement("div");blank.className="day-cell empty";blank.setAttribute("aria-hidden","true");grid.appendChild(blank)}
   if(!selectedDate||!selectedDate.startsWith(year+"-"+String(month+1).padStart(2,"0")))renderSelectedDay(null);
   else renderSelectedDay(selectedDate);
 }
@@ -510,7 +491,7 @@ function renderSelectedDay(date){
   const list=sortedTrades().filter(t=>t.trade_date===date),pnl=list.reduce((s,t)=>s+Number(t.pnl||0),0),wins=list.filter(t=>Number(t.pnl)>0).length;
   setText("dayDetailTitle",new Date(date+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}));setText("dayDetailSubtitle",list.length?"Actual trades logged for this date":"No trades were logged on this date");
   setText("dayDetailPnl",money(pnl));$("dayDetailPnl").className="chart-value "+pnlClass(pnl);setText("dayDetailCount",list.length);setText("dayDetailWinrate",(list.length?wins/list.length*100:0).toFixed(1)+"%");
-  const before=sortedTrades().filter(t=>String(t.trade_date||"")<=date).reduce((s,t)=>s+Number(t.pnl||0),0);setText("dayDetailEquity",money(before));drawEquityChart($("dayEquityChart"),list,true);
+  const before=sortedTrades().filter(t=>String(t.trade_date||"")<=date).reduce((s,t)=>s+Number(t.pnl||0),0);setText("dayDetailEquity",money(before));drawEquityChart($("dayEquityChart"),sortedTrades().filter(t=>String(t.trade_date||"")<=date),true);
   const box=$("dayTrades");box.replaceChildren();if(!list.length){box.innerHTML='<div class="empty-state">No trades logged for this day.</div>';return}
   list.forEach(t=>{const card=document.createElement("div");card.className="trade-mini";const head=document.createElement("div");head.className="trade-mini-head";const left=document.createElement("span");left.textContent=(t.symbol||"—")+" · "+(t.direction||"—");const right=document.createElement("span");right.className=pnlClass(t.pnl);right.textContent=money(t.pnl);head.append(left,right);card.appendChild(head);
     const meta=document.createElement("div");meta.className="muted";meta.textContent="Entry "+(t.entry_price??"—")+" · SL "+(t.stop_loss??"—")+" · TP "+(t.take_profit??"—");card.appendChild(meta);
@@ -560,15 +541,15 @@ function renderReplay(){
   if(t.screenshot_url){const img=document.createElement("img");img.src=t.screenshot_url;img.alt="Saved chart screenshot";img.style.cssText="max-width:100%;max-height:420px;border-radius:9px;border:1px solid var(--border);margin-top:12px";card.appendChild(img)}
   box.appendChild(card);
 }
-$("prevMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()-1,1);renderMatrix()});
-$("nextMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()+1,1);renderMatrix()});
+$("prevMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()-1,1);if(selectedDate&&!selectedDate.startsWith(matrixMonth.getFullYear()+"-"+String(matrixMonth.getMonth()+1).padStart(2,"0")))selectedDate=null;renderMatrix()});
+$("nextMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()+1,1);if(selectedDate&&!selectedDate.startsWith(matrixMonth.getFullYear()+"-"+String(matrixMonth.getMonth()+1).padStart(2,"0")))selectedDate=null;renderMatrix()});
 $("currentMonth").addEventListener("click",()=>{matrixMonth=new Date();selectedDate=localDateString(new Date());renderMatrix()});
 $("tradeSearch").addEventListener("input",renderHistory);
 $("simForm").addEventListener("submit",runSimulation);
 $("replayPrev").addEventListener("click",()=>{replayIndex=Math.max(0,replayIndex-1);renderReplay()});
 $("replayNext").addEventListener("click",()=>{replayIndex=Math.min(Math.max(0,sortedTrades().length-1),replayIndex+1);renderReplay()});
 $("toggleSettings").addEventListener("click",()=>{$("settingsPanel").hidden=!$("settingsPanel").hidden});
-window.addEventListener("resize",()=>{if($("app").style.display!=="none"){renderEquityCurve();if($("page-matrix").classList.contains("active"))drawEquityChart($("dayEquityChart"),sortedTrades().filter(t=>t.trade_date===selectedDate),true)}});
+window.addEventListener("resize",()=>{if($("app").style.display!=="none"){renderEquityCurve();if($("page-matrix").classList.contains("active"))drawEquityChart($("dayEquityChart"),sortedTrades().filter(t=>String(t.trade_date||"")<=String(selectedDate||"")),true)}});
 
 async function showSession(session){
   currentUser=session?session.user:null;$("auth").style.display=session?"none":"block";$("app").style.display=session?"block":"none";$("logout").hidden=!session;setText("userLabel",session?(session.user.email||"Signed in"):"");
