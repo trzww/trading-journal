@@ -4,179 +4,262 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MNQ Journal</title>
+<title>MNQ Journal — Trading Workspace</title>
 <style>
-:root{--bg:#090a0c;--panel:#111318;--border:#262a32;--text:#f4f4f5;--muted:#858b98;--green:#22c55e;--red:#ef4444}
+:root{--bg:#08090c;--sidebar:#0c0e12;--panel:#11141a;--border:#262b36;--text:#f4f5f7;--muted:#858d9d;--green:#22c55e;--red:#ef4444;--amber:#f5b942;--blue:#7aa2ff}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
-header{padding:20px 5%;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;font-weight:800;letter-spacing:1px}.logo span{color:var(--red)}
-main{max-width:1150px;margin:auto;padding:28px 20px}
-h1{font-size:30px;margin:0 0 8px}h2{font-size:18px;margin:0 0 12px}
-.muted{color:var(--muted);font-size:13px;line-height:1.6}
-.panel,.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:16px}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.propstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.label{font-size:11px;color:var(--muted);letter-spacing:1px}
-.value{font-size:25px;font-weight:800;margin-top:10px;overflow-wrap:anywhere}
-.smallvalue{font-size:20px;font-weight:800;margin-top:9px}
-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
-label{display:block;color:#aaa;font-size:12px}
-input,select,textarea{width:100%;margin-top:7px;padding:12px;background:#090a0c;border:1px solid #353943;border-radius:7px;color:white;font:inherit}
-button{background:var(--red);color:white;border:0;padding:12px 16px;border-radius:7px;cursor:pointer;font-weight:700}
-button.secondary{background:#22252b;border:1px solid #414550}
-button:disabled{opacity:.5;cursor:wait}
-.full{grid-column:1/-1}
-.table-wrap{overflow-x:auto}
-table{width:100%;border-collapse:collapse;min-width:500px}
-th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--border);font-size:13px}
-th{color:var(--muted);font-weight:500}
-.positive{color:var(--green)}.negative{color:var(--red)}
-.progress{height:7px;background:#292d35;border-radius:10px;overflow:hidden;margin-top:12px}
-.progress span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
-#message,#trademessage,#propmessage{white-space:pre-wrap;margin-top:12px}
-#message{color:#fca5a5}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;font-size:14px}
+button,input,select,textarea{font:inherit}
+button{background:var(--red);color:white;border:0;padding:11px 14px;border-radius:8px;cursor:pointer;font-weight:700}
+button:hover{filter:brightness(1.08)}button:disabled{opacity:.5;cursor:wait}
+button.secondary{background:#1b1f28;border:1px solid #343a47;color:#e6e8ed}
+button.ghost{background:transparent;border:1px solid var(--border);color:var(--muted)}
+input,select,textarea{width:100%;margin-top:7px;padding:11px 12px;background:#090b0f;border:1px solid #303643;border-radius:8px;color:white;outline:none}
+input:focus,select:focus,textarea:focus{border-color:#666f82}
+label{display:block;color:#aeb5c3;font-size:12px}
+header{height:70px;padding:0 26px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;background:rgba(8,9,12,.92);position:sticky;top:0;z-index:10}
+.logo{font-size:19px;font-weight:900;letter-spacing:1.2px}.logo span{color:var(--red)}
+.top-right{display:flex;align-items:center;gap:12px}
+.muted{color:var(--muted);font-size:12px;line-height:1.6}
+#auth{max-width:480px;margin:8vh auto;padding:26px;background:var(--panel);border:1px solid var(--border);border-radius:16px}
+#auth h1{margin:0 0 8px;font-size:25px}
+.authform{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:22px}.full{grid-column:1/-1}
+#message,#trademessage,#propmessage{white-space:pre-wrap;margin-top:12px;color:#fca5a5}
 #app{display:none}
-.screenshot-preview{display:block;max-width:180px;max-height:120px;object-fit:cover;border:1px solid var(--border);border-radius:7px;margin-top:8px}
-.history-shot{color:#fca5a5;text-decoration:none;font-weight:700}
+.layout{display:grid;grid-template-columns:220px minmax(0,1fr);min-height:calc(100vh - 70px)}
+.sidebar{background:var(--sidebar);border-right:1px solid var(--border);padding:20px 12px;display:flex;flex-direction:column;gap:6px}
+.side-label{font-size:10px;letter-spacing:1.5px;color:#626b7b;padding:12px 12px 7px;font-weight:800}
+.nav-btn{width:100%;display:flex;align-items:center;gap:11px;text-align:left;background:transparent;border:1px solid transparent;color:#9da5b4;padding:12px;border-radius:9px;font-weight:600}
+.nav-btn .nav-icon{width:20px;text-align:center;font-size:16px}
+.nav-btn:hover{background:#141820;color:#fff}.nav-btn.active{background:#211518;border-color:#44252a;color:#fff}.nav-btn.active .nav-icon{color:#ff656b}
+.side-bottom{margin-top:auto;padding:14px 12px;border-top:1px solid var(--border)}
+.workspace{min-width:0;padding:28px clamp(16px,3vw,38px);max-width:1600px;width:100%;margin:0 auto}
+.page{display:none}.page.active{display:block}
+.page-head{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+h1{font-size:26px;letter-spacing:-.5px;margin:0 0 7px}h2{font-size:16px;margin:0 0 13px}h3{font-size:13px;margin:0 0 12px;color:#d8dce5}
+.panel,.card{background:var(--panel);border:1px solid var(--border);border-radius:13px;padding:19px;min-width:0}
+.panel{margin-bottom:16px}.card{padding:17px}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.stats.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.label{font-size:10px;color:var(--muted);letter-spacing:1.1px;font-weight:800}
+.value{font-size:25px;font-weight:800;margin-top:11px;overflow-wrap:anywhere;letter-spacing:-.4px}
+.smallvalue{font-size:19px;font-weight:800;margin-top:9px;overflow-wrap:anywhere}
+.positive{color:var(--green)!important}.negative{color:var(--red)!important}.amber{color:var(--amber)!important}
 .sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.chart-wrap{position:relative;width:100%;height:290px;margin-top:15px}
+.chart-wrap{position:relative;width:100%;height:280px;margin-top:12px}
 #equityChart{display:block;width:100%;height:100%}
 .chart-legend{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px}
 .chart-value{font-size:20px;font-weight:800}
-@media(max-width:760px){.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.stats{grid-template-columns:1fr}.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}.value{font-size:23px}.chart-wrap{height:235px}}
+.propstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:11px}
+.progress{height:7px;background:#292e38;border-radius:10px;overflow:hidden;margin-top:11px}
+.progress span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
+form.gridform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:590px}
+th,td{text-align:left;padding:12px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.7px}
+tbody tr:hover{background:#151922}
+.screenshot-preview{display:block;max-width:180px;max-height:120px;object-fit:cover;border:1px solid var(--border);border-radius:7px;margin-top:8px}
+.history-shot{color:#fca5a5;text-decoration:none;font-weight:700}.history-shot:hover{text-decoration:underline}
+.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.toolbar button{padding:9px 12px}
+.calendar-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:15px}
+.calendar-title{font-size:19px;font-weight:800}
+.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:7px}
+.weekday{text-align:center;color:#717a8a;font-size:10px;font-weight:800;padding:5px 0;letter-spacing:.7px}
+.day-cell{min-height:102px;border:1px solid #282e39;border-radius:9px;padding:8px;background:#0c0f14;cursor:pointer;position:relative;overflow:hidden;transition:border-color .15s,transform .15s}
+.day-cell:hover{border-color:#5b6475;transform:translateY(-1px)}
+.day-cell.empty{background:transparent;border-color:transparent;cursor:default}
+.day-cell.selected{border-color:#f0f2f7;box-shadow:inset 0 0 0 1px #f0f2f7}
+.day-cell.win{background:linear-gradient(150deg,rgba(34,197,94,.13),#0c0f14 70%)}
+.day-cell.loss{background:linear-gradient(150deg,rgba(239,68,68,.13),#0c0f14 70%)}
+.day-num{font-size:11px;color:#9ba3b2;font-weight:700}
+.day-pnl{font-size:13px;font-weight:800;margin-top:13px;white-space:nowrap}
+.day-count{font-size:10px;color:#7e8796;margin-top:5px}
+.fingerprint{height:17px;display:flex;align-items:flex-end;gap:2px;margin-top:8px;opacity:.9}
+.fingerprint i{display:block;flex:1;min-width:2px;border-radius:2px 2px 0 0;background:var(--green)}
+.day-cell.loss .fingerprint i{background:var(--red)}
+.matrix-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}
+.detail-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:14px}
+.day-trades{display:grid;gap:9px}
+.trade-mini{padding:12px;background:#0c0f14;border:1px solid var(--border);border-radius:9px}
+.trade-mini-head{display:flex;justify-content:space-between;gap:10px;font-weight:700}
+.note{white-space:pre-wrap;color:#a8b0be;font-size:12px;line-height:1.5;margin-top:7px}
+.empty-state{padding:24px;text-align:center;color:var(--muted);font-size:12px;border:1px dashed #343a47;border-radius:10px}
+.metric-list{display:grid;gap:12px}
+.metric-row{display:grid;grid-template-columns:minmax(80px,1fr) 2fr auto;gap:12px;align-items:center;font-size:12px}
+.metric-bar{height:7px;background:#272d37;border-radius:9px;overflow:hidden}.metric-bar span{display:block;height:100%;background:#8794ad}
+.tag{display:inline-block;border:1px solid #343b48;background:#191e27;color:#b6becc;border-radius:5px;padding:4px 7px;font-size:10px}
+.simu-result{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:16px}
+.rule-alert{border:1px solid #56363a;background:#211518;padding:12px;border-radius:9px;color:#ffb6b6;font-size:12px;margin-top:12px}
+#settingsPanel[hidden]{display:none!important}
+@media(max-width:1000px){.layout{grid-template-columns:180px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.propstats,.matrix-summary{grid-template-columns:repeat(2,minmax(0,1fr))}.detail-grid{grid-template-columns:1fr}}
+@media(max-width:700px){header{height:60px;padding:0 15px}.layout{display:block}.sidebar{position:sticky;top:60px;z-index:9;display:flex;flex-direction:row;overflow-x:auto;border-right:0;border-bottom:1px solid var(--border);padding:7px;gap:4px}.side-label,.side-bottom{display:none}.nav-btn{width:auto;min-width:max-content;padding:10px;font-size:11px;gap:7px}.nav-btn .nav-icon{width:auto}.workspace{padding:20px 12px}.day-cell{min-height:76px;padding:5px}.day-pnl{font-size:10px;margin-top:9px}.day-count{font-size:9px}.fingerprint{height:10px;margin-top:5px}.calendar{gap:3px}.weekday{font-size:9px}.value{font-size:22px}.simu-result{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:460px){.authform,form.gridform{grid-template-columns:1fr}.full{grid-column:auto}.stats.three{grid-template-columns:1fr}.panel{padding:14px}.calendar-title{font-size:16px}.day-cell{min-height:68px}.day-num{font-size:10px}.day-pnl{font-size:9px}.day-count{display:none}}
 </style>
 </head>
 <body>
 <header>
   <div class="logo">MNQ<span>.</span>JOURNAL</div>
-  <button id="logout" class="secondary" hidden>Sign out</button>
+  <div class="top-right"><span id="userLabel" class="muted"></span><button id="logout" class="secondary" hidden>Sign out</button></div>
 </header>
 
-<main>
-  <h1>Your trading dashboard.</h1>
+<section id="auth">
+  <h1>Your trading workspace.</h1>
   <p class="muted">Track the process. Respect the risk. Improve every day.</p>
+  <form id="authform" class="authform">
+    <label class="full">Email<input type="email" id="email" autocomplete="email" required></label>
+    <label class="full">Password<input type="password" id="password" autocomplete="current-password" minlength="6" required></label>
+    <button type="submit">Sign in</button>
+    <button type="button" id="signup" class="secondary">Create account</button>
+  </form>
+  <div id="message" role="status"></div>
+</section>
 
-  <section id="auth" class="panel">
-    <h2>Your account</h2>
-    <p class="muted">Create an account or sign in to access your journal.</p>
-    <form id="authform">
-      <label class="full">Email
-        <input type="email" id="email" autocomplete="email" required>
-      </label>
-      <label class="full">Password
-        <input type="password" id="password" autocomplete="current-password" minlength="6" required>
-      </label>
-      <button type="submit">Sign in</button>
-      <button type="button" id="signup" class="secondary">Create account</button>
-    </form>
-    <div id="message" role="status"></div>
-  </section>
+<div id="app">
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-btn active" data-page="dashboard"><span class="nav-icon">◫</span>Dashboard</button>
+      <button class="nav-btn" data-page="matrix"><span class="nav-icon">▦</span>Trading Matrix</button>
+      <button class="nav-btn" data-page="trades"><span class="nav-icon">↗</span>Trades</button>
+      <button class="nav-btn" data-page="replay"><span class="nav-icon">⏵</span>Replay & Simulator</button>
+      <button class="nav-btn" data-page="analytics"><span class="nav-icon">⌁</span>Analytics</button>
+      <button class="nav-btn" data-page="prop"><span class="nav-icon">◈</span>Prop Account</button>
+      <div class="side-bottom"><div class="label">MNQ JOURNAL</div><p class="muted">Your data. Your process.</p></div>
+    </aside>
 
-  <section id="app">
-    <!-- EQUITY CURVE AT THE TOP -->
-    <section class="panel" id="equityPanel">
-      <div class="sectionhead">
-        <div>
-          <h2>Equity curve</h2>
-          <p class="muted">Your cumulative trading performance.</p>
+    <main class="workspace">
+      <section class="page active" id="page-dashboard">
+        <div class="page-head"><div><h1>Dashboard</h1><div class="muted">Your trading performance at a glance.</div></div><span id="dashboardRange" class="tag">All logged trades</span></div>
+        <div class="stats">
+          <div class="card"><div class="label">TOTAL P&L</div><div class="value" id="total">$0.00</div><div class="muted">Net result of logged trades</div></div>
+          <div class="card"><div class="label">WIN RATE</div><div class="value" id="winrate">0%</div><div class="muted">Winning trades / all trades</div></div>
+          <div class="card"><div class="label">TOTAL TRADES</div><div class="value" id="count">0</div><div class="muted">Trades in your journal</div></div>
+          <div class="card"><div class="label">MAX DRAWDOWN</div><div class="value" id="maxdrawdownstat">$0.00</div><div class="muted">Peak-to-trough equity decline</div></div>
         </div>
-        <div id="equityNet" class="chart-value">$0.00</div>
-      </div>
-      <div class="chart-wrap">
-        <canvas id="equityChart" role="img" aria-label="Cumulative profit and loss equity curve"></canvas>
-      </div>
-      <div class="chart-legend">
-        <span id="equityCount" class="muted">No trades plotted yet</span>
-        <span class="muted">Green = positive · Red = negative</span>
-      </div>
-    </section>
-
-    <div class="stats">
-      <div class="card"><div class="label">TOTAL P&L</div><div class="value" id="total">$0.00</div></div>
-      <div class="card"><div class="label">WIN RATE</div><div class="value" id="winrate">0%</div></div>
-      <div class="card"><div class="label">TOTAL TRADES</div><div class="value" id="count">0</div></div>
-    </div>
-
-    <section class="panel">
-      <div class="sectionhead">
-        <div>
-          <h2>Prop firm command center</h2>
-          <p class="muted">Track your account progress.</p>
+        <section class="panel" id="equityPanel">
+          <div class="sectionhead"><div><h2>Equity curve</h2><p class="muted">Cumulative P&L in chronological order.</p></div><div id="equityNet" class="chart-value">$0.00</div></div>
+          <div class="chart-wrap"><canvas id="equityChart" role="img" aria-label="Cumulative profit and loss equity curve"></canvas></div>
+          <div class="chart-legend"><span id="equityCount" class="muted">No trades plotted yet</span><span class="muted">Green = positive · Red = negative</span></div>
+        </section>
+        <div class="stats three">
+          <div class="card"><div class="label">BEST DAY</div><div class="value positive" id="dashBestDay">$0.00</div><div class="muted" id="dashBestDate">No winning day yet</div></div>
+          <div class="card"><div class="label">WORST DAY</div><div class="value negative" id="dashWorstDay">$0.00</div><div class="muted" id="dashWorstDate">No losing day yet</div></div>
+          <div class="card"><div class="label">AVERAGE TRADE</div><div class="value" id="avgTrade">$0.00</div><div class="muted">Average P&L per logged trade</div></div>
         </div>
-        <button class="secondary" id="toggleSettings" type="button">Account settings</button>
-      </div>
-      <div class="propstats">
-        <div class="card"><div class="label">EST. BALANCE</div><div class="smallvalue" id="balance">$50,000</div></div>
-        <div class="card"><div class="label">NET P&L</div><div class="smallvalue" id="netpnl">$0</div></div>
-        <div class="card"><div class="label">LOSS BUFFER LEFT</div><div class="smallvalue" id="lossleft">—</div></div>
-        <div class="card"><div class="label">TARGET PROGRESS</div><div class="smallvalue" id="targetpct">0%</div></div>
-      </div>
-      <div style="margin-top:20px">
-        <div class="sectionhead">
-          <span class="muted">Profit target progress</span>
-          <span id="targettext" class="muted">$0 / $3,000</span>
+      </section>
+
+      <section class="page" id="page-matrix">
+        <div class="page-head"><div><h1>Trading Matrix</h1><div class="muted">A daily fingerprint of your actual logged performance.</div></div></div>
+        <div class="matrix-summary">
+          <div class="card"><div class="label">MONTH P&L</div><div class="value" id="monthPnl">$0.00</div></div>
+          <div class="card"><div class="label">TRADES</div><div class="value" id="monthTrades">0</div></div>
+          <div class="card"><div class="label">WIN RATE</div><div class="value" id="monthWinrate">0%</div></div>
+          <div class="card"><div class="label">PROFITABLE DAYS</div><div class="value" id="monthGreenDays">0</div></div>
         </div>
-        <div class="progress"><span id="targetbar"></span></div>
-      </div>
-      <div class="propstats" style="margin-top:12px">
-        <div class="card"><div class="label">PROFIT TARGET</div><div class="smallvalue" id="targetamount">$3,000</div></div>
-        <div class="card"><div class="label">MAX LOSS LIMIT</div><div class="smallvalue" id="maxloss">$3,000</div></div>
-        <div class="card"><div class="label">BEST WINNING DAY</div><div class="smallvalue" id="bestday">$0</div></div>
-        <div class="card"><div class="label">CONSISTENCY EST.</div><div class="smallvalue" id="consistency">0%</div></div>
-      </div>
-      <p class="muted">Estimates based on trades logged here. Verify your actual rules with your prop firm.</p>
-      <div id="propmessage" class="muted" role="status"></div>
-    </section>
+        <section class="panel">
+          <div class="calendar-head"><div class="toolbar"><button class="secondary" id="prevMonth" aria-label="Previous month">←</button><div class="calendar-title" id="monthTitle">Month</div><button class="secondary" id="nextMonth" aria-label="Next month">→</button></div><button class="ghost" id="currentMonth">Current month</button></div>
+          <div class="calendar" id="calendarGrid"></div>
+          <p class="muted">Each day shows net P&L, trade count, and a small performance fingerprint. Empty days have no logged trades.</p>
+        </section>
+        <div class="detail-grid">
+          <section class="panel"><div class="sectionhead"><div><h2 id="dayDetailTitle">Select a day</h2><p class="muted" id="dayDetailSubtitle">Choose any calendar day to inspect its trades.</p></div><div class="chart-value" id="dayDetailPnl">—</div></div><div class="stats three" style="margin-top:14px"><div class="card"><div class="label">TRADES</div><div class="smallvalue" id="dayDetailCount">—</div></div><div class="card"><div class="label">WIN RATE</div><div class="smallvalue" id="dayDetailWinrate">—</div></div><div class="card"><div class="label">CUMULATIVE P&L</div><div class="smallvalue" id="dayDetailEquity">—</div></div></div><div class="chart-wrap" style="height:150px"><canvas id="dayEquityChart" aria-label="Selected day cumulative P&L"></canvas></div></section>
+          <section class="panel"><h2>Trades for selected day</h2><div id="dayTrades" class="day-trades"><div class="empty-state">Select a day to see its trade details.</div></div></section>
+        </div>
+      </section>
 
-    <section class="panel" id="settingsPanel" hidden>
-      <h2>Prop account settings</h2>
-      <p class="muted">Set these values to match your actual account rules.</p>
-      <form id="propform">
-        <label>Prop firm<input id="firm" value="Lucid" required></label>
-        <label>Account name<input id="accountname" value="50K Account" required></label>
-        <label>Starting balance ($)<input type="number" id="starting" min="0" step="0.01" value="50000" required></label>
-        <label>Maximum total loss ($)<input type="number" id="maxdrawdown" min="0" step="0.01" value="3000" required></label>
-        <label>Daily loss limit ($, 0 = off)<input type="number" id="daily" min="0" step="0.01" value="0" required></label>
-        <label>Profit target ($)<input type="number" id="target" min="0" step="0.01" value="3000" required></label>
-        <label>Consistency limit (%)<input type="number" id="consistencylimit" min="0" max="100" step="0.1" value="50" required></label>
-        <div class="full"><button id="saveSettings" type="submit">Save settings</button></div>
-      </form>
-    </section>
+      <section class="page" id="page-trades">
+        <div class="page-head"><div><h1>Trades</h1><div class="muted">Log executions and review your complete trade history.</div></div><span class="tag" id="tradeCountTag">0 trades</span></div>
+        <section class="panel">
+          <h2>＋ Log a trade</h2>
+          <form id="tradeform" class="gridform">
+            <label>Date<input type="date" id="date" required></label>
+            <label>Symbol<input id="symbol" value="MNQ" required></label>
+            <label>Direction<select id="direction"><option>Long</option><option>Short</option></select></label>
+            <label>Entry price<input type="number" step="any" id="entry" required></label>
+            <label>Stop loss<input type="number" step="any" id="sl"></label>
+            <label>Take profit<input type="number" step="any" id="tp"></label>
+            <label class="full">P&L in dollars<input type="number" step="0.01" id="pnl" required></label>
+            <label class="full">Notes<textarea id="notes" rows="3" placeholder="Setup, execution, mistakes..."></textarea></label>
+            <label class="full">Chart screenshot (optional)<input type="file" id="screenshot" accept="image/*"><span class="muted">Images must be 5 MB or smaller.</span><img id="screenshotPreview" class="screenshot-preview" alt="Screenshot preview" hidden></label>
+            <div class="full"><button type="submit" id="save">Save trade</button></div>
+          </form>
+          <div id="trademessage" class="muted" role="status"></div>
+        </section>
+        <section class="panel">
+          <div class="sectionhead"><div><h2>Trade history</h2><p class="muted">Loaded from your existing Supabase trades table.</p></div><input id="tradeSearch" style="max-width:260px;margin-top:0" placeholder="Search symbol or notes..."></div>
+          <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th><th>Notes</th><th>Chart</th></tr></thead><tbody id="history"></tbody></table></div>
+        </section>
+      </section>
 
-    <section class="panel">
-      <h2>＋ Log a trade</h2>
-      <form id="tradeform">
-        <label>Date<input type="date" id="date" required></label>
-        <label>Symbol<input id="symbol" value="MNQ" required></label>
-        <label>Direction<select id="direction"><option>Long</option><option>Short</option></select></label>
-        <label>Entry price<input type="number" step="any" id="entry" required></label>
-        <label>Stop loss<input type="number" step="any" id="sl"></label>
-        <label>Take profit<input type="number" step="any" id="tp"></label>
-        <label class="full">P&L in dollars<input type="number" step="0.01" id="pnl" required></label>
-        <label class="full">Notes<textarea id="notes" rows="3" placeholder="Setup, execution, mistakes..."></textarea></label>
-        <label class="full">Chart screenshot (optional)
-          <input type="file" id="screenshot" accept="image/*">
-          <span class="muted">Images must be 5 MB or smaller.</span>
-          <img id="screenshotPreview" class="screenshot-preview" alt="Screenshot preview" hidden>
-        </label>
-        <div class="full"><button type="submit" id="save">Save trade</button></div>
-      </form>
-      <div id="trademessage" class="muted" role="status"></div>
-    </section>
+      <section class="page" id="page-replay">
+        <div class="page-head"><div><h1>Replay & Simulator</h1><div class="muted">Run your real logged trades through hypothetical risk rules.</div></div><span class="tag">Simulation only · no changes to saved trades</span></div>
+        <section class="panel"><h2>Rule simulator</h2><p class="muted">Change the rules below and simulate your trades in date order. This does not alter your prop account settings or saved trade data.</p>
+          <form id="simForm" class="gridform">
+            <label>Starting balance ($)<input type="number" id="simStarting" min="0" step=".01" value="50000" required></label>
+            <label>Maximum total loss ($)<input type="number" id="simMaxLoss" min="0" step=".01" value="3000" required></label>
+            <label>Daily loss limit ($, 0 = off)<input type="number" id="simDailyLoss" min="0" step=".01" value="0" required></label>
+            <label>Profit target ($)<input type="number" id="simTarget" min="0" step=".01" value="3000" required></label>
+            <label>Stop sim after first rule breach<select id="simStop"><option value="yes">Yes</option><option value="no">No — report all breaches</option></select></label>
+            <div class="full"><button type="submit">Run simulation</button></div>
+          </form>
+          <div id="simResults" class="muted" style="margin-top:14px">Enter your hypothetical rules and run a simulation to see the result.</div>
+        </section>
+        <section class="panel"><h2>Historical replay</h2><p class="muted">Review saved trades in chronological order. Use the next/previous controls to step through each actual trade.</p><div class="sectionhead"><div class="toolbar"><button class="secondary" id="replayPrev">← Previous</button><button id="replayNext">Next trade →</button></div><span class="tag" id="replayPosition">No trades loaded</span></div><div id="replayCard" style="margin-top:16px"><div class="empty-state">Your saved trades will appear here after sign-in.</div></div></section>
+      </section>
 
-    <section class="panel">
-      <h2>Trade history</h2>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th><th>Chart</th></tr></thead>
-          <tbody id="history"></tbody>
-        </table>
-      </div>
-    </section>
-  </section>
-</main>
+      <section class="page" id="page-analytics">
+        <div class="page-head"><div><h1>Analytics</h1><div class="muted">Find patterns in your actual journal data.</div></div></div>
+        <div class="stats">
+          <div class="card"><div class="label">PROFIT FACTOR</div><div class="value" id="profitFactor">—</div><div class="muted">Gross wins ÷ gross losses</div></div>
+          <div class="card"><div class="label">AVERAGE WIN</div><div class="value positive" id="averageWin">$0.00</div></div>
+          <div class="card"><div class="label">AVERAGE LOSS</div><div class="value negative" id="averageLoss">$0.00</div></div>
+          <div class="card"><div class="label">EXPECTANCY / TRADE</div><div class="value" id="expectancy">$0.00</div></div>
+        </div>
+        <div class="detail-grid">
+          <section class="panel"><h2>Performance by symbol</h2><div id="symbolAnalytics" class="metric-list"></div></section>
+          <section class="panel"><h2>Performance by weekday</h2><div id="weekdayAnalytics" class="metric-list"></div></section>
+        </div>
+        <div class="detail-grid">
+          <section class="panel"><h2>Notes & execution clues</h2><p class="muted">Keyword counts are derived from notes you entered. They are clues, not proof of causation.</p><div id="notesAnalytics" class="metric-list"></div></section>
+          <section class="panel"><h2>Important data limitation</h2><p class="muted">Your current database stores trade date, symbol, direction, entry, stop, target, P&L, notes, and screenshot URL. It does not store entry time, exit time, named setup, or a structured mistake field. Session and setup accuracy cannot be calculated reliably until those fields are added.</p></section>
+        </div>
+      </section>
+
+      <section class="page" id="page-prop">
+        <div class="page-head"><div><h1>Prop Account</h1><div class="muted">Track your account settings and estimated rule progress.</div></div><button class="secondary" id="toggleSettings" type="button">Account settings</button></div>
+        <div class="propstats">
+          <div class="card"><div class="label">EST. BALANCE</div><div class="smallvalue" id="balance">$50,000.00</div></div>
+          <div class="card"><div class="label">NET P&L</div><div class="smallvalue" id="netpnl">$0.00</div></div>
+          <div class="card"><div class="label">LOSS BUFFER LEFT</div><div class="smallvalue" id="lossleft">—</div></div>
+          <div class="card"><div class="label">TARGET PROGRESS</div><div class="smallvalue" id="targetpct">0%</div></div>
+        </div>
+        <section class="panel"><div class="sectionhead"><div><h2>Profit target progress</h2><p class="muted">Progress is estimated from logged trade P&L.</p></div><span id="targettext" class="muted">$0.00 / $3,000.00</span></div><div class="progress"><span id="targetbar"></span></div>
+          <div class="propstats" style="margin-top:14px">
+            <div class="card"><div class="label">PROFIT TARGET</div><div class="smallvalue" id="targetamount">$3,000.00</div></div>
+            <div class="card"><div class="label">MAX LOSS LIMIT</div><div class="smallvalue" id="maxloss">$3,000.00</div></div>
+            <div class="card"><div class="label">BEST WINNING DAY</div><div class="smallvalue" id="bestday">$0.00</div></div>
+            <div class="card"><div class="label">CONSISTENCY EST.</div><div class="smallvalue" id="consistency">0%</div></div>
+          </div>
+          <p class="muted" style="margin-top:14px">Estimates based on trades logged here. Verify your actual rules with your prop firm.</p><div id="propmessage" class="muted" role="status"></div>
+        </section>
+        <section class="panel" id="settingsPanel" hidden><h2>Prop account settings</h2><p class="muted">Set these values to match your actual account rules.</p>
+          <form id="propform" class="gridform">
+            <label>Prop firm<input id="firm" value="Lucid" required></label>
+            <label>Account name<input id="accountname" value="50K Account" required></label>
+            <label>Starting balance ($)<input type="number" id="starting" min="0" step="0.01" value="50000" required></label>
+            <label>Maximum total loss ($)<input type="number" id="maxdrawdown" min="0" step="0.01" value="3000" required></label>
+            <label>Daily loss limit ($, 0 = off)<input type="number" id="daily" min="0" step="0.01" value="0" required></label>
+            <label>Profit target ($)<input type="number" id="target" min="0" step="0.01" value="3000" required></label>
+            <label>Consistency limit (%)<input type="number" id="consistencylimit" min="0" max="100" step="0.1" value="50" required></label>
+            <div class="full"><button id="saveSettings" type="submit">Save settings</button></div>
+          </form>
+        </section>
+      </section>
+    </main>
+  </div>
+</div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
@@ -184,386 +267,239 @@ const SUPABASE_URL = "https://dggokjetnvmwyfflbism.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Yh7Aj-YRfYq_66LVxpZszA_XWGqQo4N";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 const $ = id => document.getElementById(id);
+let currentUser = null, propAccount = null, tradesCache = [], selectedDate = null, matrixMonth = new Date(), replayIndex = 0;
 
-let currentUser = null;
-let propAccount = null;
-let tradesCache = [];
-
-$("date").value = new Date().toLocaleDateString("en-CA");
-
-function money(n) {
-  n = Number(n || 0);
-  return (n < 0 ? "-$" : "$") +
-    Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
-}
-function setText(id,text){$(id).textContent=text}
+$("date").value = localDateString(new Date());
+function localDateString(d){const x=new Date(d);return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0")}
+function money(n){n=Number(n||0);return (n<0?"-$":"$")+Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2})}
+function setText(id,text){const el=$(id);if(el)el.textContent=text}
 function setMessage(id,text){setText(id,text)}
+function pnlClass(n){return Number(n)<0?"negative":Number(n)>0?"positive":""}
+function sortedTrades(){return [...tradesCache].sort((a,b)=>String(a.trade_date||"").localeCompare(String(b.trade_date||""))||String(a.created_at||"").localeCompare(String(b.created_at||"")))}
+function dailyTotals(trades=tradesCache){const days={};trades.forEach(t=>{const d=t.trade_date||"Unknown";days[d]=(days[d]||0)+Number(t.pnl||0)});return days}
+function groupedBySymbol(){const g={};tradesCache.forEach(t=>{const k=(t.symbol||"Unknown").toUpperCase();(g[k] ||= []).push(t)});return g}
 
-async function loadPropAccount() {
+document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",()=>showPage(btn.dataset.page)));
+function showPage(page){
+  document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
+  document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));
+  if(page==="matrix")renderMatrix();
+  if(page==="analytics")renderAnalytics();
+  if(page==="replay")renderReplay();
+  if(page==="dashboard")renderEquityCurve();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+async function loadPropAccount(){
   setMessage("propmessage","Loading account settings...");
-  const {data,error} = await db.from("prop_accounts")
-    .select("*").order("created_at",{ascending:true}).limit(1);
-
+  const {data,error}=await db.from("prop_accounts").select("*").order("created_at",{ascending:true}).limit(1);
   if(error){setMessage("propmessage","Could not load prop settings: "+error.message);return}
-
-  if(data && data.length) {
-    propAccount = data[0];
-  } else {
-    const {data:newAccount,error:createError} = await db.from("prop_accounts")
-      .insert({
-        firm_name:"Lucid",account_name:"50K Account",
-        starting_balance:50000,max_drawdown:3000,
-        daily_loss_limit:0,profit_target:3000,consistency_percent:50
-      }).select().single();
-
+  if(data&&data.length){propAccount=data[0]}
+  else{
+    const {data:newAccount,error:createError}=await db.from("prop_accounts").insert({firm_name:"Lucid",account_name:"50K Account",starting_balance:50000,max_drawdown:3000,daily_loss_limit:0,profit_target:3000,consistency_percent:50}).select().single();
     if(createError){setMessage("propmessage","Could not create prop account: "+createError.message);return}
-    propAccount = newAccount;
+    propAccount=newAccount;
   }
-
-  $("firm").value = propAccount.firm_name || "Lucid";
-  $("accountname").value = propAccount.account_name || "50K Account";
-  $("starting").value = propAccount.starting_balance;
-  $("maxdrawdown").value = propAccount.max_drawdown;
-  $("daily").value = propAccount.daily_loss_limit;
-  $("target").value = propAccount.profit_target;
-  $("consistencylimit").value = propAccount.consistency_percent;
-
-  renderPropStats();
-  setMessage("propmessage","Account settings synced.");
+  $("firm").value=propAccount.firm_name||"Lucid";$("accountname").value=propAccount.account_name||"50K Account";
+  $("starting").value=propAccount.starting_balance;$("maxdrawdown").value=propAccount.max_drawdown;$("daily").value=propAccount.daily_loss_limit;
+  $("target").value=propAccount.profit_target;$("consistencylimit").value=propAccount.consistency_percent;
+  $("simStarting").value=propAccount.starting_balance;$("simMaxLoss").value=propAccount.max_drawdown;$("simDailyLoss").value=propAccount.daily_loss_limit;$("simTarget").value=propAccount.profit_target;
+  renderPropStats();setMessage("propmessage","Account settings synced.");
 }
-
-function renderPropStats() {
+function renderPropStats(){
   if(!propAccount)return;
-  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0);
-  const starting=Number(propAccount.starting_balance);
-  const target=Number(propAccount.profit_target);
-  const maxLoss=Number(propAccount.max_drawdown);
-  const balance=starting+total;
-  const lossLeft=balance-(starting-maxLoss);
+  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0),starting=Number(propAccount.starting_balance),target=Number(propAccount.profit_target),maxLoss=Number(propAccount.max_drawdown),balance=starting+total,lossLeft=balance-(starting-maxLoss);
   const progress=target>0?Math.max(0,Math.min(100,total/target*100)):0;
-
-  const days={};
-  tradesCache.forEach(t=>days[t.trade_date]=(days[t.trade_date]||0)+Number(t.pnl||0));
-  const dailyPnls=Object.values(days);
-  const bestDay=dailyPnls.length?Math.max(0,...dailyPnls):0;
-  const positiveTotal=dailyPnls.reduce((s,p)=>s+Math.max(0,p),0);
-  const consistency=positiveTotal>0?bestDay/positiveTotal*100:0;
-
-  setText("balance",money(balance));
-  setText("netpnl",money(total));
-  $("netpnl").className="smallvalue "+(total<0?"negative":total>0?"positive":"");
-  setText("lossleft",money(lossLeft));
-  $("lossleft").className="smallvalue "+(lossLeft<0?"negative":"");
-  setText("targetpct",progress.toFixed(1)+"%");
-  setText("targettext",money(Math.max(0,total))+" / "+money(target));
-  $("targetbar").style.width=progress+"%";
-  $("targetbar").style.background=total<0?"var(--red)":"var(--green)";
-  setText("targetamount",money(target));
-  setText("maxloss",money(maxLoss));
-  setText("bestday",money(bestDay));
-  setText("consistency",consistency.toFixed(1)+"%");
+  const days=dailyTotals(),dailyPnls=Object.values(days),bestDay=dailyPnls.length?Math.max(0,...dailyPnls):0,positiveTotal=dailyPnls.reduce((s,p)=>s+Math.max(0,p),0),consistency=positiveTotal>0?bestDay/positiveTotal*100:0;
+  setText("balance",money(balance));setText("netpnl",money(total));$("netpnl").className="smallvalue "+pnlClass(total);
+  setText("lossleft",money(lossLeft));$("lossleft").className="smallvalue "+(lossLeft<0?"negative":"");
+  setText("targetpct",progress.toFixed(1)+"%");setText("targettext",money(Math.max(0,total))+" / "+money(target));$("targetbar").style.width=progress+"%";$("targetbar").style.background=total<0?"var(--red)":"var(--green)";
+  setText("targetamount",money(target));setText("maxloss",money(maxLoss));setText("bestday",money(bestDay));setText("consistency",consistency.toFixed(1)+"%");
 }
 
-async function loadTrades() {
+async function loadTrades(){
   setMessage("trademessage","Loading your trades...");
-  const {data,error}=await db.from("trades")
-    .select("id,created_at,trade_date,symbol,direction,entry_price,pnl,stop_loss,take_profit,notes,screenshot_url")
-    .order("trade_date",{ascending:false});
-
+  const {data,error}=await db.from("trades").select("id,created_at,trade_date,symbol,direction,entry_price,pnl,stop_loss,take_profit,notes,screenshot_url").order("trade_date",{ascending:false});
   if(error){setMessage("trademessage","Could not load trades: "+error.message);return}
   tradesCache=data||[];
-
-  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0);
-  const wins=tradesCache.filter(t=>Number(t.pnl)>0).length;
-  setText("total",money(total));
-  $("total").className="value "+(total<0?"negative":total>0?"positive":"");
-  setText("winrate",(tradesCache.length?wins/tradesCache.length*100:0).toFixed(1)+"%");
-  setText("count",tradesCache.length);
-
-  const history=$("history");
-  history.replaceChildren();
-
-  if(!tradesCache.length){
-    const row=history.insertRow();
-    const cell=row.insertCell();cell.colSpan=6;
-    cell.textContent="No trades yet. Log your first trade above.";
-  }
-
-  tradesCache.forEach(t=>{
-    const row=history.insertRow();
-    [t.trade_date,t.symbol,t.direction,Number(t.entry_price).toString()]
-      .forEach(v=>row.insertCell().textContent=v??"");
-
-    const pnlCell=row.insertCell();
-    const pnl=Number(t.pnl||0);
-    pnlCell.textContent=money(pnl);
-    pnlCell.className=pnl<0?"negative":pnl>0?"positive":"";
-
-    const chartCell=row.insertCell();
-    if(t.screenshot_url){
-      const link=document.createElement("a");
-      link.href=t.screenshot_url;link.target="_blank";
-      link.rel="noopener noreferrer";link.className="history-shot";
-      link.textContent="View chart";chartCell.appendChild(link);
-    }else{
-      chartCell.textContent="—";chartCell.className="muted";
-    }
-  });
-
-  renderPropStats();
-  renderEquityCurve();
+  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0),wins=tradesCache.filter(t=>Number(t.pnl)>0).length;
+  setText("total",money(total));$("total").className="value "+pnlClass(total);setText("winrate",(tradesCache.length?wins/tradesCache.length*100:0).toFixed(1)+"%");setText("count",tradesCache.length);setText("tradeCountTag",tradesCache.length+" trades");
+  renderHistory();renderPropStats();renderEquityCurve();renderDashboardStats();renderMatrix();renderAnalytics();renderReplay();
   setMessage("trademessage","Trades synced.");
 }
-
-function renderEquityCurve() {
-  const canvas=$("equityChart");
-  if(!canvas)return;
-  const ctx=canvas.getContext("2d");
-  const rect=canvas.getBoundingClientRect();
-  const w=Math.max(280,rect.width||600);
-  const h=Math.max(200,rect.height||290);
-  const dpr=Math.max(1,window.devicePixelRatio||1);
-  canvas.width=Math.round(w*dpr);
-  canvas.height=Math.round(h*dpr);
-  ctx.setTransform(dpr,0,0,dpr,0,0);
-  ctx.clearRect(0,0,w,h);
-
-  // Plot trades in chronological order, regardless of history table order.
-  const ordered=[...tradesCache].sort((a,b)=>{
-    const d=String(a.trade_date||"").localeCompare(String(b.trade_date||""));
-    return d||String(a.created_at||"").localeCompare(String(b.created_at||""));
+function renderHistory(){
+  const history=$("history");history.replaceChildren();
+  const query=($("tradeSearch").value||"").trim().toLowerCase();
+  const shown=tradesCache.filter(t=>!query||[t.symbol,t.notes,t.direction,t.trade_date].some(v=>String(v||"").toLowerCase().includes(query)));
+  if(!shown.length){const row=history.insertRow(),cell=row.insertCell();cell.colSpan=7;cell.textContent=tradesCache.length?"No trades match your search.":"No trades yet. Log your first trade above.";return}
+  shown.forEach(t=>{
+    const row=history.insertRow();
+    [t.trade_date,t.symbol,t.direction,Number(t.entry_price).toString()].forEach(v=>row.insertCell().textContent=v??"");
+    const pnlCell=row.insertCell(),pnl=Number(t.pnl||0);pnlCell.textContent=money(pnl);pnlCell.className=pnlClass(pnl);
+    const notes=row.insertCell();notes.textContent=t.notes||"—";notes.style.maxWidth="230px";notes.style.whiteSpace="pre-wrap";
+    const chartCell=row.insertCell();if(t.screenshot_url){const link=document.createElement("a");link.href=t.screenshot_url;link.target="_blank";link.rel="noopener noreferrer";link.className="history-shot";link.textContent="View chart";chartCell.appendChild(link)}else{chartCell.textContent="—";chartCell.className="muted"}
   });
-
-  const values=[0];
-  let running=0;
-  ordered.forEach(t=>{running+=Number(t.pnl||0);values.push(running)});
-
-  const positive=running>=0;
-  const lineColor=positive?"#22c55e":"#ef4444";
-  const fillTop=positive?"rgba(34,197,94,.20)":"rgba(239,68,68,.20)";
-  const fillBottom=positive?"rgba(34,197,94,.01)":"rgba(239,68,68,.01)";
-
-  setText("equityNet",money(running));
-  $("equityNet").style.color=lineColor;
-  setText("equityCount",ordered.length
-    ? ordered.length+" trade"+(ordered.length===1?"":"s")+" plotted · cumulative P&L"
-    : "No trades yet — log a trade to start your curve");
-
-  const pad={top:18,right:18,bottom:30,left:65};
-  const plotW=w-pad.left-pad.right;
-  const plotH=h-pad.top-pad.bottom;
-  if(plotW<=0||plotH<=0)return;
-
-  let min=Math.min(...values),max=Math.max(...values);
-  if(min===max){min-=100;max+=100}
-  const rawStep=(max-min)/4;
-  const power=Math.pow(10,Math.floor(Math.log10(Math.max(rawStep,1))));
-  const scaled=rawStep/power;
-  const step=(scaled<=1?1:scaled<=2?2:scaled<=5?5:10)*power;
-  const axisMin=Math.floor(min/step)*step;
-  const axisMax=Math.ceil(max/step)*step;
-  const y=v=>pad.top+(axisMax-v)/(axisMax-axisMin||1)*plotH;
-  const x=i=>pad.left+(ordered.length?i/ordered.length:0)*plotW;
-
-  ctx.font="11px Arial";
-  ctx.textAlign="right";ctx.textBaseline="middle";
-
-  for(let v=axisMin;v<=axisMax+step*.001;v+=step){
-    const yy=y(v);
-    ctx.beginPath();ctx.moveTo(pad.left,yy);ctx.lineTo(w-pad.right,yy);
-    ctx.strokeStyle="#292d35";ctx.lineWidth=1;ctx.stroke();
-    ctx.fillStyle="#858b98";
-    ctx.fillText((v<0?"-$":"$")+Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0}),pad.left-9,yy);
-  }
-
-  if(axisMin<=0&&axisMax>=0){
-    ctx.beginPath();ctx.moveTo(pad.left,y(0));ctx.lineTo(w-pad.right,y(0));
-    ctx.strokeStyle="#626773";ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
-  }
-
-  if(!ordered.length){
-    ctx.fillStyle="#858b98";ctx.textAlign="center";ctx.textBaseline="middle";
-    ctx.fillText("Your equity curve will appear here",w/2,h/2);
-    return;
-  }
-
-  const gradient=ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);
-  gradient.addColorStop(0,fillTop);gradient.addColorStop(1,fillBottom);
-
-  ctx.beginPath();
-  values.forEach((v,i)=>i===0?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v)));
-  ctx.lineTo(x(values.length-1),pad.top+plotH);
-  ctx.lineTo(x(0),pad.top+plotH);
-  ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
-
-  ctx.beginPath();
-  values.forEach((v,i)=>i===0?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v)));
-  ctx.strokeStyle=lineColor;ctx.lineWidth=2.5;
-  ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
-
-  values.forEach((v,i)=>{
-    ctx.beginPath();ctx.arc(x(i),y(v),i===values.length-1?3.5:2,0,Math.PI*2);
-    ctx.fillStyle=lineColor;ctx.fill();
-  });
-
-  ctx.fillStyle="#858b98";ctx.textBaseline="top";
-  ctx.textAlign="left";ctx.fillText("Start",pad.left,h-21);
-  ctx.textAlign="right";ctx.fillText("Latest",w-pad.right,h-21);
+}
+function renderDashboardStats(){
+  const days=dailyTotals(),entries=Object.entries(days).sort((a,b)=>a[0].localeCompare(b[0]));
+  const best=entries.length?entries.reduce((a,b)=>b[1]>a[1]?b:a):null,worst=entries.length?entries.reduce((a,b)=>b[1]<a[1]?b:a):null;
+  setText("dashBestDay",best?money(best[1]):money(0));setText("dashBestDate",best?best[0]:"No trading days yet");
+  setText("dashWorstDay",worst?money(worst[1]):money(0));setText("dashWorstDate",worst?worst[0]:"No trading days yet");
+  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0);setText("avgTrade",money(tradesCache.length?total/tradesCache.length:0));
+  setText("maxdrawdownstat",money(maxDrawdown(sortedTrades())));
+}
+function maxDrawdown(trades){let running=0,peak=0,dd=0;for(const t of trades){running+=Number(t.pnl||0);peak=Math.max(peak,running);dd=Math.max(dd,peak-running)}return dd}
+function renderEquityCurve(){drawEquityChart($("equityChart"),sortedTrades(),false)}
+function drawEquityChart(canvas,trades,compact){
+  if(!canvas)return;const ctx=canvas.getContext("2d"),rect=canvas.getBoundingClientRect(),w=Math.max(250,rect.width||500),h=Math.max(130,rect.height||(compact?150:280)),dpr=Math.max(1,window.devicePixelRatio||1);
+  canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,w,h);
+  const values=[0];let running=0;trades.forEach(t=>{running+=Number(t.pnl||0);values.push(running)});
+  const positive=running>=0,lineColor=positive?"#22c55e":"#ef4444",fillTop=positive?"rgba(34,197,94,.20)":"rgba(239,68,68,.20)",fillBottom=positive?"rgba(34,197,94,.01)":"rgba(239,68,68,.01)";
+  if(!compact){setText("equityNet",money(running));$("equityNet").style.color=lineColor;setText("equityCount",trades.length?trades.length+" trades plotted · cumulative P&L":"No trades yet — log a trade to start your curve")}
+  const pad=compact?{top:10,right:8,bottom:18,left:48}:{top:18,right:18,bottom:30,left:65},plotW=w-pad.left-pad.right,plotH=h-pad.top-pad.bottom;
+  if(plotW<=0||plotH<=0)return;let min=Math.min(...values),max=Math.max(...values);if(min===max){min-=100;max+=100}
+  const rawStep=(max-min)/4,power=Math.pow(10,Math.floor(Math.log10(Math.max(rawStep,1)))),scaled=rawStep/power,step=(scaled<=1?1:scaled<=2?2:scaled<=5?5:10)*power,axisMin=Math.floor(min/step)*step,axisMax=Math.ceil(max/step)*step;
+  const y=v=>pad.top+(axisMax-v)/(axisMax-axisMin||1)*plotH,x=i=>pad.left+(values.length>1?i/(values.length-1):0)*plotW;
+  ctx.font="10px Arial";ctx.textAlign="right";ctx.textBaseline="middle";
+  for(let v=axisMin;v<=axisMax+step*.001;v+=step){const yy=y(v);ctx.beginPath();ctx.moveTo(pad.left,yy);ctx.lineTo(w-pad.right,yy);ctx.strokeStyle="#292d35";ctx.lineWidth=1;ctx.stroke();ctx.fillStyle="#858b98";ctx.fillText((v<0?"-$":"$")+Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0}),pad.left-7,yy)}
+  if(axisMin<=0&&axisMax>=0){ctx.beginPath();ctx.moveTo(pad.left,y(0));ctx.lineTo(w-pad.right,y(0));ctx.strokeStyle="#626773";ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([])}
+  if(!trades.length){ctx.fillStyle="#858b98";ctx.textAlign="center";ctx.fillText("Your equity curve will appear here",w/2,h/2);return}
+  const gradient=ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);gradient.addColorStop(0,fillTop);gradient.addColorStop(1,fillBottom);
+  ctx.beginPath();values.forEach((v,i)=>i===0?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v)));ctx.lineTo(x(values.length-1),pad.top+plotH);ctx.lineTo(x(0),pad.top+plotH);ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
+  ctx.beginPath();values.forEach((v,i)=>i===0?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v)));ctx.strokeStyle=lineColor;ctx.lineWidth=2.2;ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
+  values.forEach((v,i)=>{ctx.beginPath();ctx.arc(x(i),y(v),i===values.length-1?3:1.8,0,Math.PI*2);ctx.fillStyle=lineColor;ctx.fill()});
+  ctx.fillStyle="#858b98";ctx.textBaseline="top";ctx.textAlign="left";ctx.fillText("Start",pad.left,h-15);ctx.textAlign="right";ctx.fillText("Latest",w-pad.right,h-15);
 }
 
-window.addEventListener("resize",()=>{
-  if($("app").style.display!=="none")renderEquityCurve();
-});
-
-async function showSession(session) {
-  currentUser=session?session.user:null;
-  $("auth").style.display=session?"none":"block";
-  $("app").style.display=session?"block":"none";
-  $("logout").hidden=!session;
-
-  if(session){
-    await loadPropAccount();
-    await loadTrades();
-  }else{
-    propAccount=null;tradesCache=[];
+function renderMatrix(){
+  const grid=$("calendarGrid");if(!grid)return;grid.replaceChildren();
+  const year=matrixMonth.getFullYear(),month=matrixMonth.getMonth(),first=new Date(year,month,1),daysInMonth=new Date(year,month+1,0).getDate();
+  setText("monthTitle",first.toLocaleDateString("en-US",{month:"long",year:"numeric"}));
+  ["SUN","MON","TUE","WED","THU","FRI","SAT"].forEach(d=>{const el=document.createElement("div");el.className="weekday";el.textContent=d;grid.appendChild(el)});
+  for(let i=0;i<first.getDay();i++){const blank=document.createElement("div");blank.className="day-cell empty";grid.appendChild(blank)}
+  const days=dailyTotals(),monthTrades=tradesCache.filter(t=>String(t.trade_date||"").startsWith(year+"-"+String(month+1).padStart(2,"0")));
+  const monthTotal=monthTrades.reduce((s,t)=>s+Number(t.pnl||0),0),wins=monthTrades.filter(t=>Number(t.pnl)>0).length;
+  setText("monthPnl",money(monthTotal));$("monthPnl").className="value "+pnlClass(monthTotal);setText("monthTrades",monthTrades.length);setText("monthWinrate",(monthTrades.length?wins/monthTrades.length*100:0).toFixed(1)+"%");
+  const greenDays=Object.entries(days).filter(([d,v])=>d.startsWith(year+"-"+String(month+1).padStart(2,"0"))&&v>0).length;setText("monthGreenDays",greenDays);
+  for(let day=1;day<=daysInMonth;day++){
+    const date=year+"-"+String(month+1).padStart(2,"0")+"-"+String(day).padStart(2,"0"),dayTrades=tradesCache.filter(t=>t.trade_date===date),pnl=days[date]||0;
+    const cell=document.createElement("button");cell.type="button";cell.className="day-cell"+(dayTrades.length?(pnl>=0?" win":" loss"):"")+(selectedDate===date?" selected":"");cell.style.color="var(--text)";
+    const num=document.createElement("div");num.className="day-num";num.textContent=day;cell.appendChild(num);
+    if(dayTrades.length){const val=document.createElement("div");val.className="day-pnl "+pnlClass(pnl);val.textContent=(pnl<0?"−":"+")+money(Math.abs(pnl));cell.appendChild(val);
+      const count=document.createElement("div");count.className="day-count";count.textContent=dayTrades.length+" trade"+(dayTrades.length===1?"":"s");cell.appendChild(count);
+      const fp=document.createElement("div");fp.className="fingerprint";const bars=Math.min(9,Math.max(3,dayTrades.length+2));for(let j=0;j<bars;j++){const bar=document.createElement("i");const t=dayTrades[j%dayTrades.length],v=Math.abs(Number(t.pnl||0)),height=4+Math.min(13,Math.log10(v+1)*4+((j*7+day)%6));bar.style.height=height+"px";bar.style.opacity=String(.45+(j%4)*.15);fp.appendChild(bar)}cell.appendChild(fp)
+    }else{const empty=document.createElement("div");empty.className="day-count";empty.style.marginTop="22px";empty.textContent="—";cell.appendChild(empty)}
+    cell.addEventListener("click",()=>{selectedDate=date;renderMatrix();renderSelectedDay(date)});grid.appendChild(cell);
   }
+  if(!selectedDate||!selectedDate.startsWith(year+"-"+String(month+1).padStart(2,"0")))renderSelectedDay(null);
+  else renderSelectedDay(selectedDate);
+}
+function renderSelectedDay(date){
+  if(!date){setText("dayDetailTitle","Select a day");setText("dayDetailSubtitle","Choose any calendar day to inspect its trades.");setText("dayDetailPnl","—");setText("dayDetailCount","—");setText("dayDetailWinrate","—");setText("dayDetailEquity","—");$("dayTrades").innerHTML='<div class="empty-state">Select a day to see its trade details.</div>';drawEquityChart($("dayEquityChart"),[],true);return}
+  const list=sortedTrades().filter(t=>t.trade_date===date),pnl=list.reduce((s,t)=>s+Number(t.pnl||0),0),wins=list.filter(t=>Number(t.pnl)>0).length;
+  setText("dayDetailTitle",new Date(date+"T12:00:00").toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric",year:"numeric"}));setText("dayDetailSubtitle",list.length?"Actual trades logged for this date":"No trades were logged on this date");
+  setText("dayDetailPnl",money(pnl));$("dayDetailPnl").className="chart-value "+pnlClass(pnl);setText("dayDetailCount",list.length);setText("dayDetailWinrate",(list.length?wins/list.length*100:0).toFixed(1)+"%");
+  const before=sortedTrades().filter(t=>String(t.trade_date||"")<=date).reduce((s,t)=>s+Number(t.pnl||0),0);setText("dayDetailEquity",money(before));drawEquityChart($("dayEquityChart"),list,true);
+  const box=$("dayTrades");box.replaceChildren();if(!list.length){box.innerHTML='<div class="empty-state">No trades logged for this day.</div>';return}
+  list.forEach(t=>{const card=document.createElement("div");card.className="trade-mini";const head=document.createElement("div");head.className="trade-mini-head";const left=document.createElement("span");left.textContent=(t.symbol||"—")+" · "+(t.direction||"—");const right=document.createElement("span");right.className=pnlClass(t.pnl);right.textContent=money(t.pnl);head.append(left,right);card.appendChild(head);
+    const meta=document.createElement("div");meta.className="muted";meta.textContent="Entry "+(t.entry_price??"—")+" · SL "+(t.stop_loss??"—")+" · TP "+(t.take_profit??"—");card.appendChild(meta);
+    if(t.notes){const note=document.createElement("div");note.className="note";note.textContent=t.notes;card.appendChild(note)}
+    if(t.screenshot_url){const link=document.createElement("a");link.href=t.screenshot_url;link.target="_blank";link.rel="noopener noreferrer";link.className="history-shot";link.textContent="View chart screenshot";link.style.display="inline-block";link.style.marginTop="8px";card.appendChild(link)}
+    box.appendChild(card)
+  });
 }
 
-$("authform").addEventListener("submit",async e=>{
-  e.preventDefault();setMessage("message","Signing in...");
-  const {error}=await db.auth.signInWithPassword({
-    email:$("email").value.trim(),password:$("password").value
-  });
-  if(error)setMessage("message",error.message);
-  else setMessage("message","");
-});
+function renderAnalytics(){
+  const trades=tradesCache, wins=trades.filter(t=>Number(t.pnl)>0), losses=trades.filter(t=>Number(t.pnl)<0),grossWin=wins.reduce((s,t)=>s+Number(t.pnl),0),grossLoss=Math.abs(losses.reduce((s,t)=>s+Number(t.pnl),0)),total=trades.reduce((s,t)=>s+Number(t.pnl||0),0);
+  setText("profitFactor",grossLoss?(grossWin/grossLoss).toFixed(2):(grossWin?"∞":"—"));setText("averageWin",money(wins.length?grossWin/wins.length:0));setText("averageLoss",money(losses.length?losses.reduce((s,t)=>s+Number(t.pnl),0)/losses.length:0));setText("expectancy",money(trades.length?total/trades.length:0));
+  renderMetricGroups("symbolAnalytics",Object.entries(groupedBySymbol()).map(([name,arr])=>({name,count:arr.length,pnl:arr.reduce((s,t)=>s+Number(t.pnl||0),0)})).sort((a,b)=>b.pnl-a.pnl));
+  const weekdays=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],wg={};trades.forEach(t=>{if(!t.trade_date)return;const d=new Date(t.trade_date+"T12:00:00").getDay();(wg[weekdays[d]] ||= []).push(t)});
+  renderMetricGroups("weekdayAnalytics",Object.entries(wg).map(([name,arr])=>({name,count:arr.length,pnl:arr.reduce((s,t)=>s+Number(t.pnl||0),0)})).sort((a,b)=>b.pnl-a.pnl));
+  const words=[["revenge",/revenge|revenge trade/i],["FOMO",/fomo|chased|chasing/i],["early exit",/early exit|exited early|too early/i],["overtrading",/overtrad|too many trades/i],["missed setup",/missed setup|missed entry/i],["good execution",/good execution|followed plan|disciplined/i]];
+  const counts=words.map(([name,re])=>({name,count:trades.filter(t=>re.test(String(t.notes||""))).length,pnl:trades.filter(t=>re.test(String(t.notes||""))).reduce((s,t)=>s+Number(t.pnl||0),0)})).filter(x=>x.count);
+  renderMetricGroups("notesAnalytics",counts);
+}
+function renderMetricGroups(id,items){
+  const box=$(id);box.replaceChildren();if(!items.length){box.innerHTML='<div class="empty-state">Not enough logged data yet.</div>';return}
+  const max=Math.max(1,...items.map(x=>Math.abs(x.pnl)));
+  items.forEach(item=>{const row=document.createElement("div");row.className="metric-row";const name=document.createElement("div");name.textContent=item.name;const bar=document.createElement("div");bar.className="metric-bar";const span=document.createElement("span");span.style.width=Math.max(2,Math.abs(item.pnl)/max*100)+"%";span.style.background=item.pnl<0?"var(--red)":"var(--green)";bar.appendChild(span);const val=document.createElement("div");val.innerHTML='<span class="'+pnlClass(item.pnl)+'">'+money(item.pnl)+'</span><div class="muted" style="text-align:right">'+item.count+' trade'+(item.count===1?"":"s")+'</div>';row.append(name,bar,val);box.appendChild(row)})
+}
+function runSimulation(e){
+  if(e)e.preventDefault();const starting=Number($("simStarting").value),maxLoss=Number($("simMaxLoss").value),dailyLimit=Number($("simDailyLoss").value),target=Number($("simTarget").value),stop=$("simStop").value==="yes";
+  if([starting,maxLoss,dailyLimit,target].some(v=>!Number.isFinite(v)||v<0)){setText("simResults","Please enter valid non-negative values.");return}
+  const trades=sortedTrades();let pnl=0,breaches=[],processed=0,hitTarget=false;const dayPnl={};
+  for(const t of trades){if(stop&&breaches.length)break;const v=Number(t.pnl||0),date=t.trade_date||"Unknown";pnl+=v;processed++;dayPnl[date]=(dayPnl[date]||0)+v;
+    if(maxLoss>0&&pnl< -maxLoss)breaches.push({date,reason:"Maximum total loss breached",value:pnl});
+    if(dailyLimit>0&&dayPnl[date]< -dailyLimit)breaches.push({date,reason:"Daily loss limit breached",value:dayPnl[date]});
+    if(target>0&&pnl>=target)hitTarget=true;
+  }
+  const out=$("simResults");out.replaceChildren();const cards=document.createElement("div");cards.className="simu-result";
+  const metrics=[["SIMULATED BALANCE",money(starting+pnl)],["SIMULATED NET P&L",money(pnl)],["TRADES PROCESSED",String(processed)],["PROFIT TARGET",hitTarget?"Reached":"Not reached"]];
+  metrics.forEach(([label,value])=>{const card=document.createElement("div");card.className="card";const l=document.createElement("div");l.className="label";l.textContent=label;const v=document.createElement("div");v.className="smallvalue";v.textContent=value;if(label.includes("P&L"))v.className+=" "+pnlClass(pnl);card.append(l,v);cards.appendChild(card)});out.appendChild(cards);
+  const info=document.createElement("p");info.className="muted";info.textContent="Simulation uses the P&L and dates saved in your journal, in chronological order. It does not model intraday equity swings within an individual trade.";out.appendChild(info);
+  if(breaches.length){const alert=document.createElement("div");alert.className="rule-alert";alert.textContent="Rule breach(es): "+breaches.map(b=>b.date+" — "+b.reason+" ("+money(b.value)+")").join(" · ");out.appendChild(alert)}else{const ok=document.createElement("div");ok.className="tag";ok.style.marginTop="12px";ok.textContent=trades.length?"No configured loss limits breached in the simulated sequence.":"No saved trades to simulate.";out.appendChild(ok)}
+}
+function renderReplay(){
+  const ordered=sortedTrades();if(!ordered.length){setText("replayPosition","No trades loaded");$("replayCard").innerHTML='<div class="empty-state">No saved trades to replay yet.</div>';return}
+  replayIndex=Math.max(0,Math.min(replayIndex,ordered.length-1));const t=ordered[replayIndex];setText("replayPosition","Trade "+(replayIndex+1)+" of "+ordered.length);
+  const box=$("replayCard");box.replaceChildren();const card=document.createElement("div");card.className="panel";card.style.margin="0";
+  const head=document.createElement("div");head.className="sectionhead";const title=document.createElement("h2");title.textContent=(t.symbol||"—")+" · "+(t.direction||"—");const pnl=document.createElement("div");pnl.className="chart-value "+pnlClass(t.pnl);pnl.textContent=money(t.pnl);head.append(title,pnl);card.appendChild(head);
+  const meta=document.createElement("p");meta.className="muted";meta.textContent=(t.trade_date||"No date")+" · Entry "+(t.entry_price??"—")+" · Stop "+(t.stop_loss??"—")+" · Target "+(t.take_profit??"—");card.appendChild(meta);
+  const notes=document.createElement("p");notes.className="note";notes.textContent=t.notes||"No notes saved for this trade.";card.appendChild(notes);
+  if(t.screenshot_url){const img=document.createElement("img");img.src=t.screenshot_url;img.alt="Saved chart screenshot";img.style.cssText="max-width:100%;max-height:420px;border-radius:9px;border:1px solid var(--border);margin-top:12px";card.appendChild(img)}
+  box.appendChild(card);
+}
+$("prevMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()-1,1);renderMatrix()});
+$("nextMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()+1,1);renderMatrix()});
+$("currentMonth").addEventListener("click",()=>{matrixMonth=new Date();selectedDate=localDateString(new Date());renderMatrix()});
+$("tradeSearch").addEventListener("input",renderHistory);
+$("simForm").addEventListener("submit",runSimulation);
+$("replayPrev").addEventListener("click",()=>{replayIndex=Math.max(0,replayIndex-1);renderReplay()});
+$("replayNext").addEventListener("click",()=>{replayIndex=Math.min(Math.max(0,sortedTrades().length-1),replayIndex+1);renderReplay()});
+$("toggleSettings").addEventListener("click",()=>{$("settingsPanel").hidden=!$("settingsPanel").hidden});
+window.addEventListener("resize",()=>{if($("app").style.display!=="none"){renderEquityCurve();if($("page-matrix").classList.contains("active"))drawEquityChart($("dayEquityChart"),sortedTrades().filter(t=>t.trade_date===selectedDate),true)}});
 
-$("signup").addEventListener("click",async()=>{
-  setMessage("message","Creating account...");
-  const {data,error}=await db.auth.signUp({
-    email:$("email").value.trim(),password:$("password").value
-  });
-  if(error)setMessage("message",error.message);
-  else if(!data.session)setMessage("message","Account created. Check your email if confirmation is required, then sign in.");
-  else setMessage("message","");
-});
-
-$("logout").addEventListener("click",async()=>{
-  const {error}=await db.auth.signOut();
-  if(error)setMessage("message",error.message);
-});
-
-$("toggleSettings").addEventListener("click",()=>{
-  $("settingsPanel").hidden=!$("settingsPanel").hidden;
-});
-
+async function showSession(session){
+  currentUser=session?session.user:null;$("auth").style.display=session?"none":"block";$("app").style.display=session?"block":"none";$("logout").hidden=!session;setText("userLabel",session?(session.user.email||"Signed in"):"");
+  if(session){await loadPropAccount();await loadTrades();showPage("dashboard")}else{propAccount=null;tradesCache=[]}
+}
+$("authform").addEventListener("submit",async e=>{e.preventDefault();setMessage("message","Signing in...");const {error}=await db.auth.signInWithPassword({email:$("email").value.trim(),password:$("password").value});if(error)setMessage("message",error.message);else setMessage("message","")});
+$("signup").addEventListener("click",async()=>{setMessage("message","Creating account...");const {data,error}=await db.auth.signUp({email:$("email").value.trim(),password:$("password").value});if(error)setMessage("message",error.message);else if(!data.session)setMessage("message","Account created. Check your email if confirmation is required, then sign in.");else setMessage("message","")});
+$("logout").addEventListener("click",async()=>{const {error}=await db.auth.signOut();if(error)setMessage("message",error.message)});
 $("propform").addEventListener("submit",async e=>{
-  e.preventDefault();
-  if(!propAccount){setMessage("propmessage","Settings are still loading.");return}
-  $("saveSettings").disabled=true;
-  setMessage("propmessage","Saving settings...");
-
-  const updated={
-    firm_name:$("firm").value.trim(),
-    account_name:$("accountname").value.trim(),
-    starting_balance:Number($("starting").value),
-    max_drawdown:Number($("maxdrawdown").value),
-    daily_loss_limit:Number($("daily").value),
-    profit_target:Number($("target").value),
-    consistency_percent:Number($("consistencylimit").value)
-  };
-
-  const {data,error}=await db.from("prop_accounts")
-    .update(updated).eq("id",propAccount.id).select().single();
-
-  $("saveSettings").disabled=false;
+  e.preventDefault();if(!propAccount){setMessage("propmessage","Settings are still loading.");return}
+  $("saveSettings").disabled=true;setMessage("propmessage","Saving settings...");
+  const updated={firm_name:$("firm").value.trim(),account_name:$("accountname").value.trim(),starting_balance:Number($("starting").value),max_drawdown:Number($("maxdrawdown").value),daily_loss_limit:Number($("daily").value),profit_target:Number($("target").value),consistency_percent:Number($("consistencylimit").value)};
+  const {data,error}=await db.from("prop_accounts").update(updated).eq("id",propAccount.id).select().single();$("saveSettings").disabled=false;
   if(error){setMessage("propmessage","Could not save settings: "+error.message);return}
-  propAccount=data;renderPropStats();
-  setMessage("propmessage","Settings saved.");
+  propAccount=data;renderPropStats();$("simStarting").value=propAccount.starting_balance;$("simMaxLoss").value=propAccount.max_drawdown;$("simDailyLoss").value=propAccount.daily_loss_limit;$("simTarget").value=propAccount.profit_target;setMessage("propmessage","Settings saved.");
 });
-
 $("screenshot").addEventListener("change",()=>{
-  const file=$("screenshot").files?.[0];
-  const preview=$("screenshotPreview");
-  if(!file){preview.hidden=true;preview.removeAttribute("src");return}
-  if(!file.type.startsWith("image/")){
-    setMessage("trademessage","Choose an image file.");
-    $("screenshot").value="";preview.hidden=true;return;
-  }
-  if(file.size>5*1024*1024){
-    setMessage("trademessage","Image must be 5 MB or smaller.");
-    $("screenshot").value="";preview.hidden=true;return;
-  }
+  const file=$("screenshot").files?.[0],preview=$("screenshotPreview");if(!file){preview.hidden=true;preview.removeAttribute("src");return}
+  if(!file.type.startsWith("image/")){setMessage("trademessage","Choose an image file.");$("screenshot").value="";preview.hidden=true;return}
+  if(file.size>5*1024*1024){setMessage("trademessage","Image must be 5 MB or smaller.");$("screenshot").value="";preview.hidden=true;return}
   preview.src=URL.createObjectURL(file);preview.hidden=false;
 });
-
-async function uploadTradeScreenshot(file) {
-  if(!file)return null;
-  if(!currentUser)throw new Error("Please sign in again.");
-  if(!file.type.startsWith("image/"))throw new Error("Please choose an image.");
-  if(file.size>5*1024*1024)throw new Error("Screenshot must be 5 MB or smaller.");
-
-  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
-  const path=currentUser.id+"/"+Date.now()+"-"+safeName;
-  const {error}=await db.storage.from("trade-screenshots")
-    .upload(path,file,{contentType:file.type,upsert:false});
-  if(error)throw error;
+async function uploadTradeScreenshot(file){
+  if(!file)return null;if(!currentUser)throw new Error("Please sign in again.");if(!file.type.startsWith("image/"))throw new Error("Please choose an image.");if(file.size>5*1024*1024)throw new Error("Screenshot must be 5 MB or smaller.");
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_"),path=currentUser.id+"/"+Date.now()+"-"+safeName;
+  const {error}=await db.storage.from("trade-screenshots").upload(path,file,{contentType:file.type,upsert:false});if(error)throw error;
   return db.storage.from("trade-screenshots").getPublicUrl(path).data.publicUrl;
 }
-
 $("tradeform").addEventListener("submit",async e=>{
-  e.preventDefault();
-  $("save").disabled=true;
-  setMessage("trademessage","Saving trade...");
-
-  const optionalNumber=id=>$ (id).value===""?null:Number($(id).value);
-  const file=$("screenshot").files?.[0];
-
+  e.preventDefault();$("save").disabled=true;setMessage("trademessage","Saving trade...");
+  const optionalNumber=id=>$(id).value===""?null:Number($(id).value),file=$("screenshot").files?.[0];
   try{
-    let screenshotUrl=null;
-    if(file){
-      setMessage("trademessage","Uploading screenshot...");
-      screenshotUrl=await uploadTradeScreenshot(file);
-    }
-
-    const trade={
-      trade_date:$("date").value,
-      symbol:$("symbol").value.trim(),
-      direction:$("direction").value,
-      entry_price:Number($("entry").value),
-      stop_loss:optionalNumber("sl"),
-      take_profit:optionalNumber("tp"),
-      pnl:Number($("pnl").value),
-      notes:$("notes").value.trim()||null,
-      screenshot_url:screenshotUrl
-    };
-
-    const {error}=await db.from("trades").insert(trade);
-    if(error)throw error;
-
-    $("tradeform").reset();
-    $("date").value=new Date().toLocaleDateString("en-CA");
-    $("symbol").value="MNQ";$("direction").value="Long";
-    $("screenshotPreview").hidden=true;
-    $("screenshotPreview").removeAttribute("src");
-    setMessage("trademessage","Trade saved successfully!");
-    await loadTrades();
-  }catch(error){
-    setMessage("trademessage","Could not save trade: "+(error.message||String(error)));
-  }finally{
-    $("save").disabled=false;
-  }
+    let screenshotUrl=null;if(file){setMessage("trademessage","Uploading screenshot...");screenshotUrl=await uploadTradeScreenshot(file)}
+    const trade={trade_date:$("date").value,symbol:$("symbol").value.trim(),direction:$("direction").value,entry_price:Number($("entry").value),stop_loss:optionalNumber("sl"),take_profit:optionalNumber("tp"),pnl:Number($("pnl").value),notes:$("notes").value.trim()||null,screenshot_url:screenshotUrl};
+    const {error}=await db.from("trades").insert(trade);if(error)throw error;
+    $("tradeform").reset();$("date").value=localDateString(new Date());$("symbol").value="MNQ";$("direction").value="Long";$("screenshotPreview").hidden=true;$("screenshotPreview").removeAttribute("src");
+    setMessage("trademessage","Trade saved successfully!");await loadTrades();
+  }catch(error){setMessage("trademessage","Could not save trade: "+(error.message||String(error)))}
+  finally{$("save").disabled=false}
 });
-
-db.auth.onAuthStateChange((_event,session)=>{
-  setTimeout(()=>showSession(session),0);
-});
-
-(async()=>{
-  const {data,error}=await db.auth.getSession();
-  if(error)setMessage("message",error.message);
-  await showSession(data.session);
-})();
+db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>showSession(session),0)});
+(async()=>{const {data,error}=await db.auth.getSession();if(error)setMessage("message",error.message);await showSession(data.session)})();
 </script>
 </body>
 </html>
