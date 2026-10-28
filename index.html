@@ -4,52 +4,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MNQ Journal | Trading Command Center</title>
+<title>MNQ Journal</title>
 <style>
-:root{--bg:#080808;--panel:#111;--border:#292929;--red:#ef3333;--muted:#929292;--green:#4ade80}
+:root{--bg:#090a0c;--panel:#111318;--border:#262a32;--text:#f4f4f5;--muted:#858b98;--green:#22c55e;--red:#ef4444}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:#f5f5f5;font-family:Arial,sans-serif}
-header{padding:20px 6%;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,sans-serif}
+header{padding:20px 5%;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
 .logo{font-size:21px;font-weight:800;letter-spacing:1px}.logo span{color:var(--red)}
-main{max-width:1150px;margin:auto;padding:30px 20px}
-h1{font-size:30px;margin:0 0 8px}
-h2{font-size:18px;margin:0 0 16px}
-h3{font-size:14px;margin:0 0 10px}
+main{max-width:1150px;margin:auto;padding:28px 20px}
+h1{font-size:30px;margin:0 0 8px}h2{font-size:18px;margin:0 0 12px}
 .muted{color:var(--muted);font-size:13px;line-height:1.6}
-.panel,.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:18px}
-.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.panel,.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:16px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
 .propstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
 .label{font-size:11px;color:var(--muted);letter-spacing:1px}
 .value{font-size:25px;font-weight:800;margin-top:10px;overflow-wrap:anywhere}
 .smallvalue{font-size:20px;font-weight:800;margin-top:9px}
 form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
 label{display:block;color:#aaa;font-size:12px}
-input,select,textarea{width:100%;margin-top:7px;padding:12px;background:#090909;border:1px solid #353535;border-radius:7px;color:white;font:inherit}
+input,select,textarea{width:100%;margin-top:7px;padding:12px;background:#090a0c;border:1px solid #353943;border-radius:7px;color:white;font:inherit}
 button{background:var(--red);color:white;border:0;padding:12px 16px;border-radius:7px;cursor:pointer;font-weight:700}
-button.secondary{background:#222;border:1px solid #444}
+button.secondary{background:#22252b;border:1px solid #414550}
 button:disabled{opacity:.5;cursor:wait}
 .full{grid-column:1/-1}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:500px}
 th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--border);font-size:13px}
 th{color:var(--muted);font-weight:500}
-.positive{color:var(--green)}.negative{color:#f87171}
-.progress{height:8px;background:#292929;border-radius:10px;overflow:hidden;margin-top:12px}
-.progress span{display:block;height:100%;width:0;background:var(--red);transition:width .25s}
+.positive{color:var(--green)}.negative{color:var(--red)}
+.progress{height:7px;background:#292d35;border-radius:10px;overflow:hidden;margin-top:12px}
+.progress span{display:block;height:100%;width:0;background:var(--green);transition:width .3s}
 #message,#trademessage,#propmessage{white-space:pre-wrap;margin-top:12px}
 #message{color:#fca5a5}
 #app{display:none}
 .screenshot-preview{display:block;max-width:180px;max-height:120px;object-fit:cover;border:1px solid var(--border);border-radius:7px;margin-top:8px}
-.history-shot{display:inline-block;color:#fca5a5;text-decoration:none;font-weight:700}
-.history-shot:hover{text-decoration:underline}
+.history-shot{color:#fca5a5;text-decoration:none;font-weight:700}
 .sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
-.chart-wrap{position:relative;width:100%;height:280px;margin-top:10px}
+.chart-wrap{position:relative;width:100%;height:290px;margin-top:15px}
 #equityChart{display:block;width:100%;height:100%}
-.chart-legend{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px}
-.chart-value{font-size:13px;font-weight:700}
-@media(max-width:520px){.chart-wrap{height:230px}}
+.chart-legend{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:12px}
+.chart-value{font-size:20px;font-weight:800}
 @media(max-width:760px){.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){.stats{grid-template-columns:1fr}.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}.value{font-size:23px}}
+@media(max-width:520px){.stats{grid-template-columns:1fr}.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}.value{font-size:23px}.chart-wrap{height:235px}}
 </style>
 </head>
 <body>
@@ -79,53 +75,22 @@ th{color:var(--muted);font-weight:500}
   </section>
 
   <section id="app">
-    <section class="panel">
+    <!-- EQUITY CURVE AT THE TOP -->
+    <section class="panel" id="equityPanel">
       <div class="sectionhead">
         <div>
-          <h2>Prop firm command center</h2>
-          <p class="muted">Your account progress at a glance.</p>
+          <h2>Equity curve</h2>
+          <p class="muted">Your cumulative trading performance.</p>
         </div>
-        <button class="secondary" id="toggleSettings" type="button">Account settings</button>
+        <div id="equityNet" class="chart-value">$0.00</div>
       </div>
-
-      <div class="propstats">
-        <div class="card"><div class="label">EST. BALANCE</div><div class="smallvalue" id="balance">$50,000</div></div>
-        <div class="card"><div class="label">NET P&L</div><div class="smallvalue" id="netpnl">$0</div></div>
-        <div class="card"><div class="label">LOSS BUFFER LEFT</div><div class="smallvalue" id="lossleft">—</div></div>
-        <div class="card"><div class="label">TARGET PROGRESS</div><div class="smallvalue" id="targetpct">0%</div></div>
+      <div class="chart-wrap">
+        <canvas id="equityChart" role="img" aria-label="Cumulative profit and loss equity curve"></canvas>
       </div>
-
-      <div style="margin-top:20px">
-        <div class="sectionhead">
-          <span class="muted">Profit target progress</span>
-          <span id="targettext" class="muted">$0 / $3,000</span>
-        </div>
-        <div class="progress"><span id="targetbar"></span></div>
+      <div class="chart-legend">
+        <span id="equityCount" class="muted">No trades plotted yet</span>
+        <span class="muted">Green = positive · Red = negative</span>
       </div>
-
-      <div class="propstats" style="margin-top:16px">
-        <div class="card"><div class="label">PROFIT TARGET</div><div class="smallvalue" id="targetamount">$3,000</div></div>
-        <div class="card"><div class="label">MAX LOSS LIMIT</div><div class="smallvalue" id="maxloss">$3,000</div></div>
-        <div class="card"><div class="label">BEST WINNING DAY</div><div class="smallvalue" id="bestday">$0</div></div>
-        <div class="card"><div class="label">CONSISTENCY EST.</div><div class="smallvalue" id="consistency">0%</div></div>
-      </div>
-      <p class="muted" id="propnote">Estimates based on trades logged in this journal, not your live prop firm dashboard.</p>
-      <div id="propmessage" class="muted" role="status"></div>
-    </section>
-
-    <section class="panel" id="settingsPanel" hidden>
-      <h2>Prop account settings</h2>
-      <p class="muted">Set these values to match your actual firm's rules. Defaults are examples, not verified account terms.</p>
-      <form id="propform">
-        <label>Prop firm<input id="firm" value="Lucid" required></label>
-        <label>Account name<input id="accountname" value="50K Account" required></label>
-        <label>Starting balance ($)<input type="number" id="starting" min="0" step="0.01" required></label>
-        <label>Maximum total loss ($)<input type="number" id="maxdrawdown" min="0" step="0.01" required></label>
-        <label>Daily loss limit ($, 0 = off)<input type="number" id="daily" min="0" step="0.01" required></label>
-        <label>Profit target ($)<input type="number" id="target" min="0" step="0.01" required></label>
-        <label>Consistency limit (%)<input type="number" id="consistencylimit" min="0" max="100" step="0.1" required></label>
-        <div class="full"><button id="saveSettings" type="submit">Save account settings</button></div>
-      </form>
     </section>
 
     <div class="stats">
@@ -133,6 +98,52 @@ th{color:var(--muted);font-weight:500}
       <div class="card"><div class="label">WIN RATE</div><div class="value" id="winrate">0%</div></div>
       <div class="card"><div class="label">TOTAL TRADES</div><div class="value" id="count">0</div></div>
     </div>
+
+    <section class="panel">
+      <div class="sectionhead">
+        <div>
+          <h2>Prop firm command center</h2>
+          <p class="muted">Track your account progress.</p>
+        </div>
+        <button class="secondary" id="toggleSettings" type="button">Account settings</button>
+      </div>
+      <div class="propstats">
+        <div class="card"><div class="label">EST. BALANCE</div><div class="smallvalue" id="balance">$50,000</div></div>
+        <div class="card"><div class="label">NET P&L</div><div class="smallvalue" id="netpnl">$0</div></div>
+        <div class="card"><div class="label">LOSS BUFFER LEFT</div><div class="smallvalue" id="lossleft">—</div></div>
+        <div class="card"><div class="label">TARGET PROGRESS</div><div class="smallvalue" id="targetpct">0%</div></div>
+      </div>
+      <div style="margin-top:20px">
+        <div class="sectionhead">
+          <span class="muted">Profit target progress</span>
+          <span id="targettext" class="muted">$0 / $3,000</span>
+        </div>
+        <div class="progress"><span id="targetbar"></span></div>
+      </div>
+      <div class="propstats" style="margin-top:12px">
+        <div class="card"><div class="label">PROFIT TARGET</div><div class="smallvalue" id="targetamount">$3,000</div></div>
+        <div class="card"><div class="label">MAX LOSS LIMIT</div><div class="smallvalue" id="maxloss">$3,000</div></div>
+        <div class="card"><div class="label">BEST WINNING DAY</div><div class="smallvalue" id="bestday">$0</div></div>
+        <div class="card"><div class="label">CONSISTENCY EST.</div><div class="smallvalue" id="consistency">0%</div></div>
+      </div>
+      <p class="muted">Estimates based on trades logged here. Verify your actual rules with your prop firm.</p>
+      <div id="propmessage" class="muted" role="status"></div>
+    </section>
+
+    <section class="panel" id="settingsPanel" hidden>
+      <h2>Prop account settings</h2>
+      <p class="muted">Set these values to match your actual account rules.</p>
+      <form id="propform">
+        <label>Prop firm<input id="firm" value="Lucid" required></label>
+        <label>Account name<input id="accountname" value="50K Account" required></label>
+        <label>Starting balance ($)<input type="number" id="starting" min="0" step="0.01" value="50000" required></label>
+        <label>Maximum total loss ($)<input type="number" id="maxdrawdown" min="0" step="0.01" value="3000" required></label>
+        <label>Daily loss limit ($, 0 = off)<input type="number" id="daily" min="0" step="0.01" value="0" required></label>
+        <label>Profit target ($)<input type="number" id="target" min="0" step="0.01" value="3000" required></label>
+        <label>Consistency limit (%)<input type="number" id="consistencylimit" min="0" max="100" step="0.1" value="50" required></label>
+        <div class="full"><button id="saveSettings" type="submit">Save settings</button></div>
+      </form>
+    </section>
 
     <section class="panel">
       <h2>＋ Log a trade</h2>
@@ -145,31 +156,14 @@ th{color:var(--muted);font-weight:500}
         <label>Take profit<input type="number" step="any" id="tp"></label>
         <label class="full">P&L in dollars<input type="number" step="0.01" id="pnl" required></label>
         <label class="full">Notes<textarea id="notes" rows="3" placeholder="Setup, execution, mistakes..."></textarea></label>
-        <label class="full">Chart screenshot (optional, image only)
+        <label class="full">Chart screenshot (optional)
           <input type="file" id="screenshot" accept="image/*">
-          <span class="muted">Keep images under 5 MB for smoother uploads.</span>
+          <span class="muted">Images must be 5 MB or smaller.</span>
           <img id="screenshotPreview" class="screenshot-preview" alt="Screenshot preview" hidden>
         </label>
         <div class="full"><button type="submit" id="save">Save trade</button></div>
       </form>
       <div id="trademessage" class="muted" role="status"></div>
-    </section>
-
-    <section class="panel" id="equityPanel">
-      <div class="sectionhead">
-        <div>
-          <h2>Equity curve</h2>
-          <p class="muted">Your cumulative P&amp;L, calculated from the trades you log.</p>
-        </div>
-        <div class="chart-value" id="equityNet">$0.00</div>
-      </div>
-      <div class="chart-wrap">
-        <canvas id="equityChart" aria-label="Cumulative trading profit and loss line chart" role="img"></canvas>
-      </div>
-      <div class="chart-legend">
-        <span class="muted" id="equityCount">No trades plotted yet</span>
-        <span class="muted">Red line = cumulative P&amp;L</span>
-      </div>
     </section>
 
     <section class="panel">
@@ -197,51 +191,37 @@ let tradesCache = [];
 
 $("date").value = new Date().toLocaleDateString("en-CA");
 
-function message(text) { $("message").textContent = text; }
-function tradeMessage(text) { $("trademessage").textContent = text; }
-function propMessage(text) { $("propmessage").textContent = text; }
 function money(n) {
-  const v = Number(n || 0);
-  return (v < 0 ? "-$" : "$") + Math.abs(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+  n = Number(n || 0);
+  return (n < 0 ? "-$" : "$") +
+    Math.abs(n).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
 }
+function setText(id,text){$(id).textContent=text}
+function setMessage(id,text){setText(id,text)}
 
 async function loadPropAccount() {
-  propMessage("Loading account settings...");
+  setMessage("propmessage","Loading account settings...");
   const {data,error} = await db.from("prop_accounts")
-    .select("*")
-    .order("created_at",{ascending:true})
-    .limit(1);
+    .select("*").order("created_at",{ascending:true}).limit(1);
 
-  if(error) {
-    propMessage("Could not load prop settings: " + error.message);
-    return;
-  }
+  if(error){setMessage("propmessage","Could not load prop settings: "+error.message);return}
 
   if(data && data.length) {
     propAccount = data[0];
   } else {
     const {data:newAccount,error:createError} = await db.from("prop_accounts")
       .insert({
-        firm_name:"Lucid",
-        account_name:"50K Account",
-        starting_balance:50000,
-        max_drawdown:3000,
-        daily_loss_limit:0,
-        profit_target:3000,
-        consistency_percent:50
-      })
-      .select()
-      .single();
+        firm_name:"Lucid",account_name:"50K Account",
+        starting_balance:50000,max_drawdown:3000,
+        daily_loss_limit:0,profit_target:3000,consistency_percent:50
+      }).select().single();
 
-    if(createError) {
-      propMessage("Could not create prop account: " + createError.message);
-      return;
-    }
+    if(createError){setMessage("propmessage","Could not create prop account: "+createError.message);return}
     propAccount = newAccount;
   }
 
-  $("firm").value = propAccount.firm_name;
-  $("accountname").value = propAccount.account_name;
+  $("firm").value = propAccount.firm_name || "Lucid";
+  $("accountname").value = propAccount.account_name || "50K Account";
   $("starting").value = propAccount.starting_balance;
   $("maxdrawdown").value = propAccount.max_drawdown;
   $("daily").value = propAccount.daily_loss_limit;
@@ -249,255 +229,241 @@ async function loadPropAccount() {
   $("consistencylimit").value = propAccount.consistency_percent;
 
   renderPropStats();
-  propMessage("Prop account settings synced.");
+  setMessage("propmessage","Account settings synced.");
 }
 
 function renderPropStats() {
-  if(!propAccount) return;
+  if(!propAccount)return;
+  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0);
+  const starting=Number(propAccount.starting_balance);
+  const target=Number(propAccount.profit_target);
+  const maxLoss=Number(propAccount.max_drawdown);
+  const balance=starting+total;
+  const lossLeft=balance-(starting-maxLoss);
+  const progress=target>0?Math.max(0,Math.min(100,total/target*100)):0;
 
-  const total = tradesCache.reduce((sum,t)=>sum+Number(t.pnl||0),0);
-  const starting = Number(propAccount.starting_balance);
-  const target = Number(propAccount.profit_target);
-  const maxLoss = Number(propAccount.max_drawdown);
-  const balance = starting + total;
-  const floor = starting - maxLoss;
-  const lossLeft = balance - floor;
-  const progress = target > 0 ? Math.max(0,Math.min(100,total/target*100)) : 0;
+  const days={};
+  tradesCache.forEach(t=>days[t.trade_date]=(days[t.trade_date]||0)+Number(t.pnl||0));
+  const dailyPnls=Object.values(days);
+  const bestDay=dailyPnls.length?Math.max(0,...dailyPnls):0;
+  const positiveTotal=dailyPnls.reduce((s,p)=>s+Math.max(0,p),0);
+  const consistency=positiveTotal>0?bestDay/positiveTotal*100:0;
 
-  const days = {};
-  tradesCache.forEach(t=>{
-    const day = t.trade_date;
-    days[day] = (days[day] || 0) + Number(t.pnl || 0);
-  });
-  const dailyPnls = Object.values(days);
-  const bestDay = dailyPnls.length ? Math.max(0,...dailyPnls) : 0;
-  const positiveDaysTotal = dailyPnls.reduce((sum,p)=>sum+Math.max(0,p),0);
-  const consistency = positiveDaysTotal > 0 ? bestDay/positiveDaysTotal*100 : 0;
-
-  $("balance").textContent = money(balance);
-  $("netpnl").textContent = money(total);
-  $("netpnl").className = "smallvalue " + (total < 0 ? "negative" : total > 0 ? "positive" : "");
-  $("lossleft").textContent = money(lossLeft);
-  $("lossleft").className = "smallvalue " + (lossLeft < 0 ? "negative" : "");
-  $("targetpct").textContent = progress.toFixed(1) + "%";
-  $("targettext").textContent = money(Math.max(0,total)) + " / " + money(target);
-  $("targetbar").style.width = progress + "%";
-  $("targetamount").textContent = money(target);
-  $("maxloss").textContent = money(maxLoss);
-  $("bestday").textContent = money(bestDay);
-  $("consistency").textContent = consistency.toFixed(1) + "%";
-
-  $("propnote").textContent =
-    "Estimated balance uses logged P&L. Loss buffer assumes a fixed floor of " +
-    money(floor) + ". Consistency is best positive day divided by the sum of positive daily results. Verify all figures against your firm's official rules.";
+  setText("balance",money(balance));
+  setText("netpnl",money(total));
+  $("netpnl").className="smallvalue "+(total<0?"negative":total>0?"positive":"");
+  setText("lossleft",money(lossLeft));
+  $("lossleft").className="smallvalue "+(lossLeft<0?"negative":"");
+  setText("targetpct",progress.toFixed(1)+"%");
+  setText("targettext",money(Math.max(0,total))+" / "+money(target));
+  $("targetbar").style.width=progress+"%";
+  $("targetbar").style.background=total<0?"var(--red)":"var(--green)";
+  setText("targetamount",money(target));
+  setText("maxloss",money(maxLoss));
+  setText("bestday",money(bestDay));
+  setText("consistency",consistency.toFixed(1)+"%");
 }
 
 async function loadTrades() {
-  tradeMessage("Loading your trades...");
-  const {data,error} = await db.from("trades")
+  setMessage("trademessage","Loading your trades...");
+  const {data,error}=await db.from("trades")
     .select("id,created_at,trade_date,symbol,direction,entry_price,pnl,stop_loss,take_profit,notes,screenshot_url")
     .order("trade_date",{ascending:false});
 
-  if(error) {
-    tradeMessage("Could not load trades: " + error.message);
-    return;
-  }
+  if(error){setMessage("trademessage","Could not load trades: "+error.message);return}
+  tradesCache=data||[];
 
-  tradesCache = data || [];
-  const total = tradesCache.reduce((sum,t)=>sum+Number(t.pnl||0),0);
-  const wins = tradesCache.filter(t=>Number(t.pnl)>0).length;
+  const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0);
+  const wins=tradesCache.filter(t=>Number(t.pnl)>0).length;
+  setText("total",money(total));
+  $("total").className="value "+(total<0?"negative":total>0?"positive":"");
+  setText("winrate",(tradesCache.length?wins/tradesCache.length*100:0).toFixed(1)+"%");
+  setText("count",tradesCache.length);
 
-  $("total").textContent = money(total);
-  $("total").className = "value " + (total<0?"negative":"positive");
-  $("winrate").textContent = (tradesCache.length?wins/tradesCache.length*100:0).toFixed(1)+"%";
-  $("count").textContent = tradesCache.length;
-
-  const history = $("history");
+  const history=$("history");
   history.replaceChildren();
 
-  if(!tradesCache.length) {
-    const row = history.insertRow();
-    const cell = row.insertCell();
-    cell.colSpan = 6;
-    cell.textContent = "No trades yet. Log your first trade above.";
+  if(!tradesCache.length){
+    const row=history.insertRow();
+    const cell=row.insertCell();cell.colSpan=6;
+    cell.textContent="No trades yet. Log your first trade above.";
   }
 
   tradesCache.forEach(t=>{
-    const row = history.insertRow();
+    const row=history.insertRow();
     [t.trade_date,t.symbol,t.direction,Number(t.entry_price).toString()]
-      .forEach(value=>row.insertCell().textContent=value ?? "");
-    const cell = row.insertCell();
-    const pnl = Number(t.pnl||0);
-    cell.textContent = money(pnl);
-    cell.className = pnl<0?"negative":pnl>0?"positive":"";
+      .forEach(v=>row.insertCell().textContent=v??"");
 
-    const shotCell = row.insertCell();
-    if(t.screenshot_url) {
-      const link = document.createElement("a");
-      link.href = t.screenshot_url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.className = "history-shot";
-      link.textContent = "View chart";
-      shotCell.appendChild(link);
-    } else {
-      shotCell.textContent = "—";
-      shotCell.className = "muted";
+    const pnlCell=row.insertCell();
+    const pnl=Number(t.pnl||0);
+    pnlCell.textContent=money(pnl);
+    pnlCell.className=pnl<0?"negative":pnl>0?"positive":"";
+
+    const chartCell=row.insertCell();
+    if(t.screenshot_url){
+      const link=document.createElement("a");
+      link.href=t.screenshot_url;link.target="_blank";
+      link.rel="noopener noreferrer";link.className="history-shot";
+      link.textContent="View chart";chartCell.appendChild(link);
+    }else{
+      chartCell.textContent="—";chartCell.className="muted";
     }
   });
 
   renderPropStats();
   renderEquityCurve();
-  tradeMessage("Your trades are synced with Supabase.");
+  setMessage("trademessage","Trades synced.");
 }
 
 function renderEquityCurve() {
-  const canvas = $("equityChart");
-  if(!canvas) return;
-  const ctx = canvas.getContext("2d");
-  const rect = canvas.getBoundingClientRect();
-  const cssWidth = Math.max(280, rect.width || 600);
-  const cssHeight = Math.max(200, rect.height || 280);
-  const dpr = Math.max(1, window.devicePixelRatio || 1);
-  canvas.width = Math.round(cssWidth * dpr);
-  canvas.height = Math.round(cssHeight * dpr);
-  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  ctx.clearRect(0, 0, cssWidth, cssHeight);
+  const canvas=$("equityChart");
+  if(!canvas)return;
+  const ctx=canvas.getContext("2d");
+  const rect=canvas.getBoundingClientRect();
+  const w=Math.max(280,rect.width||600);
+  const h=Math.max(200,rect.height||290);
+  const dpr=Math.max(1,window.devicePixelRatio||1);
+  canvas.width=Math.round(w*dpr);
+  canvas.height=Math.round(h*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  ctx.clearRect(0,0,w,h);
 
-  const ordered = [...tradesCache].sort((a,b)=>{
-    const dateCompare = String(a.trade_date || "").localeCompare(String(b.trade_date || ""));
-    if(dateCompare !== 0) return dateCompare;
-    return String(a.created_at || "").localeCompare(String(b.created_at || ""));
+  // Plot trades in chronological order, regardless of history table order.
+  const ordered=[...tradesCache].sort((a,b)=>{
+    const d=String(a.trade_date||"").localeCompare(String(b.trade_date||""));
+    return d||String(a.created_at||"").localeCompare(String(b.created_at||""));
   });
-  const values = [0];
-  let running = 0;
-  ordered.forEach(t=>{ running += Number(t.pnl || 0); values.push(running); });
-  $("equityNet").textContent = money(running);
-  $("equityNet").className = "chart-value " + (running < 0 ? "negative" : running > 0 ? "positive" : "");
-  $("equityCount").textContent = ordered.length ? ordered.length + " trade" + (ordered.length===1?"":"s") + " plotted · starts at $0" : "No trades plotted yet — log a trade to start your curve";
 
-  const pad = {top:18,right:18,bottom:30,left:58};
-  const plotW = cssWidth - pad.left - pad.right;
-  const plotH = cssHeight - pad.top - pad.bottom;
-  if(plotW <= 0 || plotH <= 0) return;
-  let min = Math.min(...values), max = Math.max(...values);
-  if(min === max) { min -= 100; max += 100; }
-  const range = max - min;
-  const niceStep = (()=>{
-    const raw = range / 4;
-    const power = Math.pow(10, Math.floor(Math.log10(Math.max(raw, 1))));
-    const scaled = raw / power;
-    return (scaled <= 1 ? 1 : scaled <= 2 ? 2 : scaled <= 5 ? 5 : 10) * power;
-  })();
-  const axisMin = Math.floor(min / niceStep) * niceStep;
-  const axisMax = Math.ceil(max / niceStep) * niceStep;
-  const y = value => pad.top + (axisMax - value) / (axisMax - axisMin || 1) * plotH;
-  const x = index => pad.left + (ordered.length ? index / ordered.length : 0) * plotW;
+  const values=[0];
+  let running=0;
+  ordered.forEach(t=>{running+=Number(t.pnl||0);values.push(running)});
 
-  ctx.font = "11px Arial";
-  ctx.textAlign = "right";
-  ctx.textBaseline = "middle";
-  for(let v=axisMin; v<=axisMax + niceStep*0.001; v+=niceStep) {
-    const yy = y(v);
-    ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(cssWidth-pad.right, yy);
-    ctx.strokeStyle = "#292929"; ctx.lineWidth = 1; ctx.stroke();
-    ctx.fillStyle = "#929292";
-    ctx.fillText((v < 0 ? "-$" : "$" ) + Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0}), pad.left-8, yy);
+  const positive=running>=0;
+  const lineColor=positive?"#22c55e":"#ef4444";
+  const fillTop=positive?"rgba(34,197,94,.20)":"rgba(239,68,68,.20)";
+  const fillBottom=positive?"rgba(34,197,94,.01)":"rgba(239,68,68,.01)";
+
+  setText("equityNet",money(running));
+  $("equityNet").style.color=lineColor;
+  setText("equityCount",ordered.length
+    ? ordered.length+" trade"+(ordered.length===1?"":"s")+" plotted · cumulative P&L"
+    : "No trades yet — log a trade to start your curve");
+
+  const pad={top:18,right:18,bottom:30,left:65};
+  const plotW=w-pad.left-pad.right;
+  const plotH=h-pad.top-pad.bottom;
+  if(plotW<=0||plotH<=0)return;
+
+  let min=Math.min(...values),max=Math.max(...values);
+  if(min===max){min-=100;max+=100}
+  const rawStep=(max-min)/4;
+  const power=Math.pow(10,Math.floor(Math.log10(Math.max(rawStep,1))));
+  const scaled=rawStep/power;
+  const step=(scaled<=1?1:scaled<=2?2:scaled<=5?5:10)*power;
+  const axisMin=Math.floor(min/step)*step;
+  const axisMax=Math.ceil(max/step)*step;
+  const y=v=>pad.top+(axisMax-v)/(axisMax-axisMin||1)*plotH;
+  const x=i=>pad.left+(ordered.length?i/ordered.length:0)*plotW;
+
+  ctx.font="11px Arial";
+  ctx.textAlign="right";ctx.textBaseline="middle";
+
+  for(let v=axisMin;v<=axisMax+step*.001;v+=step){
+    const yy=y(v);
+    ctx.beginPath();ctx.moveTo(pad.left,yy);ctx.lineTo(w-pad.right,yy);
+    ctx.strokeStyle="#292d35";ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle="#858b98";
+    ctx.fillText((v<0?"-$":"$")+Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0}),pad.left-9,yy);
   }
-  if(min <= 0 && max >= 0) {
-    ctx.beginPath(); ctx.moveTo(pad.left,y(0)); ctx.lineTo(cssWidth-pad.right,y(0));
-    ctx.strokeStyle = "#555"; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+
+  if(axisMin<=0&&axisMax>=0){
+    ctx.beginPath();ctx.moveTo(pad.left,y(0));ctx.lineTo(w-pad.right,y(0));
+    ctx.strokeStyle="#626773";ctx.setLineDash([4,4]);ctx.stroke();ctx.setLineDash([]);
   }
-  if(ordered.length === 0) {
-    ctx.fillStyle = "#929292"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
-    ctx.fillText("Your equity curve will appear here", cssWidth/2, cssHeight/2);
+
+  if(!ordered.length){
+    ctx.fillStyle="#858b98";ctx.textAlign="center";ctx.textBaseline="middle";
+    ctx.fillText("Your equity curve will appear here",w/2,h/2);
     return;
   }
-  const gradient = ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);
-  gradient.addColorStop(0,"rgba(239,51,51,0.24)");
-  gradient.addColorStop(1,"rgba(239,51,51,0.01)");
+
+  const gradient=ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);
+  gradient.addColorStop(0,fillTop);gradient.addColorStop(1,fillBottom);
+
   ctx.beginPath();
-  values.forEach((v,i)=>{ const px=x(i), py=y(v); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
-  ctx.lineTo(x(values.length-1), pad.top+plotH); ctx.lineTo(x(0), pad.top+plotH); ctx.closePath();
-  ctx.fillStyle = gradient; ctx.fill();
+  values.forEach((v,i)=>i===0?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v)));
+  ctx.lineTo(x(values.length-1),pad.top+plotH);
+  ctx.lineTo(x(0),pad.top+plotH);
+  ctx.closePath();ctx.fillStyle=gradient;ctx.fill();
+
   ctx.beginPath();
-  values.forEach((v,i)=>{ const px=x(i), py=y(v); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
-  ctx.strokeStyle = "#ef3333"; ctx.lineWidth = 2.5; ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.stroke();
+  values.forEach((v,i)=>i===0?ctx.moveTo(x(i),y(v)):ctx.lineTo(x(i),y(v)));
+  ctx.strokeStyle=lineColor;ctx.lineWidth=2.5;
+  ctx.lineJoin="round";ctx.lineCap="round";ctx.stroke();
+
   values.forEach((v,i)=>{
-    ctx.beginPath(); ctx.arc(x(i),y(v),i===values.length-1?3.5:2,0,Math.PI*2);
-    ctx.fillStyle = "#ef3333"; ctx.fill();
+    ctx.beginPath();ctx.arc(x(i),y(v),i===values.length-1?3.5:2,0,Math.PI*2);
+    ctx.fillStyle=lineColor;ctx.fill();
   });
-  ctx.fillStyle = "#929292"; ctx.textAlign = "left"; ctx.textBaseline = "top";
-  ctx.fillText("Start", pad.left, cssHeight-21);
-  ctx.textAlign = "right";
-  ctx.fillText("Latest", cssWidth-pad.right, cssHeight-21);
+
+  ctx.fillStyle="#858b98";ctx.textBaseline="top";
+  ctx.textAlign="left";ctx.fillText("Start",pad.left,h-21);
+  ctx.textAlign="right";ctx.fillText("Latest",w-pad.right,h-21);
 }
 
 window.addEventListener("resize",()=>{
-  if($("app").style.display !== "none") renderEquityCurve();
+  if($("app").style.display!=="none")renderEquityCurve();
 });
 
 async function showSession(session) {
-  currentUser = session ? session.user : null;
-  $("auth").style.display = session ? "none" : "block";
-  $("app").style.display = session ? "block" : "none";
-  $("logout").hidden = !session;
+  currentUser=session?session.user:null;
+  $("auth").style.display=session?"none":"block";
+  $("app").style.display=session?"block":"none";
+  $("logout").hidden=!session;
 
-  if(session) {
+  if(session){
     await loadPropAccount();
     await loadTrades();
-  } else {
-    propAccount = null;
-    tradesCache = [];
+  }else{
+    propAccount=null;tradesCache=[];
   }
 }
 
 $("authform").addEventListener("submit",async e=>{
-  e.preventDefault();
-  message("Signing in...");
-  const {error} = await db.auth.signInWithPassword({
-    email:$("email").value.trim(),
-    password:$("password").value
+  e.preventDefault();setMessage("message","Signing in...");
+  const {error}=await db.auth.signInWithPassword({
+    email:$("email").value.trim(),password:$("password").value
   });
-  if(error) message(error.message);
-  else message("");
+  if(error)setMessage("message",error.message);
+  else setMessage("message","");
 });
 
 $("signup").addEventListener("click",async()=>{
-  message("Creating your account...");
-  const {data,error} = await db.auth.signUp({
-    email:$("email").value.trim(),
-    password:$("password").value
+  setMessage("message","Creating account...");
+  const {data,error}=await db.auth.signUp({
+    email:$("email").value.trim(),password:$("password").value
   });
-  if(error) {
-    message(error.message);
-  } else if(!data.session) {
-    message("Account created. Sign in with your email and password.");
-  } else {
-    message("");
-  }
+  if(error)setMessage("message",error.message);
+  else if(!data.session)setMessage("message","Account created. Check your email if confirmation is required, then sign in.");
+  else setMessage("message","");
 });
 
 $("logout").addEventListener("click",async()=>{
-  const {error} = await db.auth.signOut();
-  if(error) message(error.message);
+  const {error}=await db.auth.signOut();
+  if(error)setMessage("message",error.message);
 });
 
 $("toggleSettings").addEventListener("click",()=>{
-  $("settingsPanel").hidden = !$("settingsPanel").hidden;
+  $("settingsPanel").hidden=!$("settingsPanel").hidden;
 });
 
 $("propform").addEventListener("submit",async e=>{
   e.preventDefault();
-  if(!propAccount) {
-    propMessage("Account settings are still loading. Try again in a moment.");
-    return;
-  }
+  if(!propAccount){setMessage("propmessage","Settings are still loading.");return}
+  $("saveSettings").disabled=true;
+  setMessage("propmessage","Saving settings...");
 
-  $("saveSettings").disabled = true;
-  propMessage("Saving settings...");
-
-  const updated = {
+  const updated={
     firm_name:$("firm").value.trim(),
     account_name:$("accountname").value.trim(),
     starting_balance:Number($("starting").value),
@@ -507,82 +473,60 @@ $("propform").addEventListener("submit",async e=>{
     consistency_percent:Number($("consistencylimit").value)
   };
 
-  const {data,error} = await db.from("prop_accounts")
-    .update(updated)
-    .eq("id",propAccount.id)
-    .select()
-    .single();
+  const {data,error}=await db.from("prop_accounts")
+    .update(updated).eq("id",propAccount.id).select().single();
 
-  $("saveSettings").disabled = false;
-
-  if(error) {
-    propMessage("Could not save settings: " + error.message);
-    return;
-  }
-
-  propAccount = data;
-  renderPropStats();
-  propMessage("Settings saved successfully.");
+  $("saveSettings").disabled=false;
+  if(error){setMessage("propmessage","Could not save settings: "+error.message);return}
+  propAccount=data;renderPropStats();
+  setMessage("propmessage","Settings saved.");
 });
 
 $("screenshot").addEventListener("change",()=>{
-  const file = $("screenshot").files && $("screenshot").files[0];
-  const preview = $("screenshotPreview");
-  if(!file) {
-    preview.hidden = true;
-    preview.removeAttribute("src");
-    return;
+  const file=$("screenshot").files?.[0];
+  const preview=$("screenshotPreview");
+  if(!file){preview.hidden=true;preview.removeAttribute("src");return}
+  if(!file.type.startsWith("image/")){
+    setMessage("trademessage","Choose an image file.");
+    $("screenshot").value="";preview.hidden=true;return;
   }
-  if(!file.type.startsWith("image/")) {
-    tradeMessage("Please choose an image file.");
-    $("screenshot").value = "";
-    preview.hidden = true;
-    return;
+  if(file.size>5*1024*1024){
+    setMessage("trademessage","Image must be 5 MB or smaller.");
+    $("screenshot").value="";preview.hidden=true;return;
   }
-  if(file.size > 5 * 1024 * 1024) {
-    tradeMessage("That image is over 5 MB. Choose a smaller screenshot.");
-    $("screenshot").value = "";
-    preview.hidden = true;
-    return;
-  }
-  preview.src = URL.createObjectURL(file);
-  preview.hidden = false;
+  preview.src=URL.createObjectURL(file);preview.hidden=false;
 });
 
 async function uploadTradeScreenshot(file) {
-  if(!file) return null;
-  if(!currentUser) throw new Error("Please sign in again before uploading.");
-  if(!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
-  if(file.size > 5 * 1024 * 1024) throw new Error("Screenshot must be 5 MB or smaller.");
+  if(!file)return null;
+  if(!currentUser)throw new Error("Please sign in again.");
+  if(!file.type.startsWith("image/"))throw new Error("Please choose an image.");
+  if(file.size>5*1024*1024)throw new Error("Screenshot must be 5 MB or smaller.");
 
-  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
-  const path = currentUser.id + "/" + Date.now() + "-" + safeName;
-  const {error:uploadError} = await db.storage
-    .from("trade-screenshots")
-    .upload(path, file, {contentType:file.type, upsert:false});
-
-  if(uploadError) throw uploadError;
-
-  const {data} = db.storage.from("trade-screenshots").getPublicUrl(path);
-  return data.publicUrl;
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,"_");
+  const path=currentUser.id+"/"+Date.now()+"-"+safeName;
+  const {error}=await db.storage.from("trade-screenshots")
+    .upload(path,file,{contentType:file.type,upsert:false});
+  if(error)throw error;
+  return db.storage.from("trade-screenshots").getPublicUrl(path).data.publicUrl;
 }
 
 $("tradeform").addEventListener("submit",async e=>{
   e.preventDefault();
-  $("save").disabled = true;
-  tradeMessage("Saving trade...");
+  $("save").disabled=true;
+  setMessage("trademessage","Saving trade...");
 
-  const optionalNumber = id => $(id).value===""?null:Number($(id).value);
-  const file = $("screenshot").files && $("screenshot").files[0];
+  const optionalNumber=id=>$ (id).value===""?null:Number($(id).value);
+  const file=$("screenshot").files?.[0];
 
-  try {
-    let screenshotUrl = null;
-    if(file) {
-      tradeMessage("Uploading screenshot...");
-      screenshotUrl = await uploadTradeScreenshot(file);
+  try{
+    let screenshotUrl=null;
+    if(file){
+      setMessage("trademessage","Uploading screenshot...");
+      screenshotUrl=await uploadTradeScreenshot(file);
     }
 
-    const trade = {
+    const trade={
       trade_date:$("date").value,
       symbol:$("symbol").value.trim(),
       direction:$("direction").value,
@@ -594,21 +538,20 @@ $("tradeform").addEventListener("submit",async e=>{
       screenshot_url:screenshotUrl
     };
 
-    const {error} = await db.from("trades").insert(trade);
-    if(error) throw error;
+    const {error}=await db.from("trades").insert(trade);
+    if(error)throw error;
 
     $("tradeform").reset();
-    $("date").value = new Date().toLocaleDateString("en-CA");
-    $("symbol").value = "MNQ";
-    $("direction").value = "Long";
-    $("screenshotPreview").hidden = true;
+    $("date").value=new Date().toLocaleDateString("en-CA");
+    $("symbol").value="MNQ";$("direction").value="Long";
+    $("screenshotPreview").hidden=true;
     $("screenshotPreview").removeAttribute("src");
-    tradeMessage("Trade saved successfully!");
+    setMessage("trademessage","Trade saved successfully!");
     await loadTrades();
-  } catch(error) {
-    tradeMessage("Could not save trade: " + (error.message || String(error)));
-  } finally {
-    $("save").disabled = false;
+  }catch(error){
+    setMessage("trademessage","Could not save trade: "+(error.message||String(error)));
+  }finally{
+    $("save").disabled=false;
   }
 });
 
@@ -617,8 +560,8 @@ db.auth.onAuthStateChange((_event,session)=>{
 });
 
 (async()=>{
-  const {data,error} = await db.auth.getSession();
-  if(error) message(error.message);
+  const {data,error}=await db.auth.getSession();
+  if(error)setMessage("message",error.message);
   await showSession(data.session);
 })();
 </script>
