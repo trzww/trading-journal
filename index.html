@@ -4,33 +4,44 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MNQ Journal</title>
+<title>MNQ Journal | Trading Command Center</title>
 <style>
+:root{--bg:#080808;--panel:#111;--border:#292929;--red:#ef3333;--muted:#929292;--green:#4ade80}
 *{box-sizing:border-box}
-body{margin:0;background:#090909;color:#f5f5f5;font-family:Arial,sans-serif}
-header{padding:22px 6%;border-bottom:1px solid #292929;display:flex;justify-content:space-between;align-items:center}
-.logo{font-size:21px;font-weight:bold}.logo span{color:#ef3333}
-main{max-width:1050px;margin:auto;padding:35px 20px}
-h1{font-size:30px;margin-bottom:8px}
-.muted{color:#888;font-size:14px;line-height:1.6}
-.panel,.card{background:#111;border:1px solid #292929;border-radius:12px;padding:20px;margin-top:20px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.label{color:#999;font-size:13px}.value{font-size:27px;font-weight:bold;margin-top:10px}
-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-label{color:#aaa;font-size:13px}
-input,select,textarea{width:100%;margin-top:7px;padding:12px;background:#090909;border:1px solid #333;border-radius:7px;color:white}
-button{background:#e52b2b;color:white;border:0;padding:12px 17px;border-radius:7px;cursor:pointer;font-weight:bold}
+body{margin:0;background:var(--bg);color:#f5f5f5;font-family:Arial,sans-serif}
+header{padding:20px 6%;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:21px;font-weight:800;letter-spacing:1px}.logo span{color:var(--red)}
+main{max-width:1150px;margin:auto;padding:30px 20px}
+h1{font-size:30px;margin:0 0 8px}
+h2{font-size:18px;margin:0 0 16px}
+h3{font-size:14px;margin:0 0 10px}
+.muted{color:var(--muted);font-size:13px;line-height:1.6}
+.panel,.card{background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:18px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.propstats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.label{font-size:11px;color:var(--muted);letter-spacing:1px}
+.value{font-size:25px;font-weight:800;margin-top:10px;overflow-wrap:anywhere}
+.smallvalue{font-size:20px;font-weight:800;margin-top:9px}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px}
+label{display:block;color:#aaa;font-size:12px}
+input,select,textarea{width:100%;margin-top:7px;padding:12px;background:#090909;border:1px solid #353535;border-radius:7px;color:white;font:inherit}
+button{background:var(--red);color:white;border:0;padding:12px 16px;border-radius:7px;cursor:pointer;font-weight:700}
 button.secondary{background:#222;border:1px solid #444}
 button:disabled{opacity:.5;cursor:wait}
 .full{grid-column:1/-1}
 .table-wrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse;min-width:500px}
-th,td{text-align:left;padding:13px 10px;border-bottom:1px solid #292929;font-size:13px}
-th{color:#888}
-.positive{color:#4ade80}.negative{color:#ef4444}
-#message{white-space:pre-wrap;color:#fca5a5;margin-top:12px}
+th,td{text-align:left;padding:13px 10px;border-bottom:1px solid var(--border);font-size:13px}
+th{color:var(--muted);font-weight:500}
+.positive{color:var(--green)}.negative{color:#f87171}
+.progress{height:8px;background:#292929;border-radius:10px;overflow:hidden;margin-top:12px}
+.progress span{display:block;height:100%;width:0;background:var(--red);transition:width .25s}
+#message,#trademessage,#propmessage{white-space:pre-wrap;margin-top:12px}
+#message{color:#fca5a5}
 #app{display:none}
-@media(max-width:600px){.stats{grid-template-columns:1fr}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+@media(max-width:760px){.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){.stats{grid-template-columns:1fr}.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}.value{font-size:23px}}
 </style>
 </head>
 <body>
@@ -60,6 +71,93 @@ th{color:#888}
   </section>
 
   <section id="app">
+    <section class="panel">
+      <div class="sectionhead">
+        <div>
+          <h2>Prop firm command center</h2>
+          <p class="muted">Your account progress at a glance.</p>
+        </div>
+        <button class="secondary" id="toggleSettings" type="button">Account settings</button>
+      </div>
+
+      <div class="propstats">
+        <div class="card">
+          <div class="label">EST. BALANCE</div>
+          <div class="smallvalue" id="balance">$50,000</div>
+        </div>
+        <div class="card">
+          <div class="label">NET P&L</div>
+          <div class="smallvalue" id="netpnl">$0</div>
+        </div>
+        <div class="card">
+          <div class="label">LOSS BUFFER LEFT</div>
+          <div class="smallvalue" id="lossleft">—</div>
+        </div>
+        <div class="card">
+          <div class="label">TARGET PROGRESS</div>
+          <div class="smallvalue" id="targetpct">0%</div>
+        </div>
+      </div>
+
+      <div style="margin-top:20px">
+        <div class="sectionhead">
+          <span class="muted">Profit target progress</span>
+          <span id="targettext" class="muted">$0 / $3,000</span>
+        </div>
+        <div class="progress"><span id="targetbar"></span></div>
+      </div>
+
+      <div class="propstats" style="margin-top:16px">
+        <div class="card">
+          <div class="label">PROFIT TARGET</div>
+          <div class="smallvalue" id="targetamount">$3,000</div>
+        </div>
+        <div class="card">
+          <div class="label">MAX LOSS LIMIT</div>
+          <div class="smallvalue" id="maxloss">$3,000</div>
+        </div>
+        <div class="card">
+          <div class="label">BEST WINNING DAY</div>
+          <div class="smallvalue" id="bestday">$0</div>
+        </div>
+        <div class="card">
+          <div class="label">CONSISTENCY EST.</div>
+          <div class="smallvalue" id="consistency">0%</div>
+        </div>
+      </div>
+      <p class="muted" id="propnote">Estimates based on trades logged in this journal, not your live prop firm dashboard.</p>
+      <div id="propmessage" class="muted" role="status"></div>
+    </section>
+
+    <section class="panel" id="settingsPanel" hidden>
+      <h2>Prop account settings</h2>
+      <p class="muted">Set these values to match your actual firm's rules. Defaults are examples, not verified account terms.</p>
+      <form id="propform">
+        <label>Prop firm
+          <input id="firm" value="Lucid" required>
+        </label>
+        <label>Account name
+          <input id="accountname" value="50K Account" required>
+        </label>
+        <label>Starting balance ($)
+          <input type="number" id="starting" min="0" step="0.01" required>
+        </label>
+        <label>Maximum total loss ($)
+          <input type="number" id="maxdrawdown" min="0" step="0.01" required>
+        </label>
+        <label>Daily loss limit ($, 0 = off)
+          <input type="number" id="daily" min="0" step="0.01" required>
+        </label>
+        <label>Profit target ($)
+          <input type="number" id="target" min="0" step="0.01" required>
+        </label>
+        <label>Consistency limit (%)
+          <input type="number" id="consistencylimit" min="0" max="100" step="0.1" required>
+        </label>
+        <div class="full"><button id="saveSettings" type="submit">Save account settings</button></div>
+      </form>
+    </section>
+
     <div class="stats">
       <div class="card"><div class="label">TOTAL P&L</div><div class="value" id="total">$0.00</div></div>
       <div class="card"><div class="label">WIN RATE</div><div class="value" id="winrate">0%</div></div>
@@ -99,17 +197,113 @@ th{color:#888}
 const SUPABASE_URL = "https://dggokjetnvmwyfflbism.supabase.co";
 const SUPABASE_KEY = "sb_publishable_Yh7Aj-YRfYq_66LVxpZszA_XWGqQo4N";
 const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
 const $ = id => document.getElementById(id);
+
+let currentUser = null;
+let propAccount = null;
+let tradesCache = [];
+
 $("date").value = new Date().toLocaleDateString("en-CA");
 
 function message(text) { $("message").textContent = text; }
 function tradeMessage(text) { $("trademessage").textContent = text; }
+function propMessage(text) { $("propmessage").textContent = text; }
+function money(n) {
+  const v = Number(n || 0);
+  return (v < 0 ? "-$" : "$") + Math.abs(v).toLocaleString("en-US",{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+
+async function loadPropAccount() {
+  propMessage("Loading account settings...");
+  const {data,error} = await db.from("prop_accounts")
+    .select("*")
+    .order("created_at",{ascending:true})
+    .limit(1);
+
+  if(error) {
+    propMessage("Could not load prop settings: " + error.message);
+    return;
+  }
+
+  if(data && data.length) {
+    propAccount = data[0];
+  } else {
+    const {data:newAccount,error:createError} = await db.from("prop_accounts")
+      .insert({
+        firm_name:"Lucid",
+        account_name:"50K Account",
+        starting_balance:50000,
+        max_drawdown:3000,
+        daily_loss_limit:0,
+        profit_target:3000,
+        consistency_percent:50
+      })
+      .select()
+      .single();
+
+    if(createError) {
+      propMessage("Could not create prop account: " + createError.message);
+      return;
+    }
+    propAccount = newAccount;
+  }
+
+  $("firm").value = propAccount.firm_name;
+  $("accountname").value = propAccount.account_name;
+  $("starting").value = propAccount.starting_balance;
+  $("maxdrawdown").value = propAccount.max_drawdown;
+  $("daily").value = propAccount.daily_loss_limit;
+  $("target").value = propAccount.profit_target;
+  $("consistencylimit").value = propAccount.consistency_percent;
+
+  renderPropStats();
+  propMessage("Prop account settings synced.");
+}
+
+function renderPropStats() {
+  if(!propAccount) return;
+
+  const total = tradesCache.reduce((sum,t)=>sum+Number(t.pnl||0),0);
+  const starting = Number(propAccount.starting_balance);
+  const target = Number(propAccount.profit_target);
+  const maxLoss = Number(propAccount.max_drawdown);
+  const balance = starting + total;
+  const floor = starting - maxLoss;
+  const lossLeft = balance - floor;
+  const progress = target > 0 ? Math.max(0,Math.min(100,total/target*100)) : 0;
+
+  const days = {};
+  tradesCache.forEach(t=>{
+    const day = t.trade_date;
+    days[day] = (days[day] || 0) + Number(t.pnl || 0);
+  });
+  const dailyPnls = Object.values(days);
+  const bestDay = dailyPnls.length ? Math.max(0,...dailyPnls) : 0;
+  const positiveDaysTotal = dailyPnls.reduce((sum,p)=>sum+Math.max(0,p),0);
+  const consistency = positiveDaysTotal > 0 ? bestDay/positiveDaysTotal*100 : 0;
+
+  $("balance").textContent = money(balance);
+  $("netpnl").textContent = money(total);
+  $("netpnl").className = "smallvalue " + (total < 0 ? "negative" : total > 0 ? "positive" : "");
+  $("lossleft").textContent = money(lossLeft);
+  $("lossleft").className = "smallvalue " + (lossLeft < 0 ? "negative" : "");
+  $("targetpct").textContent = progress.toFixed(1) + "%";
+  $("targettext").textContent = money(Math.max(0,total)) + " / " + money(target);
+  $("targetbar").style.width = progress + "%";
+  $("targetamount").textContent = money(target);
+  $("maxloss").textContent = money(maxLoss);
+  $("bestday").textContent = money(bestDay);
+  $("consistency").textContent = consistency.toFixed(1) + "%";
+
+  $("propnote").textContent =
+    "Estimated balance uses logged P&L. Loss buffer assumes a fixed floor of " +
+    money(floor) + ". Consistency is best positive day divided by the sum of positive daily results. Verify all figures against your firm's official rules.";
+}
 
 async function loadTrades() {
   tradeMessage("Loading your trades...");
   const {data,error} = await db.from("trades")
-    .select("id,trade_date,symbol,direction,entry_price,pnl")
+    .select("id,trade_date,symbol,direction,entry_price,pnl,stop_loss,take_profit,notes")
     .order("trade_date",{ascending:false});
 
   if(error) {
@@ -117,40 +311,52 @@ async function loadTrades() {
     return;
   }
 
-  const total = data.reduce((sum,t)=>sum+Number(t.pnl||0),0);
-  const wins = data.filter(t=>Number(t.pnl)>0).length;
-  $("total").textContent = (total<0?"-$":"$")+Math.abs(total).toFixed(2);
+  tradesCache = data || [];
+  const total = tradesCache.reduce((sum,t)=>sum+Number(t.pnl||0),0);
+  const wins = tradesCache.filter(t=>Number(t.pnl)>0).length;
+
+  $("total").textContent = money(total);
   $("total").className = "value " + (total<0?"negative":"positive");
-  $("winrate").textContent = (data.length?wins/data.length*100:0).toFixed(1)+"%";
-  $("count").textContent = data.length;
+  $("winrate").textContent = (tradesCache.length?wins/tradesCache.length*100:0).toFixed(1)+"%";
+  $("count").textContent = tradesCache.length;
 
   const history = $("history");
   history.replaceChildren();
 
-  if(!data.length) {
+  if(!tradesCache.length) {
     const row = history.insertRow();
     const cell = row.insertCell();
     cell.colSpan = 5;
     cell.textContent = "No trades yet. Log your first trade above.";
   }
 
-  data.forEach(t=>{
+  tradesCache.forEach(t=>{
     const row = history.insertRow();
     [t.trade_date,t.symbol,t.direction,Number(t.entry_price).toString()]
-      .forEach(value=>row.insertCell().textContent=value??"");
+      .forEach(value=>row.insertCell().textContent=value ?? "");
     const cell = row.insertCell();
     const pnl = Number(t.pnl||0);
-    cell.textContent = (pnl<0?"-":"")+"$"+Math.abs(pnl).toFixed(2);
+    cell.textContent = money(pnl);
     cell.className = pnl<0?"negative":pnl>0?"positive":"";
   });
+
+  renderPropStats();
   tradeMessage("Your trades are synced with Supabase.");
 }
 
 async function showSession(session) {
+  currentUser = session ? session.user : null;
   $("auth").style.display = session ? "none" : "block";
   $("app").style.display = session ? "block" : "none";
   $("logout").hidden = !session;
-  if(session) await loadTrades();
+
+  if(session) {
+    await loadPropAccount();
+    await loadTrades();
+  } else {
+    propAccount = null;
+    tradesCache = [];
+  }
 }
 
 $("authform").addEventListener("submit",async e=>{
@@ -173,7 +379,7 @@ $("signup").addEventListener("click",async()=>{
   if(error) {
     message(error.message);
   } else if(!data.session) {
-    message("Account request received. Check your email to confirm your account, then sign in.");
+    message("Account created. Sign in with your email and password.");
   } else {
     message("");
   }
@@ -182,6 +388,48 @@ $("signup").addEventListener("click",async()=>{
 $("logout").addEventListener("click",async()=>{
   const {error} = await db.auth.signOut();
   if(error) message(error.message);
+});
+
+$("toggleSettings").addEventListener("click",()=>{
+  $("settingsPanel").hidden = !$("settingsPanel").hidden;
+});
+
+$("propform").addEventListener("submit",async e=>{
+  e.preventDefault();
+  if(!propAccount) {
+    propMessage("Account settings are still loading. Try again in a moment.");
+    return;
+  }
+
+  $("saveSettings").disabled = true;
+  propMessage("Saving settings...");
+
+  const updated = {
+    firm_name:$("firm").value.trim(),
+    account_name:$("accountname").value.trim(),
+    starting_balance:Number($("starting").value),
+    max_drawdown:Number($("maxdrawdown").value),
+    daily_loss_limit:Number($("daily").value),
+    profit_target:Number($("target").value),
+    consistency_percent:Number($("consistencylimit").value)
+  };
+
+  const {data,error} = await db.from("prop_accounts")
+    .update(updated)
+    .eq("id",propAccount.id)
+    .select()
+    .single();
+
+  $("saveSettings").disabled = false;
+
+  if(error) {
+    propMessage("Could not save settings: " + error.message);
+    return;
+  }
+
+  propAccount = data;
+  renderPropStats();
+  propMessage("Settings saved successfully.");
 });
 
 $("tradeform").addEventListener("submit",async e=>{
@@ -205,7 +453,7 @@ $("tradeform").addEventListener("submit",async e=>{
   $("save").disabled = false;
 
   if(error) {
-    tradeMessage("Could not save: "+error.message);
+    tradeMessage("Could not save: " + error.message);
     return;
   }
 
