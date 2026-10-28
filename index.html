@@ -39,7 +39,15 @@ th{color:var(--muted);font-weight:500}
 #message,#trademessage,#propmessage{white-space:pre-wrap;margin-top:12px}
 #message{color:#fca5a5}
 #app{display:none}
+.screenshot-preview{display:block;max-width:180px;max-height:120px;object-fit:cover;border:1px solid var(--border);border-radius:7px;margin-top:8px}
+.history-shot{display:inline-block;color:#fca5a5;text-decoration:none;font-weight:700}
+.history-shot:hover{text-decoration:underline}
 .sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.chart-wrap{position:relative;width:100%;height:280px;margin-top:10px}
+#equityChart{display:block;width:100%;height:100%}
+.chart-legend{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:10px}
+.chart-value{font-size:13px;font-weight:700}
+@media(max-width:520px){.chart-wrap{height:230px}}
 @media(max-width:760px){.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:520px){.stats{grid-template-columns:1fr}.propstats{grid-template-columns:repeat(2,minmax(0,1fr))}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}.value{font-size:23px}}
 </style>
@@ -81,22 +89,10 @@ th{color:var(--muted);font-weight:500}
       </div>
 
       <div class="propstats">
-        <div class="card">
-          <div class="label">EST. BALANCE</div>
-          <div class="smallvalue" id="balance">$50,000</div>
-        </div>
-        <div class="card">
-          <div class="label">NET P&L</div>
-          <div class="smallvalue" id="netpnl">$0</div>
-        </div>
-        <div class="card">
-          <div class="label">LOSS BUFFER LEFT</div>
-          <div class="smallvalue" id="lossleft">—</div>
-        </div>
-        <div class="card">
-          <div class="label">TARGET PROGRESS</div>
-          <div class="smallvalue" id="targetpct">0%</div>
-        </div>
+        <div class="card"><div class="label">EST. BALANCE</div><div class="smallvalue" id="balance">$50,000</div></div>
+        <div class="card"><div class="label">NET P&L</div><div class="smallvalue" id="netpnl">$0</div></div>
+        <div class="card"><div class="label">LOSS BUFFER LEFT</div><div class="smallvalue" id="lossleft">—</div></div>
+        <div class="card"><div class="label">TARGET PROGRESS</div><div class="smallvalue" id="targetpct">0%</div></div>
       </div>
 
       <div style="margin-top:20px">
@@ -108,22 +104,10 @@ th{color:var(--muted);font-weight:500}
       </div>
 
       <div class="propstats" style="margin-top:16px">
-        <div class="card">
-          <div class="label">PROFIT TARGET</div>
-          <div class="smallvalue" id="targetamount">$3,000</div>
-        </div>
-        <div class="card">
-          <div class="label">MAX LOSS LIMIT</div>
-          <div class="smallvalue" id="maxloss">$3,000</div>
-        </div>
-        <div class="card">
-          <div class="label">BEST WINNING DAY</div>
-          <div class="smallvalue" id="bestday">$0</div>
-        </div>
-        <div class="card">
-          <div class="label">CONSISTENCY EST.</div>
-          <div class="smallvalue" id="consistency">0%</div>
-        </div>
+        <div class="card"><div class="label">PROFIT TARGET</div><div class="smallvalue" id="targetamount">$3,000</div></div>
+        <div class="card"><div class="label">MAX LOSS LIMIT</div><div class="smallvalue" id="maxloss">$3,000</div></div>
+        <div class="card"><div class="label">BEST WINNING DAY</div><div class="smallvalue" id="bestday">$0</div></div>
+        <div class="card"><div class="label">CONSISTENCY EST.</div><div class="smallvalue" id="consistency">0%</div></div>
       </div>
       <p class="muted" id="propnote">Estimates based on trades logged in this journal, not your live prop firm dashboard.</p>
       <div id="propmessage" class="muted" role="status"></div>
@@ -133,27 +117,13 @@ th{color:var(--muted);font-weight:500}
       <h2>Prop account settings</h2>
       <p class="muted">Set these values to match your actual firm's rules. Defaults are examples, not verified account terms.</p>
       <form id="propform">
-        <label>Prop firm
-          <input id="firm" value="Lucid" required>
-        </label>
-        <label>Account name
-          <input id="accountname" value="50K Account" required>
-        </label>
-        <label>Starting balance ($)
-          <input type="number" id="starting" min="0" step="0.01" required>
-        </label>
-        <label>Maximum total loss ($)
-          <input type="number" id="maxdrawdown" min="0" step="0.01" required>
-        </label>
-        <label>Daily loss limit ($, 0 = off)
-          <input type="number" id="daily" min="0" step="0.01" required>
-        </label>
-        <label>Profit target ($)
-          <input type="number" id="target" min="0" step="0.01" required>
-        </label>
-        <label>Consistency limit (%)
-          <input type="number" id="consistencylimit" min="0" max="100" step="0.1" required>
-        </label>
+        <label>Prop firm<input id="firm" value="Lucid" required></label>
+        <label>Account name<input id="accountname" value="50K Account" required></label>
+        <label>Starting balance ($)<input type="number" id="starting" min="0" step="0.01" required></label>
+        <label>Maximum total loss ($)<input type="number" id="maxdrawdown" min="0" step="0.01" required></label>
+        <label>Daily loss limit ($, 0 = off)<input type="number" id="daily" min="0" step="0.01" required></label>
+        <label>Profit target ($)<input type="number" id="target" min="0" step="0.01" required></label>
+        <label>Consistency limit (%)<input type="number" id="consistencylimit" min="0" max="100" step="0.1" required></label>
         <div class="full"><button id="saveSettings" type="submit">Save account settings</button></div>
       </form>
     </section>
@@ -175,16 +145,38 @@ th{color:var(--muted);font-weight:500}
         <label>Take profit<input type="number" step="any" id="tp"></label>
         <label class="full">P&L in dollars<input type="number" step="0.01" id="pnl" required></label>
         <label class="full">Notes<textarea id="notes" rows="3" placeholder="Setup, execution, mistakes..."></textarea></label>
+        <label class="full">Chart screenshot (optional, image only)
+          <input type="file" id="screenshot" accept="image/*">
+          <span class="muted">Keep images under 5 MB for smoother uploads.</span>
+          <img id="screenshotPreview" class="screenshot-preview" alt="Screenshot preview" hidden>
+        </label>
         <div class="full"><button type="submit" id="save">Save trade</button></div>
       </form>
       <div id="trademessage" class="muted" role="status"></div>
+    </section>
+
+    <section class="panel" id="equityPanel">
+      <div class="sectionhead">
+        <div>
+          <h2>Equity curve</h2>
+          <p class="muted">Your cumulative P&amp;L, calculated from the trades you log.</p>
+        </div>
+        <div class="chart-value" id="equityNet">$0.00</div>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="equityChart" aria-label="Cumulative trading profit and loss line chart" role="img"></canvas>
+      </div>
+      <div class="chart-legend">
+        <span class="muted" id="equityCount">No trades plotted yet</span>
+        <span class="muted">Red line = cumulative P&amp;L</span>
+      </div>
     </section>
 
     <section class="panel">
       <h2>Trade history</h2>
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th></tr></thead>
+          <thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th><th>Chart</th></tr></thead>
           <tbody id="history"></tbody>
         </table>
       </div>
@@ -303,7 +295,7 @@ function renderPropStats() {
 async function loadTrades() {
   tradeMessage("Loading your trades...");
   const {data,error} = await db.from("trades")
-    .select("id,trade_date,symbol,direction,entry_price,pnl,stop_loss,take_profit,notes")
+    .select("id,created_at,trade_date,symbol,direction,entry_price,pnl,stop_loss,take_profit,notes,screenshot_url")
     .order("trade_date",{ascending:false});
 
   if(error) {
@@ -326,7 +318,7 @@ async function loadTrades() {
   if(!tradesCache.length) {
     const row = history.insertRow();
     const cell = row.insertCell();
-    cell.colSpan = 5;
+    cell.colSpan = 6;
     cell.textContent = "No trades yet. Log your first trade above.";
   }
 
@@ -338,11 +330,112 @@ async function loadTrades() {
     const pnl = Number(t.pnl||0);
     cell.textContent = money(pnl);
     cell.className = pnl<0?"negative":pnl>0?"positive":"";
+
+    const shotCell = row.insertCell();
+    if(t.screenshot_url) {
+      const link = document.createElement("a");
+      link.href = t.screenshot_url;
+      link.target = "_blank";
+      link.rel = "noopener noreferrer";
+      link.className = "history-shot";
+      link.textContent = "View chart";
+      shotCell.appendChild(link);
+    } else {
+      shotCell.textContent = "—";
+      shotCell.className = "muted";
+    }
   });
 
   renderPropStats();
+  renderEquityCurve();
   tradeMessage("Your trades are synced with Supabase.");
 }
+
+function renderEquityCurve() {
+  const canvas = $("equityChart");
+  if(!canvas) return;
+  const ctx = canvas.getContext("2d");
+  const rect = canvas.getBoundingClientRect();
+  const cssWidth = Math.max(280, rect.width || 600);
+  const cssHeight = Math.max(200, rect.height || 280);
+  const dpr = Math.max(1, window.devicePixelRatio || 1);
+  canvas.width = Math.round(cssWidth * dpr);
+  canvas.height = Math.round(cssHeight * dpr);
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, cssWidth, cssHeight);
+
+  const ordered = [...tradesCache].sort((a,b)=>{
+    const dateCompare = String(a.trade_date || "").localeCompare(String(b.trade_date || ""));
+    if(dateCompare !== 0) return dateCompare;
+    return String(a.created_at || "").localeCompare(String(b.created_at || ""));
+  });
+  const values = [0];
+  let running = 0;
+  ordered.forEach(t=>{ running += Number(t.pnl || 0); values.push(running); });
+  $("equityNet").textContent = money(running);
+  $("equityNet").className = "chart-value " + (running < 0 ? "negative" : running > 0 ? "positive" : "");
+  $("equityCount").textContent = ordered.length ? ordered.length + " trade" + (ordered.length===1?"":"s") + " plotted · starts at $0" : "No trades plotted yet — log a trade to start your curve";
+
+  const pad = {top:18,right:18,bottom:30,left:58};
+  const plotW = cssWidth - pad.left - pad.right;
+  const plotH = cssHeight - pad.top - pad.bottom;
+  if(plotW <= 0 || plotH <= 0) return;
+  let min = Math.min(...values), max = Math.max(...values);
+  if(min === max) { min -= 100; max += 100; }
+  const range = max - min;
+  const niceStep = (()=>{
+    const raw = range / 4;
+    const power = Math.pow(10, Math.floor(Math.log10(Math.max(raw, 1))));
+    const scaled = raw / power;
+    return (scaled <= 1 ? 1 : scaled <= 2 ? 2 : scaled <= 5 ? 5 : 10) * power;
+  })();
+  const axisMin = Math.floor(min / niceStep) * niceStep;
+  const axisMax = Math.ceil(max / niceStep) * niceStep;
+  const y = value => pad.top + (axisMax - value) / (axisMax - axisMin || 1) * plotH;
+  const x = index => pad.left + (ordered.length ? index / ordered.length : 0) * plotW;
+
+  ctx.font = "11px Arial";
+  ctx.textAlign = "right";
+  ctx.textBaseline = "middle";
+  for(let v=axisMin; v<=axisMax + niceStep*0.001; v+=niceStep) {
+    const yy = y(v);
+    ctx.beginPath(); ctx.moveTo(pad.left, yy); ctx.lineTo(cssWidth-pad.right, yy);
+    ctx.strokeStyle = "#292929"; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = "#929292";
+    ctx.fillText((v < 0 ? "-$" : "$" ) + Math.abs(v).toLocaleString("en-US",{maximumFractionDigits:0}), pad.left-8, yy);
+  }
+  if(min <= 0 && max >= 0) {
+    ctx.beginPath(); ctx.moveTo(pad.left,y(0)); ctx.lineTo(cssWidth-pad.right,y(0));
+    ctx.strokeStyle = "#555"; ctx.setLineDash([4,4]); ctx.stroke(); ctx.setLineDash([]);
+  }
+  if(ordered.length === 0) {
+    ctx.fillStyle = "#929292"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("Your equity curve will appear here", cssWidth/2, cssHeight/2);
+    return;
+  }
+  const gradient = ctx.createLinearGradient(0,pad.top,0,pad.top+plotH);
+  gradient.addColorStop(0,"rgba(239,51,51,0.24)");
+  gradient.addColorStop(1,"rgba(239,51,51,0.01)");
+  ctx.beginPath();
+  values.forEach((v,i)=>{ const px=x(i), py=y(v); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
+  ctx.lineTo(x(values.length-1), pad.top+plotH); ctx.lineTo(x(0), pad.top+plotH); ctx.closePath();
+  ctx.fillStyle = gradient; ctx.fill();
+  ctx.beginPath();
+  values.forEach((v,i)=>{ const px=x(i), py=y(v); if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py); });
+  ctx.strokeStyle = "#ef3333"; ctx.lineWidth = 2.5; ctx.lineJoin = "round"; ctx.lineCap = "round"; ctx.stroke();
+  values.forEach((v,i)=>{
+    ctx.beginPath(); ctx.arc(x(i),y(v),i===values.length-1?3.5:2,0,Math.PI*2);
+    ctx.fillStyle = "#ef3333"; ctx.fill();
+  });
+  ctx.fillStyle = "#929292"; ctx.textAlign = "left"; ctx.textBaseline = "top";
+  ctx.fillText("Start", pad.left, cssHeight-21);
+  ctx.textAlign = "right";
+  ctx.fillText("Latest", cssWidth-pad.right, cssHeight-21);
+}
+
+window.addEventListener("resize",()=>{
+  if($("app").style.display !== "none") renderEquityCurve();
+});
 
 async function showSession(session) {
   currentUser = session ? session.user : null;
@@ -432,37 +525,91 @@ $("propform").addEventListener("submit",async e=>{
   propMessage("Settings saved successfully.");
 });
 
+$("screenshot").addEventListener("change",()=>{
+  const file = $("screenshot").files && $("screenshot").files[0];
+  const preview = $("screenshotPreview");
+  if(!file) {
+    preview.hidden = true;
+    preview.removeAttribute("src");
+    return;
+  }
+  if(!file.type.startsWith("image/")) {
+    tradeMessage("Please choose an image file.");
+    $("screenshot").value = "";
+    preview.hidden = true;
+    return;
+  }
+  if(file.size > 5 * 1024 * 1024) {
+    tradeMessage("That image is over 5 MB. Choose a smaller screenshot.");
+    $("screenshot").value = "";
+    preview.hidden = true;
+    return;
+  }
+  preview.src = URL.createObjectURL(file);
+  preview.hidden = false;
+});
+
+async function uploadTradeScreenshot(file) {
+  if(!file) return null;
+  if(!currentUser) throw new Error("Please sign in again before uploading.");
+  if(!file.type.startsWith("image/")) throw new Error("Please choose an image file.");
+  if(file.size > 5 * 1024 * 1024) throw new Error("Screenshot must be 5 MB or smaller.");
+
+  const safeName = file.name.replace(/[^a-zA-Z0-9._-]/g, "_");
+  const path = currentUser.id + "/" + Date.now() + "-" + safeName;
+  const {error:uploadError} = await db.storage
+    .from("trade-screenshots")
+    .upload(path, file, {contentType:file.type, upsert:false});
+
+  if(uploadError) throw uploadError;
+
+  const {data} = db.storage.from("trade-screenshots").getPublicUrl(path);
+  return data.publicUrl;
+}
+
 $("tradeform").addEventListener("submit",async e=>{
   e.preventDefault();
   $("save").disabled = true;
   tradeMessage("Saving trade...");
 
   const optionalNumber = id => $(id).value===""?null:Number($(id).value);
-  const trade = {
-    trade_date:$("date").value,
-    symbol:$("symbol").value.trim(),
-    direction:$("direction").value,
-    entry_price:Number($("entry").value),
-    stop_loss:optionalNumber("sl"),
-    take_profit:optionalNumber("tp"),
-    pnl:Number($("pnl").value),
-    notes:$("notes").value.trim()||null
-  };
+  const file = $("screenshot").files && $("screenshot").files[0];
 
-  const {error} = await db.from("trades").insert(trade);
-  $("save").disabled = false;
+  try {
+    let screenshotUrl = null;
+    if(file) {
+      tradeMessage("Uploading screenshot...");
+      screenshotUrl = await uploadTradeScreenshot(file);
+    }
 
-  if(error) {
-    tradeMessage("Could not save: " + error.message);
-    return;
+    const trade = {
+      trade_date:$("date").value,
+      symbol:$("symbol").value.trim(),
+      direction:$("direction").value,
+      entry_price:Number($("entry").value),
+      stop_loss:optionalNumber("sl"),
+      take_profit:optionalNumber("tp"),
+      pnl:Number($("pnl").value),
+      notes:$("notes").value.trim()||null,
+      screenshot_url:screenshotUrl
+    };
+
+    const {error} = await db.from("trades").insert(trade);
+    if(error) throw error;
+
+    $("tradeform").reset();
+    $("date").value = new Date().toLocaleDateString("en-CA");
+    $("symbol").value = "MNQ";
+    $("direction").value = "Long";
+    $("screenshotPreview").hidden = true;
+    $("screenshotPreview").removeAttribute("src");
+    tradeMessage("Trade saved successfully!");
+    await loadTrades();
+  } catch(error) {
+    tradeMessage("Could not save trade: " + (error.message || String(error)));
+  } finally {
+    $("save").disabled = false;
   }
-
-  $("tradeform").reset();
-  $("date").value = new Date().toLocaleDateString("en-CA");
-  $("symbol").value = "MNQ";
-  $("direction").value = "Long";
-  tradeMessage("Trade saved successfully!");
-  await loadTrades();
 });
 
 db.auth.onAuthStateChange((_event,session)=>{
