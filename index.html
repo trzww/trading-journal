@@ -2,211 +2,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MNQ Journal</title>
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      background: #090909;
-      color: #f5f5f5;
-      font-family: Arial, sans-serif;
-    }
-    header {
-      padding: 24px 6%;
-      border-bottom: 1px solid #292929;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .logo { font-size: 21px; font-weight: bold; }
-    .logo span { color: #ef3333; }
-    .status { color: #aaa; font-size: 12px; }
-    main { max-width: 1100px; margin: auto; padding: 36px 20px; }
-    h1 { margin-bottom: 8px; font-size: 30px; }
-    .subtitle { color: #888; margin-bottom: 30px; }
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-    .card, .panel {
-      background: #111;
-      border: 1px solid #292929;
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .label { color: #999; font-size: 13px; }
-    .value { font-size: 27px; font-weight: bold; margin-top: 12px; }
-    .red { color: #ef4444; }
-    .panel { margin-top: 22px; }
-    h2 { font-size: 18px; margin-top: 0; }
-    form {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-    }
-    label { color: #aaa; font-size: 13px; }
-    input, select, textarea {
-      display: block;
-      width: 100%;
-      margin-top: 7px;
-      padding: 12px;
-      background: #090909;
-      border: 1px solid #333;
-      border-radius: 7px;
-      color: white;
-    }
-    textarea { resize: vertical; }
-    .full { grid-column: 1 / -1; }
-    button {
-      background: #e52b2b;
-      color: white;
-      border: 0;
-      padding: 13px 18px;
-      border-radius: 7px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    button:hover { background: #c91f1f; }
-    .empty { color: #888; text-align: center; padding: 28px 0; }
-    .table-wrap { overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; min-width: 500px; }
-    th, td {
-      text-align: left;
-      padding: 13px 10px;
-      border-bottom: 1px solid #292929;
-      font-size: 13px;
-    }
-    th { color: #888; }
-    @media (max-width: 600px) {
-      .stats { grid-template-columns: 1fr; }
-      form { grid-template-columns: 1fr; }
-      .full { grid-column: auto; }
-      h1 { font-size: 25px; }
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MNQ Journal</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#090909;color:#f5f5f5;font-family:Arial,sans-serif}
+header{padding:22px 6%;border-bottom:1px solid #292929;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:21px;font-weight:bold}.logo span{color:#ef3333}
+main{max-width:1050px;margin:auto;padding:35px 20px}
+h1{font-size:30px;margin-bottom:8px}
+.muted{color:#888;font-size:14px;line-height:1.6}
+.panel,.card{background:#111;border:1px solid #292929;border-radius:12px;padding:20px;margin-top:20px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.label{color:#999;font-size:13px}.value{font-size:27px;font-weight:bold;margin-top:10px}
+form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+label{color:#aaa;font-size:13px}
+input,select,textarea{width:100%;margin-top:7px;padding:12px;background:#090909;border:1px solid #333;border-radius:7px;color:white}
+button{background:#e52b2b;color:white;border:0;padding:12px 17px;border-radius:7px;cursor:pointer;font-weight:bold}
+button.secondary{background:#222;border:1px solid #444}
+button:disabled{opacity:.5;cursor:wait}
+.full{grid-column:1/-1}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:500px}
+th,td{text-align:left;padding:13px 10px;border-bottom:1px solid #292929;font-size:13px}
+th{color:#888}
+.positive{color:#4ade80}.negative{color:#ef4444}
+#message{white-space:pre-wrap;color:#fca5a5;margin-top:12px}
+#app{display:none}
+@media(max-width:600px){.stats{grid-template-columns:1fr}form{grid-template-columns:1fr}.full{grid-column:auto}h1{font-size:25px}}
+</style>
 </head>
 <body>
-  <header>
-    <div class="logo">MNQ<span>.</span>JOURNAL</div>
-    <div class="status">● PERSONAL TRADING SPACE</div>
-  </header>
+<header>
+  <div class="logo">MNQ<span>.</span>JOURNAL</div>
+  <button id="logout" class="secondary" hidden>Sign out</button>
+</header>
 
-  <main>
-    <h1>Your trading dashboard.</h1>
-    <p class="subtitle">Track the process. Respect the risk. Improve every day.</p>
+<main>
+  <h1>Your trading dashboard.</h1>
+  <p class="muted">Track the process. Respect the risk. Improve every day.</p>
 
-    <section class="stats">
-      <div class="card">
-        <div class="label">TOTAL P&L</div>
-        <div class="value" id="total">$0.00</div>
-      </div>
-      <div class="card">
-        <div class="label">WIN RATE</div>
-        <div class="value" id="winrate">0%</div>
-      </div>
-      <div class="card">
-        <div class="label">TOTAL TRADES</div>
-        <div class="value" id="count">0</div>
-      </div>
-    </section>
+  <section id="auth" class="panel">
+    <h2>Your account</h2>
+    <p class="muted">Create an account or sign in to access your journal.</p>
+    <form id="authform">
+      <label class="full">Email
+        <input type="email" id="email" autocomplete="email" required>
+      </label>
+      <label class="full">Password
+        <input type="password" id="password" autocomplete="current-password" minlength="6" required>
+      </label>
+      <button type="submit">Sign in</button>
+      <button type="button" id="signup" class="secondary">Create account</button>
+    </form>
+    <div id="message" role="status"></div>
+  </section>
+
+  <section id="app">
+    <div class="stats">
+      <div class="card"><div class="label">TOTAL P&L</div><div class="value" id="total">$0.00</div></div>
+      <div class="card"><div class="label">WIN RATE</div><div class="value" id="winrate">0%</div></div>
+      <div class="card"><div class="label">TOTAL TRADES</div><div class="value" id="count">0</div></div>
+    </div>
 
     <section class="panel">
       <h2>＋ Log a trade</h2>
       <form id="tradeform">
-        <label>Date
-          <input type="date" id="date" required>
-        </label>
-        <label>Symbol
-          <input value="MNQ" id="symbol" required>
-        </label>
-        <label>Direction
-          <select id="direction">
-            <option>Long</option>
-            <option>Short</option>
-          </select>
-        </label>
-        <label>Entry price
-          <input type="number" step="any" id="entry" required>
-        </label>
-        <label>Stop loss
-          <input type="number" step="any" id="sl">
-        </label>
-        <label>Take profit
-          <input type="number" step="any" id="tp">
-        </label>
-        <label>P&L ($)
-          <input type="number" step="0.01" id="pnl" required>
-        </label>
-        <label>Trade screenshot
-          <input type="file" id="screenshot" accept="image/*">
-        </label>
-        <label class="full">Notes
-          <textarea id="notes" rows="3" placeholder="Setup, execution, mistakes..."></textarea>
-        </label>
-        <div class="full">
-          <button type="submit">Save trade</button>
-        </div>
+        <label>Date<input type="date" id="date" required></label>
+        <label>Symbol<input id="symbol" value="MNQ" required></label>
+        <label>Direction<select id="direction"><option>Long</option><option>Short</option></select></label>
+        <label>Entry price<input type="number" step="any" id="entry" required></label>
+        <label>Stop loss<input type="number" step="any" id="sl"></label>
+        <label>Take profit<input type="number" step="any" id="tp"></label>
+        <label class="full">P&L in dollars<input type="number" step="0.01" id="pnl" required></label>
+        <label class="full">Notes<textarea id="notes" rows="3" placeholder="Setup, execution, mistakes..."></textarea></label>
+        <div class="full"><button type="submit" id="save">Save trade</button></div>
       </form>
+      <div id="trademessage" class="muted" role="status"></div>
     </section>
 
     <section class="panel">
       <h2>Trade history</h2>
       <div class="table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th>Date</th><th>Symbol</th><th>Side</th>
-              <th>Entry</th><th>P&L</th>
-            </tr>
-          </thead>
-          <tbody id="history">
-            <tr><td colspan="5" class="empty">Your trades will appear here.</td></tr>
-          </tbody>
+          <thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th></tr></thead>
+          <tbody id="history"></tbody>
         </table>
       </div>
-      <p class="subtitle">First design preview — database connection comes next.</p>
     </section>
-  </main>
+  </section>
+</main>
 
-  <script>
-    const dateInput = document.getElementById("date");
-    dateInput.value = new Date().toLocaleDateString("en-CA");
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+const SUPABASE_URL = "https://dggokjetnvmwyfflbism.supabase.co";
+const SUPABASE_KEY = "sb_publishable_Yh7Aj-YRfYq_66LVxpZszA_XWGqQo4N";
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    let trades = [];
+const $ = id => document.getElementById(id);
+$("date").value = new Date().toLocaleDateString("en-CA");
 
-    document.getElementById("tradeform").addEventListener("submit", function(e) {
-      e.preventDefault();
+function message(text) { $("message").textContent = text; }
+function tradeMessage(text) { $("trademessage").textContent = text; }
 
-      trades.push({
-        date: dateInput.value,
-        symbol: document.getElementById("symbol").value,
-        direction: document.getElementById("direction").value,
-        entry: Number(document.getElementById("entry").value),
-        pnl: Number(document.getElementById("pnl").value)
-      });
+async function loadTrades() {
+  tradeMessage("Loading your trades...");
+  const {data,error} = await db.from("trades")
+    .select("id,trade_date,symbol,direction,entry_price,pnl")
+    .order("trade_date",{ascending:false});
 
-      const total = trades.reduce((sum, trade) => sum + trade.pnl, 0);
-      const wins = trades.filter(trade => trade.pnl > 0).length;
+  if(error) {
+    tradeMessage("Could not load trades: " + error.message);
+    return;
+  }
 
-      document.getElementById("total").textContent =
-        (total < 0 ? "-$" : "$") + Math.abs(total).toFixed(2);
-      document.getElementById("total").className =
-        "value " + (total < 0 ? "red" : "");
-      document.getElementById("winrate").textContent =
-        (wins / trades.length * 100).toFixed(1) + "%";
-      document.getElementById("count").textContent = trades.length;
+  const total = data.reduce((sum,t)=>sum+Number(t.pnl||0),0);
+  const wins = data.filter(t=>Number(t.pnl)>0).length;
+  $("total").textContent = (total<0?"-$":"$")+Math.abs(total).toFixed(2);
+  $("total").className = "value " + (total<0?"negative":"positive");
+  $("winrate").textContent = (data.length?wins/data.length*100:0).toFixed(1)+"%";
+  $("count").textContent = data.length;
 
-      document.getElementById("history").innerHTML = trades.map(t =>
-        `<tr><td>${t.date}</td><td>${t.symbol}</td><td>${t.direction}</td><td>${t.entry}</td><td class="${t.pnl < 0 ? "red" : ""}">$${t.pnl.toFixed(2)}</td></tr>`
-      ).reverse().join("");
+  const history = $("history");
+  history.replaceChildren();
 
-      this.reset();
-      dateInput.value = new Date().toLocaleDateString("en-CA");
-      document.getElementById("symbol").value = "MNQ";
-    });
-  </script>
+  if(!data.length) {
+    const row = history.insertRow();
+    const cell = row.insertCell();
+    cell.colSpan = 5;
+    cell.textContent = "No trades yet. Log your first trade above.";
+  }
+
+  data.forEach(t=>{
+    const row = history.insertRow();
+    [t.trade_date,t.symbol,t.direction,Number(t.entry_price).toString()]
+      .forEach(value=>row.insertCell().textContent=value??"");
+    const cell = row.insertCell();
+    const pnl = Number(t.pnl||0);
+    cell.textContent = (pnl<0?"-":"")+"$"+Math.abs(pnl).toFixed(2);
+    cell.className = pnl<0?"negative":pnl>0?"positive":"";
+  });
+  tradeMessage("Your trades are synced with Supabase.");
+}
+
+async function showSession(session) {
+  $("auth").style.display = session ? "none" : "block";
+  $("app").style.display = session ? "block" : "none";
+  $("logout").hidden = !session;
+  if(session) await loadTrades();
+}
+
+$("authform").addEventListener("submit",async e=>{
+  e.preventDefault();
+  message("Signing in...");
+  const {error} = await db.auth.signInWithPassword({
+    email:$("email").value.trim(),
+    password:$("password").value
+  });
+  if(error) message(error.message);
+  else message("");
+});
+
+$("signup").addEventListener("click",async()=>{
+  message("Creating your account...");
+  const {data,error} = await db.auth.signUp({
+    email:$("email").value.trim(),
+    password:$("password").value
+  });
+  if(error) {
+    message(error.message);
+  } else if(!data.session) {
+    message("Account request received. Check your email to confirm your account, then sign in.");
+  } else {
+    message("");
+  }
+});
+
+$("logout").addEventListener("click",async()=>{
+  const {error} = await db.auth.signOut();
+  if(error) message(error.message);
+});
+
+$("tradeform").addEventListener("submit",async e=>{
+  e.preventDefault();
+  $("save").disabled = true;
+  tradeMessage("Saving trade...");
+
+  const optionalNumber = id => $(id).value===""?null:Number($(id).value);
+  const trade = {
+    trade_date:$("date").value,
+    symbol:$("symbol").value.trim(),
+    direction:$("direction").value,
+    entry_price:Number($("entry").value),
+    stop_loss:optionalNumber("sl"),
+    take_profit:optionalNumber("tp"),
+    pnl:Number($("pnl").value),
+    notes:$("notes").value.trim()||null
+  };
+
+  const {error} = await db.from("trades").insert(trade);
+  $("save").disabled = false;
+
+  if(error) {
+    tradeMessage("Could not save: "+error.message);
+    return;
+  }
+
+  $("tradeform").reset();
+  $("date").value = new Date().toLocaleDateString("en-CA");
+  $("symbol").value = "MNQ";
+  $("direction").value = "Long";
+  tradeMessage("Trade saved successfully!");
+  await loadTrades();
+});
+
+db.auth.onAuthStateChange((_event,session)=>{
+  setTimeout(()=>showSession(session),0);
+});
+
+(async()=>{
+  const {data,error} = await db.auth.getSession();
+  if(error) message(error.message);
+  await showSession(data.session);
+})();
+</script>
 </body>
 </html>
