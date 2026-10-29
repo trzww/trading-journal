@@ -371,6 +371,29 @@ header{background:rgba(4,4,6,.88)}
 .stats .card:hover{background:linear-gradient(145deg,rgba(48,43,79,.3),transparent 72%),#0d0c0f}
 .panel{background:linear-gradient(145deg,rgba(48,43,79,.13),transparent 48%),rgba(10,10,12,.94)}
 input,select,textarea{background:#080809}
+
+/* Personal Growth Coach */
+.growth-coach{border-color:#3a3030;background:linear-gradient(145deg,rgba(40,26,28,.38),rgba(17,20,26,.98) 48%)}
+.growth-kicker{font-size:10px;letter-spacing:1.7px;color:#d7bda5;font-weight:800;text-transform:uppercase;margin-bottom:9px}
+.growth-title{font-size:24px;letter-spacing:-.6px;font-weight:850;margin-bottom:7px}
+.growth-intro{max-width:760px;color:#a9afbb;line-height:1.7;font-size:13px}
+.growth-top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.growth-pill{border:1px solid #493b37;border-radius:99px;padding:7px 10px;color:#d7bda5;font-size:10px;letter-spacing:1px;font-weight:800}
+.growth-chat{margin-top:18px;border:1px solid var(--border);background:#0b0d11;border-radius:12px;overflow:hidden}
+.growth-chat-head{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:13px 15px;border-bottom:1px solid var(--border);color:#aeb5c3;font-size:11px}
+.growth-messages{padding:16px;min-height:190px;max-height:430px;overflow:auto;display:flex;flex-direction:column;gap:12px}
+.growth-msg{max-width:88%;padding:12px 14px;border-radius:12px;line-height:1.65;font-size:13px;white-space:pre-wrap;overflow-wrap:anywhere}
+.growth-msg.bot{align-self:flex-start;background:#171a21;border:1px solid #292e38;color:#e8eaf0;border-bottom-left-radius:4px}
+.growth-msg.user{align-self:flex-end;background:#29201f;border:1px solid #4b3432;color:#fff0e9;border-bottom-right-radius:4px}
+.growth-compose{padding:13px;border-top:1px solid var(--border);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end}
+.growth-compose textarea{resize:vertical;min-height:70px;max-height:180px;margin:0}
+.growth-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.growth-report{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-top:16px}
+.growth-report .card{padding:15px}.growth-report h3{margin-bottom:9px;color:#e7d4c4}.growth-report ul{margin:0;padding-left:18px;color:#b7bdc8;line-height:1.7;font-size:12px}.growth-report p{margin:0;color:#b7bdc8;line-height:1.7;font-size:12px;white-space:pre-wrap}
+.growth-status{font-size:11px;color:#d7bda5;min-height:18px;margin-top:10px}
+.growth-privacy{font-size:11px;color:#818998;line-height:1.65;margin-top:13px}
+@media(max-width:700px){.growth-report{grid-template-columns:1fr}.growth-compose{grid-template-columns:1fr}.growth-compose button{width:100%}.growth-msg{max-width:96%}.growth-title{font-size:22px}}
+
 </style>
 </head>
 <body>
@@ -516,6 +539,14 @@ input,select,textarea{background:#080809}
 
       <section class="page" id="page-coach">
         <div class="page-head"><div><h1>Trading Coach</h1><div class="muted">Practical guidance generated from your saved trades—not predictions or guaranteed outcomes.</div></div><span class="tag" id="coachStatus">Waiting for trade data</span></div>
+        <section class="panel growth-coach" aria-label="AI personal growth coach">
+          <div class="growth-top"><div><div class="growth-kicker">Beyond the charts · Personal development</div><div class="growth-title">Know yourself. Trade with intention.</div><div class="growth-intro">An AI-led reflection session that adapts its follow-up questions to your answers. Explore values and faith if you choose, beliefs, discipline, ambition, emotional patterns, relationships, habits, and trading psychology—then receive a practical improvement plan.</div></div><span class="growth-pill" id="growthState">SESSION NOT STARTED</span></div>
+          <div class="growth-controls" id="growthStartControls"><button type="button" id="growthStart">Start deep assessment</button><button type="button" class="secondary" id="growthReset">Reset session</button></div>
+          <div class="growth-chat" id="growthChat" hidden><div class="growth-chat-head"><span id="growthProgress">PRIVATE REFLECTION SESSION · QUESTION 1</span><span>AI COACH</span></div><div class="growth-messages" id="growthMessages" role="log" aria-live="polite"></div><form class="growth-compose" id="growthForm"><textarea id="growthAnswer" maxlength="4000" placeholder="Take your time. Be honest—there is no perfect answer." required></textarea><button id="growthSend" type="submit">Send answer</button></form></div>
+          <div class="growth-status" id="growthStatus" role="status" aria-live="polite"></div>
+          <div id="growthReport" hidden></div>
+          <p class="growth-privacy">Privacy: this assessment sends your answers to the configured AI service to generate responses. This feature does not save the conversation to your trading journal database; the session stays in this page until you reset it or reload. Share only what you are comfortable sharing. It offers reflection, not a clinical diagnosis, religious ruling, or financial advice.</p>
+        </section>
         <div class="stats">
           <div class="card"><div class="label">RECENT 10 TRADES</div><div class="value" id="coachRecentPnl">$0.00</div><div class="muted" id="coachRecentLabel">No trades logged</div></div>
           <div class="card"><div class="label">CURRENT STREAK</div><div class="value" id="coachStreak">—</div><div class="muted" id="coachStreakLabel">Based on most recent results</div></div>
@@ -766,6 +797,18 @@ function renderTradingCoach(){
   const render=(id,items)=>{const el=$(id);if(!el)return;el.replaceChildren();items.forEach(item=>{const row=document.createElement("div");row.className="metric-row";const left=document.createElement("div");const title=document.createElement("strong");title.textContent=item.title;const desc=document.createElement("div");desc.className="muted";desc.textContent=item.desc;desc.style.marginTop="4px";left.append(title,desc);row.appendChild(left);el.appendChild(row)})};
   render("coachDo",dos);render("coachAvoid",avoids);render("coachReasons",reasons.map((r,i)=>({title:"Observation "+(i+1),desc:r})));
 }
+
+
+// Adaptive AI personal-growth assessment. Conversation is held in memory only.
+let growthHistory=[],growthStarted=false,growthFinished=false,growthQuestionCount=0;
+function growthAddMessage(role,content){const box=$("growthMessages");if(!box)return;const item=document.createElement("div");item.className="growth-msg "+(role==="user"?"user":"bot");item.textContent=content;box.appendChild(item);box.scrollTop=box.scrollHeight}
+function growthSetBusy(busy){$("growthSend").disabled=busy;$("growthStart").disabled=busy;$("growthAnswer").disabled=busy;setText("growthStatus",busy?"Thinking carefully about your answer…":"")}
+function growthRenderReport(report){const root=$("growthReport");root.replaceChildren();root.hidden=false;const heading=document.createElement("div");heading.className="signature-kicker";heading.textContent="YOUR PERSONAL FIELD NOTES";root.appendChild(heading);const title=document.createElement("div");title.className="signature-title";title.style.margin="7px 0 12px";title.textContent=report.title||"Your personal growth assessment";root.appendChild(title);const grid=document.createElement("div");grid.className="growth-report";const addCard=(name,value)=>{const card=document.createElement("section");card.className="card";const h=document.createElement("h3");h.textContent=name;card.appendChild(h);if(Array.isArray(value)){const ul=document.createElement("ul");value.forEach(v=>{const li=document.createElement("li");li.textContent=String(v);ul.appendChild(li)});card.appendChild(ul)}else{const p=document.createElement("p");p.textContent=String(value||"Not enough information to assess yet.");card.appendChild(p)}grid.appendChild(card)};addCard("Strengths to build on",report.strengths);addCard("Patterns to watch",report.blindSpots);addCard("Your next 7 days",report.actionPlan);addCard("Trading psychology",report.tradingPsychology);addCard("Values & personal grounding",report.valuesAndFaith);addCard("Reflection to carry forward",report.reflection);root.appendChild(grid);const restart=document.createElement("button");restart.type="button";restart.className="secondary";restart.style.marginTop="14px";restart.textContent="Start a new assessment";restart.addEventListener("click",growthResetSession);root.appendChild(restart)}
+async function growthCallCoach(mode){const {data,error}=await db.functions.invoke("personal-growth-coach",{body:{mode,messages:growthHistory,questionCount:growthQuestionCount}});if(error)throw new Error(error.message||"AI coach request failed");if(!data||typeof data.message!=="string")throw new Error("The AI coach returned an unexpected response.");return data}
+async function growthStartSession(){if(growthStarted)return;growthStarted=true;growthFinished=false;growthQuestionCount=0;growthHistory=[];$("growthChat").hidden=false;$("growthReport").hidden=true;$("growthMessages").replaceChildren();setText("growthState","ASSESSMENT IN PROGRESS");setText("growthProgress","REFLECTION SESSION · STARTING");growthSetBusy(true);try{const data=await growthCallCoach("start");growthHistory.push({role:"assistant",content:data.message});growthAddMessage("assistant",data.message);growthQuestionCount=1;setText("growthProgress","REFLECTION SESSION · QUESTION 1");$("growthAnswer").focus()}catch(e){growthStarted=false;setText("growthState","SETUP REQUIRED");setText("growthStatus","Could not connect: "+e.message+". Deploy the personal-growth-coach Supabase function and configure OPENAI_API_KEY.");}finally{growthSetBusy(false)}}
+async function growthSubmitAnswer(e){e.preventDefault();if(!growthStarted||growthFinished)return;const answer=$("growthAnswer").value.trim();if(!answer)return;growthHistory.push({role:"user",content:answer});growthAddMessage("user",answer);$("growthAnswer").value="";growthSetBusy(true);try{const data=await growthCallCoach("continue");if(data.finished&&data.report){growthFinished=true;growthAddMessage("assistant",data.message||"Your assessment is ready.");setText("growthState","ASSESSMENT COMPLETE");setText("growthProgress","PERSONAL ASSESSMENT COMPLETE");growthRenderReport(data.report);$("growthForm").hidden=true;}else{growthHistory.push({role:"assistant",content:data.message});growthAddMessage("assistant",data.message);growthQuestionCount++;setText("growthProgress","REFLECTION SESSION · QUESTION "+growthQuestionCount);}}catch(e){growthHistory.pop();$("growthAnswer").value=answer;setText("growthStatus","Could not get a response: "+e.message+". Your answer is still here—try again.");}finally{growthSetBusy(false)}}
+function growthResetSession(){growthHistory=[];growthStarted=false;growthFinished=false;growthQuestionCount=0;$("growthChat").hidden=true;$("growthForm").hidden=false;$("growthReport").hidden=true;$("growthReport").replaceChildren();$("growthMessages").replaceChildren();$("growthAnswer").value="";setText("growthState","SESSION NOT STARTED");setText("growthProgress","PRIVATE REFLECTION SESSION · QUESTION 1");setText("growthStatus","");$("growthStart").disabled=false}
+$("growthStart").addEventListener("click",growthStartSession);$("growthReset").addEventListener("click",growthResetSession);$("growthForm").addEventListener("submit",growthSubmitAnswer);
 
 function renderPerformanceOrb(){
   const total=tradesCache.reduce((sum,t)=>sum+Number(t.pnl||0),0);
