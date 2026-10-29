@@ -359,6 +359,18 @@ button{border-radius:9px;min-height:38px;background:linear-gradient(135deg,#5a10
 @media(max-width:700px){header{height:62px;padding:0 14px}.logo{font-size:16px}.layout{display:block;min-height:calc(100vh - 62px)}.sidebar{position:sticky;top:62px;height:auto;max-height:none;display:flex;flex-direction:row;overflow-x:auto;overflow-y:hidden;padding:8px;gap:5px;background:rgba(5,5,6,.96);backdrop-filter:blur(18px);border-right:0;border-bottom:1px solid rgba(211,195,170,.18)}.side-label,.side-bottom{display:none}.nav-btn{flex:0 0 auto;width:auto;min-width:max-content;min-height:38px;padding:9px 11px;font-size:10px}.nav-btn:hover{transform:none}.nav-btn.active:before{left:8px;right:8px;top:auto;bottom:2px;width:auto;height:2px}.workspace{padding:18px 12px}.page-head{margin-bottom:18px;align-items:flex-start}.page-head h1{font-size:28px}.command-hero{min-height:225px;padding:24px 19px;margin-bottom:13px}.hero-title{font-size:34px;letter-spacing:-1.8px}.hero-mark{position:absolute;right:-44px;top:25px;opacity:.25;transform:scale(.9)}.hero-copy{max-width:100%}.hero-index{right:14px;bottom:11px}.hero-rule{gap:7px}.hero-rule i{width:14px}.stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.stats.three{grid-template-columns:repeat(2,minmax(0,1fr))}.stats .card{min-height:104px;padding:14px}.value{font-size:23px;margin-top:10px}.panel{padding:15px;margin-bottom:13px}.chart-wrap{height:245px}.signature-title{font-size:24px}.instrument-grid{grid-template-columns:1fr}.pulse-instrument{height:150px}.dna-layout,.engine-layout{grid-template-columns:1fr}.engine-layout{justify-items:center}.engine-bars{width:100%}.coach-radar-layout{grid-template-columns:100px minmax(0,1fr);gap:10px}.coach-radar{width:100px;height:100px}.mission-layout{grid-template-columns:95px minmax(0,1fr);gap:10px}.mission-gauge{width:90px;height:90px}.replay-instrument{grid-template-columns:1fr}.calendar{gap:3px}.day-cell{min-height:73px;padding:4px}.day-pnl{font-size:9px}.day-count{font-size:8px}.weekday{font-size:8px}.authform{grid-template-columns:1fr}.authform .full{grid-column:1}.authform button{width:100%}#auth{margin:6vh 13px;padding:25px}.table-wrap{margin-left:-1px;margin-right:-1px}}
 @media(prefers-reduced-motion:reduce){.command-hero *,.hero-mark-ring,.hero-mark-core{animation:none!important;transition:none!important}}
 
+
+/* MICRO-LIFT: an almost imperceptible brightness increase, preserving NIGHTSHIFT */
+html{background:#020203}
+body{background:#020203}
+header{background:rgba(4,4,6,.88)}
+.sidebar{background:linear-gradient(180deg,rgba(11,11,14,.97),rgba(5,5,7,.99))}
+.command-hero{background:linear-gradient(110deg,rgba(48,43,79,.44),rgba(12,11,14,.93) 50%,rgba(72,8,12,.2)),#0a0a0c}
+.hero-mark-core{background:radial-gradient(circle at 35% 25%,rgba(48,43,79,.8),#0a0a0c 68%)}
+.stats .card{background:linear-gradient(145deg,rgba(48,43,79,.19),transparent 68%),rgba(10,10,12,.94)}
+.stats .card:hover{background:linear-gradient(145deg,rgba(48,43,79,.3),transparent 72%),#0d0c0f}
+.panel{background:linear-gradient(145deg,rgba(48,43,79,.13),transparent 48%),rgba(10,10,12,.94)}
+input,select,textarea{background:#080809}
 </style>
 </head>
 <body>
