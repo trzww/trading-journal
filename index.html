@@ -708,6 +708,31 @@ button:active,.btn:active{transform:translateY(0) scale(.985)}
 @media(max-width:700px){.mnq-vault-stage{min-height:170px}.mnq-vault-core{width:88px;height:88px}.mnq-vault-ring{width:165px;height:62px}.mnq-vault-ring.r2{width:205px;height:76px}.mnq-vault-ring.r3{width:245px;height:92px}.mnq-vault-caption{left:14px;bottom:12px}.mnq-vault-coordinate{right:12px;top:12px}}
 @media(prefers-reduced-motion:reduce){body:before,.mnq-vault-core,.mnq-vault-ring{animation:none!important}*{scroll-behavior:auto!important;transition:none!important}}
 
+
+/* MNQ / DIMENSIONAL FIELD — cinematic interface layer */
+body{isolation:isolate}
+.mnq-depth-canvas{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.36;mix-blend-mode:screen}
+body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
+.page.active{animation:mnqPageArrival .72s cubic-bezier(.16,1,.3,1) both}
+@keyframes mnqPageArrival{from{opacity:.25;filter:blur(5px);transform:translateY(13px) scale(.995)}to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}}
+.page.active .page-head{animation:mnqHeadArrival .8s cubic-bezier(.16,1,.3,1) both}
+@keyframes mnqHeadArrival{from{opacity:0;transform:translateY(10px);letter-spacing:.04em}to{opacity:1;transform:none;letter-spacing:normal}}
+.page.active .stats>.card,.page.active>.panel,.page.active .detail-grid>.panel{animation:mnqPanelArrival .75s cubic-bezier(.16,1,.3,1) both}
+.page.active .stats>.card:nth-child(2){animation-delay:.06s}.page.active .stats>.card:nth-child(3){animation-delay:.12s}.page.active .stats>.card:nth-child(4){animation-delay:.18s}
+@keyframes mnqPanelArrival{from{opacity:.35;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.page:not(.active) .mnq-page-mark{display:none}
+.mnq-page-mark{display:flex;align-items:center;gap:10px;margin:0 0 16px;color:rgba(211,195,170,.58);font:9px/1.2 ui-monospace,monospace;letter-spacing:.2em;text-transform:uppercase}
+.mnq-page-mark:before{content:"";width:28px;height:1px;background:linear-gradient(90deg,#d3c3aa,transparent);box-shadow:0 0 8px rgba(211,195,170,.45)}
+.mnq-page-mark span{margin-left:auto;letter-spacing:.13em;color:rgba(187,198,196,.34)}
+/* cursor light is a restrained glass reflection, not a spotlight */
+.card,.panel{--mnq-card-x:50%;--mnq-card-y:0%}
+.card:focus-within,.panel:focus-within{outline-color:rgba(211,195,170,.25)}
+.mnq-page-corner{position:absolute;right:0;top:0;width:52px;height:52px;pointer-events:none;opacity:.55}
+.mnq-page-corner:before,.mnq-page-corner:after{content:"";position:absolute;background:rgba(211,195,170,.45)}
+.mnq-page-corner:before{top:0;right:0;width:24px;height:1px}.mnq-page-corner:after{top:0;right:0;width:1px;height:24px}
+@media(max-width:700px){.mnq-depth-canvas{opacity:.2}.page.active{animation-duration:.42s}}
+@media(prefers-reduced-motion:reduce){.mnq-depth-canvas{display:none}.page.active,.page.active .page-head,.page.active .stats>.card,.page.active>.panel,.page.active .detail-grid>.panel{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -1354,6 +1379,41 @@ db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>showSession(session)
    el.addEventListener("pointerleave",()=>{el.style.transform=""});
   });
  }
+})();
+
+
+/* DIMENSIONAL FIELD: real-time perspective particles, navigation choreography */
+(function(){
+ if(document.querySelector(".mnq-depth-canvas"))return;
+ const canvas=document.createElement("canvas");canvas.className="mnq-depth-canvas";canvas.setAttribute("aria-hidden","true");document.body.prepend(canvas);
+ const ctx=canvas.getContext("2d");if(!ctx)return;
+ const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+ let w=0,h=0,dpr=1,raf=0,last=0,points=[],mx=-9999,my=-9999;
+ const palette=["187,198,196","211,195,170","72,8,12","87,78,135"];
+ function resize(){dpr=Math.min(devicePixelRatio||1,1.6);w=innerWidth;h=innerHeight;canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);canvas.style.width=w+"px";canvas.style.height=h+"px";ctx.setTransform(dpr,0,0,dpr,0,0);const count=Math.min(100,Math.max(38,Math.floor(w*h/14500)));points=Array.from({length:count},()=>({x:Math.random()*w,y:Math.random()*h,z:.25+Math.random()*.75,r:.45+Math.random()*1.15,p:Math.random()*6.28,v:.08+Math.random()*.24,c:palette[Math.floor(Math.random()*palette.length)]}));}
+ function draw(t){if(!ctx)return;const dt=Math.min(32,t-last||16);last=t;ctx.clearRect(0,0,w,h);
+  const cx=w*.52,cy=h*.48;
+  for(let i=0;i<points.length;i++){const p=points[i];p.p+=dt*.00018*p.v;let x=p.x+Math.sin(p.p)*12*p.z+(mx>-1000?(mx-w/2)*.012*p.z:0),y=p.y+Math.cos(p.p*.8)*10*p.z+(my>-1000?(my-h/2)*.012*p.z:0);
+   const dx=x-cx,dy=y-cy,depth=1+((dx/w)+(dy/h))*.08;x=cx+dx*depth;y=cy+dy*depth;
+   ctx.beginPath();ctx.arc(x,y,p.r*p.z,0,Math.PI*2);ctx.fillStyle="rgba("+p.c+","+(0.18+p.z*.35)+")";ctx.fill();
+   for(let j=i+1;j<points.length;j++){const q=points[j],qx=q.x+Math.sin(q.p)*12*q.z,qy=q.y+Math.cos(q.p*.8)*10*q.z,dd=Math.hypot(x-qx,y-qy);if(dd<105&&p.z>.45&&q.z>.45){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(qx,qy);ctx.strokeStyle="rgba(187,198,196,"+((1-dd/105)*.075*p.z)+")";ctx.lineWidth=.6;ctx.stroke();}}
+  }
+  // distant central axis glow
+  const g=ctx.createRadialGradient(w*.52,h*.46,0,w*.52,h*.46,Math.max(w,h)*.55);g.addColorStop(0,"rgba(48,43,79,.075)");g.addColorStop(.55,"rgba(72,8,12,.025)");g.addColorStop(1,"rgba(0,0,0,0)");ctx.fillStyle=g;ctx.fillRect(0,0,w,h);
+  if(!reduced)raf=requestAnimationFrame(draw);
+ }
+ resize();if(reduced)draw(0);else raf=requestAnimationFrame(draw);
+ addEventListener("resize",resize,{passive:true});
+ addEventListener("pointermove",e=>{mx=e.clientX;my=e.clientY},{passive:true});
+ addEventListener("pointerleave",()=>{mx=my=-9999},{passive:true});
+ // Section labels are decorative and use only static page names.
+ const names={dashboard:"Performance command",matrix:"Performance map",trades:"Execution desk",replay:"Simulation chamber",analytics:"Statistical engine",coach:"Trading psychology",prop:"Risk control"};
+ function markPage(page){const el=document.getElementById("page-"+page);if(!el||el.querySelector(".mnq-page-mark"))return;const mark=document.createElement("div");mark.className="mnq-page-mark";mark.textContent="MNQ / "+(names[page]||"Workspace");const index=document.createElement("span");index.textContent="FIELD SYSTEM · "+String(Object.keys(names).indexOf(page)+1).padStart(2,"0")+" / 07";mark.appendChild(index);const head=el.querySelector(".page-head");if(head)head.before(mark);else el.prepend(mark);}
+ Object.keys(names).forEach(markPage);
+ const original=window.showPage;
+ if(typeof original==="function"&&!original.__mnqWrapped){const wrapped=function(page){const el=document.getElementById("page-"+page);if(el){el.classList.remove("mnq-arrive");void el.offsetWidth;el.classList.add("mnq-arrive")}return original.apply(this,arguments)};wrapped.__mnqWrapped=true;window.showPage=wrapped;}
+ // Add a tiny corner engraving to major panels, never to forms or controls.
+ document.querySelectorAll("#page-dashboard>.panel,#page-matrix>.panel,#page-replay>.panel,#page-analytics>.panel,#page-coach>.panel,#page-prop>.panel").forEach(p=>{if(!p.querySelector(".mnq-page-corner")){const c=document.createElement("i");c.className="mnq-page-corner";c.setAttribute("aria-hidden","true");p.appendChild(c)}});
 })();
 
 </script>
