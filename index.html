@@ -780,6 +780,12 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 @media(max-width:760px){#auth{width:calc(100% - 24px);margin:22px auto;grid-template-columns:1fr;min-height:0}.auth-visual{min-height:265px;border-right:0;border-bottom:1px solid rgba(211,195,170,.12)}.auth-orbit{top:43%;width:250px;height:95px}.auth-orbit-b{width:300px;height:115px}.auth-prism{width:82px;height:82px}.auth-visual-label{left:22px;bottom:20px}.auth-visual-label strong{font-size:24px;margin:8px 0}.auth-coordinate{top:14px;right:14px}.auth-entry{padding:28px 23px 24px}.auth-kicker{margin-bottom:20px}}
 @media(prefers-reduced-motion:reduce){.auth-prism,.auth-orbit,.auth-visual:after{animation:none!important}}
 
+
+/* FLOWLIGHT visibility safeguard: keep the cursor aura above the entry artwork */
+.mnq-flowlight,.mnq-flowlight-trail{position:fixed!important;z-index:2147483646!important;pointer-events:none!important;display:block!important}
+.mnq-flowlight{mix-blend-mode:screen!important}
+@media(max-width:760px),(hover:none),(pointer:coarse){.mnq-flowlight,.mnq-flowlight-trail{display:none!important}}
+
 </style>
 </head>
 <body>
@@ -1477,7 +1483,7 @@ db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>showSession(session)
 
 /* FLOWLIGHT cursor aura — smooth lagging glow with a soft trailing bloom */
 (function(){
- if(matchMedia("(hover:none), (pointer:coarse), (prefers-reduced-motion:reduce)").matches)return;
+ if(matchMedia("(hover:none), (pointer:coarse)").matches)return;
  if(document.querySelector(".mnq-flowlight"))return;
  const aura=document.createElement("div"),trail=document.createElement("div");
  aura.className="mnq-flowlight";trail.className="mnq-flowlight-trail";
