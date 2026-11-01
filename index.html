@@ -896,33 +896,26 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 .gallery-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
 
 /* Custom faceted outcome sculpture */
-.outcome-panel{overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 40%,rgba(48,43,79,.25),transparent 65%),#0c0e13}
+.outcome-panel{overflow:hidden;position:relative;background:linear-gradient(115deg,rgba(48,43,79,.16),transparent 42%),#0c0e13}
 .outcome-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;position:relative;z-index:2}
 .outcome-heading h2{margin:7px 0 4px;font-size:20px}
 .outcome-total{display:flex;flex-direction:column;align-items:flex-end;gap:3px}.outcome-total strong{font-size:28px;color:#d3c3aa;font-variant-numeric:tabular-nums}.outcome-total span{font-size:9px;letter-spacing:.18em;color:var(--muted)}
-.outcome-stage{height:300px;position:relative;display:flex;align-items:flex-end;justify-content:center;gap:clamp(26px,9vw,110px);padding:0 20px 40px;perspective:950px;isolation:isolate}
-.outcome-ground{position:absolute;left:9%;right:9%;bottom:25px;height:95px;transform:rotateX(67deg) rotateZ(-7deg);background:repeating-linear-gradient(90deg,rgba(187,198,196,.10) 0 1px,transparent 1px 42px),repeating-linear-gradient(0deg,rgba(187,198,196,.10) 0 1px,transparent 1px 42px);border:1px solid rgba(187,198,196,.13);box-shadow:0 24px 65px rgba(0,0,0,.45);z-index:-1}
-.outcome-crystal{--level:3px;width:clamp(62px,10vw,104px);height:var(--level);min-height:9px;position:relative;transform-style:preserve-3d;transform:rotateY(-28deg) rotateX(7deg);transform-origin:bottom center;transition:height .9s cubic-bezier(.2,.8,.2,1),filter .3s;filter:drop-shadow(0 16px 16px rgba(0,0,0,.32));animation:crystal-arrive 1.1s cubic-bezier(.2,.8,.2,1) both}
-.outcome-crystal:hover{filter:brightness(1.2) drop-shadow(0 18px 22px rgba(0,0,0,.5));transform:rotateY(-18deg) rotateX(2deg) translateY(-5px)}
-.crystal-front,.crystal-side,.crystal-top,.crystal-glint{position:absolute;inset:0}
-.crystal-front{clip-path:polygon(50% 0,100% 17%,82% 100%,18% 100%,0 17%);background:linear-gradient(155deg,var(--crystal-hi),var(--crystal-main) 48%,var(--crystal-deep));border:1px solid var(--crystal-hi);transform:translateZ(13px);box-shadow:inset 0 0 28px rgba(255,255,255,.12)}
-.crystal-side{clip-path:polygon(100% 17%,100% 75%,82% 100%,82% 100%);background:var(--crystal-deep);transform:translateZ(-1px) translateX(12px) skewY(-18deg);opacity:.95}
-.crystal-top{height:22px;inset:0 0 auto;clip-path:polygon(50% 0,100% 17%,50% 38%,0 17%);background:var(--crystal-hi);transform:translateY(-8px) translateZ(14px);filter:brightness(1.2)}
-.crystal-glint{clip-path:polygon(50% 0,57% 4%,31% 100%,18% 100%);background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0));transform:translateZ(15px);opacity:.55}
-.win-crystal{--crystal-hi:#d3c3aa;--crystal-main:#81735f;--crystal-deep:#453a31}
-.loss-crystal{--crystal-hi:#a84a53;--crystal-main:#671d27;--crystal-deep:#310d14}
-.flat-crystal{--crystal-hi:#bbc6c4;--crystal-main:#667572;--crystal-deep:#303a39}
-.outcome-axis{position:absolute;bottom:7px;font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:800}
-.axis-win{left:calc(50% - clamp(110px,19vw,205px))}.axis-loss{left:calc(50% - 15px)}.axis-flat{right:calc(50% - clamp(110px,19vw,205px))}
-.outcome-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;border-top:1px solid var(--border);padding-top:16px}
-.outcome-stat{display:grid;grid-template-columns:9px 1fr auto;align-items:center;gap:9px;min-width:0}
+.outcome-bar-wrap{margin:26px 0 20px}
+.outcome-bar-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px;color:var(--muted);font:700 9px ui-monospace,monospace;letter-spacing:.12em}
+.outcome-bar{height:12px;display:flex;overflow:hidden;gap:3px;border-radius:3px;background:#1a1c23;box-shadow:inset 0 1px 3px #000}
+.outcome-segment{height:100%;width:0;transition:width .8s cubic-bezier(.2,.8,.2,1);min-width:0}
+.outcome-segment.win-segment{background:linear-gradient(90deg,#8e7658,#d3c3aa);box-shadow:0 0 14px rgba(211,195,170,.18)}
+.outcome-segment.loss-segment{background:linear-gradient(90deg,#48080c,#a33a43)}
+.outcome-segment.flat-segment{background:linear-gradient(90deg,#657b73,#bbc6c4)}
+.outcome-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.outcome-stat{position:relative;display:grid;grid-template-columns:9px 1fr;align-items:center;gap:9px;min-width:0;padding:15px 13px;border:1px solid rgba(211,195,170,.1);border-radius:9px;background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(255,255,255,.008));transition:border-color .25s,transform .25s}
+.outcome-stat:hover{border-color:rgba(211,195,170,.28);transform:translateY(-2px)}
 .outcome-dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 12px currentColor}
 .win-dot{background:#d3c3aa;color:#d3c3aa}.loss-dot{background:#a84a53;color:#a84a53}.flat-dot{background:#bbc6c4;color:#bbc6c4}
-.outcome-stat strong{font-size:12px;display:block}.outcome-stat small{font-size:10px;color:var(--muted);display:block;margin-top:3px;white-space:nowrap}.outcome-stat b{font-size:15px;font-variant-numeric:tabular-nums;color:#e7e2d8}
+.outcome-stat strong{font-size:12px;display:block}.outcome-stat small{font-size:10px;color:var(--muted);display:block;margin-top:4px;white-space:nowrap}.outcome-stat b{grid-column:2;font-size:21px;line-height:1.2;font-variant-numeric:tabular-nums;color:#e7e2d8;margin-top:7px}
 .outcome-footnote{font-size:10px;color:var(--muted);margin:13px 0 0}
-@keyframes crystal-arrive{from{opacity:0;transform:rotateY(-55deg) rotateX(18deg) translateY(30px) scale(.82)}to{opacity:1;transform:rotateY(-28deg) rotateX(7deg) translateY(0) scale(1)}}
-@media(max-width:600px){.outcome-stage{height:240px;gap:clamp(20px,8vw,45px)}.outcome-crystal{width:clamp(52px,17vw,75px)}.outcome-legend{gap:6px}.outcome-stat{grid-template-columns:7px 1fr;gap:6px}.outcome-stat b{grid-column:2}.outcome-stat small{font-size:9px}.outcome-ground{left:2%;right:2%}}
-@media(prefers-reduced-motion:reduce){.outcome-crystal{animation:none;transition:none}}
+@media(max-width:600px){.outcome-legend{gap:6px}.outcome-stat{padding:12px 9px;grid-template-columns:7px 1fr;gap:6px}.outcome-stat strong{font-size:11px}.outcome-stat small{font-size:9px}.outcome-stat b{font-size:18px}}
+@media(prefers-reduced-motion:reduce){.outcome-segment{transition:none}}}
 </style>
 </head>
 <body>
@@ -1053,17 +1046,13 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
       <section class="page" id="page-gallery">
 <div class="page-head"><div><h1>Screenshot Gallery</h1><div class="muted">Your saved trade charts, all in one place.</div></div><span class="tag" id="galleryCount">0 screenshots</span></div>
 <section class="panel outcome-panel">
-<div class="outcome-heading"><div><div class="label">TRADE OUTCOME DISTRIBUTION</div><h2>Win / Loss / Break-even</h2><p class="muted">A live view of how your trades are distributed.</p></div><div class="outcome-total"><strong id="outcomeTotal">0</strong><span>TRADES</span></div></div>
-<div class="outcome-stage" id="outcomeStage"><div class="outcome-ground"></div>
-<div class="outcome-crystal win-crystal" id="winCrystal"><div class="crystal-top"></div><div class="crystal-front"></div><div class="crystal-side"></div><div class="crystal-glint"></div></div>
-<div class="outcome-crystal loss-crystal" id="lossCrystal"><div class="crystal-top"></div><div class="crystal-front"></div><div class="crystal-side"></div><div class="crystal-glint"></div></div>
-<div class="outcome-crystal flat-crystal" id="flatCrystal"><div class="crystal-top"></div><div class="crystal-front"></div><div class="crystal-side"></div><div class="crystal-glint"></div></div>
-<div class="outcome-axis axis-win">W</div><div class="outcome-axis axis-loss">L</div><div class="outcome-axis axis-flat">BE</div></div>
+<div class="outcome-heading"><div><div class="label">TRADE OUTCOMES</div><h2>Win / Loss / Break-even</h2><p class="muted">A clear breakdown of every trade you've logged.</p></div><div class="outcome-total"><strong id="outcomeTotal">0</strong><span>TOTAL TRADES</span></div></div>
+<div class="outcome-bar-wrap"><div class="outcome-bar-label"><span>RESULT DISTRIBUTION</span><span id="outcomeBarCaption">AWAITING TRADES</span></div><div class="outcome-bar" role="img" aria-label="Trade outcome distribution"><span class="outcome-segment win-segment" id="winOutcomeBar"></span><span class="outcome-segment loss-segment" id="lossOutcomeBar"></span><span class="outcome-segment flat-segment" id="flatOutcomeBar"></span></div></div>
 <div class="outcome-legend">
 <div class="outcome-stat"><span class="outcome-dot win-dot"></span><div><strong>Wins</strong><small id="winOutcomeCount">0 trades</small></div><b id="winOutcomePct">0%</b></div>
 <div class="outcome-stat"><span class="outcome-dot loss-dot"></span><div><strong>Losses</strong><small id="lossOutcomeCount">0 trades</small></div><b id="lossOutcomePct">0%</b></div>
 <div class="outcome-stat"><span class="outcome-dot flat-dot"></span><div><strong>Break-even</strong><small id="flatOutcomeCount">0 trades</small></div><b id="flatOutcomePct">0%</b></div></div>
-<p class="outcome-footnote">Crystal height represents its share of all recorded trades.</p></section>
+<p class="outcome-footnote">Percentages are based on all recorded trades, with no screenshot requirement.</p></section>
 <section class="panel"><div class="toolbar" style="margin-bottom:16px"><select id="gallerySymbol" aria-label="Filter by symbol" style="max-width:190px;margin-top:0"><option value="all">All symbols</option></select><select id="galleryResult" aria-label="Filter by result" style="max-width:190px;margin-top:0"><option value="all">All results</option><option value="win">Wins</option><option value="loss">Losses</option><option value="flat">Break-even</option></select></div><div id="galleryGrid" class="gallery-grid"><div class="empty-state">Your saved chart screenshots will appear here.</div></div></section>
 </section>
 <section class="page" id="page-replay">
@@ -1179,7 +1168,8 @@ function sortedTrades(){return [...tradesCache].sort((a,b)=>String(a.trade_date|
 function renderOutcomeSculpture(){
 const total=tradesCache.length,wins=tradesCache.filter(t=>Number(t.pnl)>0).length,losses=tradesCache.filter(t=>Number(t.pnl)<0).length,flat=total-wins-losses;
 setText("outcomeTotal",total);
-[{count:wins,id:"winCrystal",countId:"winOutcomeCount",pctId:"winOutcomePct"},{count:losses,id:"lossCrystal",countId:"lossOutcomeCount",pctId:"lossOutcomePct"},{count:flat,id:"flatCrystal",countId:"flatOutcomeCount",pctId:"flatOutcomePct"}].forEach(g=>{const pct=total?g.count/total*100:0,el=$(g.id);if(el)el.style.setProperty("--level",Math.max(3,pct*1.65)+"px");setText(g.countId,g.count+" trades");setText(g.pctId,pct.toFixed(1)+"%")});
+[{count:wins,countId:"winOutcomeCount",pctId:"winOutcomePct",barId:"winOutcomeBar"},{count:losses,countId:"lossOutcomeCount",pctId:"lossOutcomePct",barId:"lossOutcomeBar"},{count:flat,countId:"flatOutcomeCount",pctId:"flatOutcomePct",barId:"flatOutcomeBar"}].forEach(g=>{const pct=total?g.count/total*100:0,bar=$(g.barId);if(bar)bar.style.width=pct+"%";setText(g.countId,g.count+" trades");setText(g.pctId,pct.toFixed(1)+"%")});
+setText("outcomeBarCaption",total?total+" TRADES":"AWAITING TRADES");
 }
 function renderGallery(){
 const grid=$("galleryGrid"),symbol=$("gallerySymbol"),result=$("galleryResult");if(!grid||!symbol||!result)return;
