@@ -744,6 +744,42 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 @media(max-width:760px),(hover:none),(pointer:coarse){.mnq-flowlight,.mnq-flowlight-trail{display:none}}
 @media(prefers-reduced-motion:reduce){.mnq-flowlight,.mnq-flowlight-trail{display:none}}
 
+
+/* SIGN-IN / BLACK VAULT ENTRY */
+#auth{width:min(1060px,calc(100% - 48px));max-width:none;min-height:570px;margin:6vh auto 7vh;padding:0;display:grid;grid-template-columns:1.08fr .92fr;gap:0;overflow:hidden;position:relative;isolation:isolate;border:1px solid rgba(211,195,170,.19);border-radius:22px;background:linear-gradient(115deg,rgba(12,11,16,.98),rgba(8,8,11,.98));box-shadow:0 35px 110px rgba(0,0,0,.58),0 0 70px rgba(48,43,79,.13),inset 0 1px rgba(255,255,255,.045)}
+#auth:after{content:"";position:absolute;inset:0;pointer-events:none;border-radius:inherit;background:linear-gradient(115deg,rgba(211,195,170,.055),transparent 35%,transparent 72%,rgba(72,8,12,.08));z-index:4}
+.auth-visual{position:relative;min-height:570px;overflow:hidden;isolation:isolate;background:radial-gradient(ellipse at 48% 47%,rgba(48,43,79,.5),transparent 42%),radial-gradient(ellipse at 15% 80%,rgba(72,8,12,.25),transparent 48%),linear-gradient(145deg,#0c0b12,#060608 76%);border-right:1px solid rgba(211,195,170,.12)}
+.auth-visual:before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(187,198,196,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(187,198,196,.055) 1px,transparent 1px);background-size:36px 36px;transform:perspective(600px) rotateX(61deg) scale(1.6) translateY(15%);transform-origin:bottom;mask-image:linear-gradient(transparent,#000 36%,#000 85%,transparent);opacity:.55}
+.auth-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(110deg,transparent 35%,rgba(211,195,170,.045) 50%,transparent 65%);transform:translateX(-100%);animation:authScan 8s ease-in-out infinite}
+.auth-orbit{position:absolute;left:50%;top:43%;width:330px;height:125px;border:1px solid rgba(211,195,170,.3);border-radius:50%;transform:translate(-50%,-50%) rotate(-28deg);box-shadow:0 0 28px rgba(48,43,79,.2);animation:authOrbit 18s linear infinite}
+.auth-orbit-b{width:400px;height:155px;transform:translate(-50%,-50%) rotate(52deg);border-color:rgba(72,8,12,.7);animation-duration:25s;animation-direction:reverse}
+.auth-prism{position:absolute;left:50%;top:43%;width:110px;height:110px;transform:translate(-50%,-50%);transform-style:preserve-3d;animation:authPrism 14s linear infinite}
+.auth-prism i{position:absolute;inset:0;border:1px solid rgba(211,195,170,.65);background:linear-gradient(140deg,rgba(72,8,12,.26),rgba(48,43,79,.18));clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);box-shadow:inset 0 0 25px rgba(211,195,170,.08)}
+.auth-prism i:nth-child(2){transform:rotateY(60deg) rotateX(60deg);border-color:rgba(187,198,196,.42)}
+.auth-prism i:nth-child(3){transform:rotateY(-60deg) rotateX(-60deg);border-color:rgba(72,8,12,.8)}
+.auth-cross{position:absolute;left:50%;top:43%;width:7px;height:7px;border-radius:50%;background:#d3c3aa;box-shadow:0 0 15px #d3c3aa,0 0 55px rgba(211,195,170,.8)}
+.auth-visual-label{position:absolute;left:clamp(24px,4vw,54px);bottom:48px;z-index:2;color:#d3c3aa}
+.auth-visual-label span,.auth-visual-label small,.auth-coordinate,.auth-kicker,.auth-foot{font:9px/1.5 ui-monospace,monospace;letter-spacing:.2em}
+.auth-visual-label strong{display:block;margin:17px 0 13px;color:#eee7dc;font-size:clamp(25px,3vw,38px);line-height:1.02;letter-spacing:-.045em;font-weight:800}
+.auth-visual-label small{color:rgba(187,198,196,.55)}
+.auth-coordinate{position:absolute;right:24px;top:24px;text-align:right;color:rgba(187,198,196,.48)}
+.auth-entry{align-self:center;padding:clamp(28px,4vw,54px);min-width:0}
+.auth-kicker{display:flex;justify-content:space-between;gap:10px;color:rgba(211,195,170,.65);margin-bottom:30px;font-size:8px}
+.auth-kicker span{color:rgba(187,198,196,.35)}
+.auth-entry h1{font-size:clamp(25px,3vw,34px);letter-spacing:-1.2px;color:#f1eee8}
+.auth-entry>.muted{margin-bottom:4px}
+.auth-entry .authform{grid-template-columns:1fr;margin-top:28px;gap:15px}
+.auth-entry .authform button{min-height:45px}
+.auth-entry .authform button[type=submit]{box-shadow:0 8px 25px rgba(72,8,12,.24)}
+.auth-entry input{background:rgba(0,0,0,.42);border-color:rgba(187,198,196,.17);min-height:45px}
+.auth-entry input:focus{border-color:rgba(211,195,170,.65);box-shadow:0 0 0 3px rgba(211,195,170,.07)}
+.auth-foot{display:flex;justify-content:space-between;gap:8px;margin-top:34px;padding-top:15px;border-top:1px solid rgba(211,195,170,.1);color:rgba(187,198,196,.35);font-size:8px}
+@keyframes authPrism{to{transform:translate(-50%,-50%) rotateX(360deg) rotateY(360deg)}}
+@keyframes authOrbit{to{filter:hue-rotate(24deg)}}
+@keyframes authScan{0%,35%{transform:translateX(-100%)}70%,100%{transform:translateX(100%)}}
+@media(max-width:760px){#auth{width:calc(100% - 24px);margin:22px auto;grid-template-columns:1fr;min-height:0}.auth-visual{min-height:265px;border-right:0;border-bottom:1px solid rgba(211,195,170,.12)}.auth-orbit{top:43%;width:250px;height:95px}.auth-orbit-b{width:300px;height:115px}.auth-prism{width:82px;height:82px}.auth-visual-label{left:22px;bottom:20px}.auth-visual-label strong{font-size:24px;margin:8px 0}.auth-coordinate{top:14px;right:14px}.auth-entry{padding:28px 23px 24px}.auth-kicker{margin-bottom:20px}}
+@media(prefers-reduced-motion:reduce){.auth-prism,.auth-orbit,.auth-visual:after{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -753,15 +789,26 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 </header>
 
 <section id="auth">
-  <h1>Your trading workspace.</h1>
-  <p class="muted">Track the process. Respect the risk. Improve every day.</p>
-  <form id="authform" class="authform">
-    <label class="full">Email<input type="email" id="email" autocomplete="email" required></label>
-    <label class="full">Password<input type="password" id="password" autocomplete="current-password" minlength="6" required></label>
-    <button type="submit">Sign in</button>
-    <button type="button" id="signup" class="secondary">Create account</button>
-  </form>
-  <div id="message" role="status"></div>
+  <div class="auth-visual" aria-hidden="true">
+    <div class="auth-orbit auth-orbit-a"></div><div class="auth-orbit auth-orbit-b"></div>
+    <div class="auth-prism"><i></i><i></i><i></i></div>
+    <div class="auth-cross"></div>
+    <div class="auth-visual-label"><span>MNQ / JOURNAL</span><strong>THE EDGE IS<br>IN THE DETAILS.</strong><small>RISK · EXECUTION · REVIEW</small></div>
+    <div class="auth-coordinate">FIELD 01<br>DISCIPLINE SYSTEM</div>
+  </div>
+  <div class="auth-entry">
+    <div class="auth-kicker">PRIVATE TRADING WORKSPACE <span>01 — 07</span></div>
+    <h1>Your trading workspace.</h1>
+    <p class="muted">Track the process. Respect the risk. Improve every day.</p>
+    <form id="authform" class="authform">
+      <label class="full">Email<input type="email" id="email" autocomplete="email" required></label>
+      <label class="full">Password<input type="password" id="password" autocomplete="current-password" minlength="6" required></label>
+      <button type="submit">Sign in</button>
+      <button type="button" id="signup" class="secondary">Create account</button>
+    </form>
+    <div id="message" role="status"></div>
+    <div class="auth-foot"><span>YOUR DATA. YOUR PROCESS.</span><span>MNQ.JOURNAL ©</span></div>
+  </div>
 </section>
 
 <div id="app">
