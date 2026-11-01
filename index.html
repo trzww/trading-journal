@@ -786,6 +786,38 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 .mnq-flowlight{mix-blend-mode:screen!important}
 @media(max-width:760px),(hover:none),(pointer:coarse){.mnq-flowlight,.mnq-flowlight-trail{display:none!important}}
 
+
+/* COMPLETE ENTRY EXPERIENCE */
+#auth.mnq-entry-shell{width:min(1320px,calc(100% - 64px));max-width:none;margin:25px auto;padding:0;display:block;position:relative;isolation:isolate;overflow:visible;border:0;border-radius:0;background:transparent;box-shadow:none;color:#eee7dc}
+#auth.mnq-entry-shell:after{display:none}
+.mnq-entry-topline,.mnq-entry-bottomline{display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:48px;border-bottom:1px solid rgba(211,195,170,.14)}
+.mnq-entry-brand{display:flex;align-items:center;gap:10px;color:#eee7dc;text-decoration:none;font-size:15px;font-weight:800;letter-spacing:-.04em}.mnq-entry-brand>span:last-child{color:#d3c3aa}
+.mnq-brand-mark{display:grid;place-items:center;width:28px;height:28px;border:1px solid rgba(211,195,170,.45);color:#d3c3aa;font:800 13px ui-monospace,monospace;border-radius:7px;transform:rotate(45deg)}
+.mnq-entry-topmeta,.mnq-entry-bottomline{font:8px/1.5 ui-monospace,monospace;letter-spacing:.18em;color:rgba(187,198,196,.48)}
+.mnq-entry-topmeta{display:flex;align-items:center;gap:10px}.mnq-entry-topmeta i,.mnq-entry-card-head i,.mnq-entry-card-bottom i{width:6px;height:6px;border-radius:50%;background:#a9b9a9;box-shadow:0 0 12px rgba(169,185,169,.7);display:inline-block}
+.mnq-entry-layout{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(340px,.75fr);gap:clamp(35px,7vw,105px);align-items:center;padding:clamp(42px,6vw,78px) clamp(5px,3vw,35px) 50px}
+.mnq-entry-stage{min-width:0}.mnq-entry-eyebrow{display:flex;justify-content:space-between;gap:12px;color:rgba(211,195,170,.58);font:8px ui-monospace,monospace;letter-spacing:.18em}
+.mnq-entry-headline{margin:35px 0 15px;color:#eee7dc;font-size:clamp(55px,7.4vw,104px);font-weight:900;line-height:.82;letter-spacing:-.085em}.mnq-entry-headline small{display:block;margin-bottom:12px;color:rgba(187,198,196,.55);font-size:.46em;letter-spacing:.015em}.mnq-entry-headline em{font-style:normal;color:#d3c3aa;text-shadow:0 0 40px rgba(211,195,170,.13)}
+.mnq-entry-intro{max-width:460px;margin:23px 0 26px;color:rgba(187,198,196,.68);font-size:13px;line-height:1.8}
+.mnq-entry-visual{height:215px;position:relative;overflow:hidden;border-top:1px solid rgba(211,195,170,.18);border-bottom:1px solid rgba(211,195,170,.14);background:radial-gradient(ellipse at 70% 50%,rgba(48,43,79,.34),transparent 48%),linear-gradient(110deg,rgba(72,8,12,.1),transparent)}
+.mnq-entry-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(187,198,196,.07) 1px,transparent 1px),linear-gradient(90deg,rgba(187,198,196,.07) 1px,transparent 1px);background-size:35px 35px;mask-image:linear-gradient(90deg,transparent,#000 20%,#000 85%,transparent);transform:perspective(550px) rotateX(49deg) scale(1.45);transform-origin:bottom}
+.mnq-entry-chart-label,.mnq-entry-visual-foot{position:absolute;left:14px;right:14px;z-index:2;display:flex;justify-content:space-between;color:rgba(187,198,196,.48);font:7px ui-monospace,monospace;letter-spacing:.16em}.mnq-entry-chart-label{top:13px}.mnq-entry-visual-foot{bottom:12px}.mnq-entry-visual svg{position:absolute;inset:24px 0 15px;width:100%;height:calc(100% - 39px);overflow:visible}
+.mnq-entry-line{stroke-dasharray:1100;stroke-dashoffset:1100;animation:mnqEntryDraw 3s .3s ease forwards}.mnq-entry-pulse{transform-box:fill-box;transform-origin:center;animation:mnqEntryPulse 2s infinite}
+.mnq-entry-orbit{position:absolute;z-index:1;right:12%;top:49%;width:92px;height:92px;border:1px solid rgba(211,195,170,.17);border-radius:50%;transform:translateY(-50%);animation:mnqEntrySpin 20s linear infinite}.mnq-entry-orbit:before,.mnq-entry-orbit:after{content:"";position:absolute;inset:12px;border:1px solid rgba(72,8,12,.65);border-radius:50%;transform:rotateX(65deg) rotate(35deg)}.mnq-entry-orbit:after{inset:-8px;transform:rotateY(65deg) rotate(-35deg);border-color:rgba(187,198,196,.17)}.mnq-entry-orbit i{position:absolute;width:4px;height:4px;border-radius:50%;background:#d3c3aa;box-shadow:0 0 12px #d3c3aa}.mnq-entry-orbit i:nth-child(1){top:8px;left:19px}.mnq-entry-orbit i:nth-child(2){right:2px;top:45px;background:#48080c}.mnq-entry-orbit i:nth-child(3){bottom:9px;left:22px}
+.mnq-entry-pillars{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-top:23px}.mnq-entry-pillars>div{padding-right:10px;border-right:1px solid rgba(211,195,170,.12)}.mnq-entry-pillars>div:last-child{border:0}.mnq-entry-pillars small{display:block;margin-bottom:8px;color:rgba(211,195,170,.55);font:8px ui-monospace,monospace}.mnq-entry-pillars b{display:block;color:#e4ddd2;font-size:10px}.mnq-entry-pillars span{display:block;margin-top:5px;color:rgba(187,198,196,.42);font-size:9px}
+.mnq-entry-card{position:relative;min-width:0;padding:clamp(25px,3vw,40px);border:1px solid rgba(211,195,170,.2);border-radius:15px;background:linear-gradient(145deg,rgba(20,18,25,.97),rgba(8,8,11,.98));box-shadow:0 28px 90px rgba(0,0,0,.48),inset 0 1px rgba(255,255,255,.04);overflow:hidden}.mnq-entry-card:before{content:"";position:absolute;left:0;top:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,#d3c3aa,#48080c,transparent)}.mnq-entry-card:after{content:"";position:absolute;width:180px;height:180px;right:-100px;top:-100px;border-radius:50%;border:1px solid rgba(211,195,170,.13);box-shadow:0 0 0 18px rgba(211,195,170,.018),0 0 0 38px rgba(211,195,170,.014);pointer-events:none}
+.mnq-entry-card-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:22px;border-bottom:1px solid rgba(187,198,196,.1)}.mnq-entry-card-icon{width:31px;height:31px;display:grid;place-items:center;border:1px solid rgba(211,195,170,.35);border-radius:8px;color:#d3c3aa;font:800 12px ui-monospace,monospace}.mnq-entry-card-head>span:last-child{display:flex;align-items:center;gap:8px;color:rgba(187,198,196,.48);font:7px ui-monospace,monospace;letter-spacing:.15em}
+.mnq-entry-card-copy{margin:29px 0 24px}.mnq-entry-card-copy small{color:rgba(211,195,170,.58);font:7px ui-monospace,monospace;letter-spacing:.16em}.mnq-entry-card-copy h1{margin:13px 0 9px;color:#f0e9df;font-size:clamp(38px,4vw,50px);line-height:.96;letter-spacing:-.075em;font-weight:800}.mnq-entry-card-copy h1 span{color:#d3c3aa}.mnq-entry-card-copy p{margin:0;color:rgba(187,198,196,.55);font-size:11px;line-height:1.7}
+.mnq-entry-form{display:grid;grid-template-columns:1fr!important;gap:13px!important;margin-top:0!important}.mnq-entry-form label{display:block;color:rgba(211,195,170,.66);font:8px ui-monospace,monospace;letter-spacing:.13em}.mnq-entry-form input{display:block;width:100%;margin-top:8px;min-height:47px;padding:0 14px;background:rgba(0,0,0,.4)!important;border:1px solid rgba(187,198,196,.18)!important;border-radius:7px;color:#eee7dc;font-size:12px;letter-spacing:0;transition:border-color .2s,box-shadow .2s}.mnq-entry-form input::placeholder{color:rgba(187,198,196,.28)}.mnq-entry-form input:focus{outline:none;border-color:rgba(211,195,170,.65)!important;box-shadow:0 0 0 3px rgba(211,195,170,.07),0 0 24px rgba(48,43,79,.18)!important}
+.mnq-entry-form button{width:100%;min-height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-radius:7px;background:#d3c3aa;color:#100f12;font-size:11px;font-weight:800;transition:transform .2s,box-shadow .2s}.mnq-entry-form button:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(211,195,170,.17)}.mnq-entry-form button span{font-size:16px}.mnq-entry-divider{display:flex;align-items:center;gap:10px;margin:3px 0;color:rgba(187,198,196,.32);font:7px ui-monospace,monospace;letter-spacing:.13em}.mnq-entry-divider:before,.mnq-entry-divider:after{content:"";height:1px;flex:1;background:rgba(187,198,196,.12)}.mnq-entry-form button.secondary{justify-content:space-between;background:rgba(187,198,196,.055);border:1px solid rgba(187,198,196,.17);color:#d8d4ce}.mnq-entry-form button.secondary:hover{background:rgba(187,198,196,.1)}
+#auth #message{min-height:18px;margin-top:10px;font-size:11px}.mnq-entry-card-bottom{display:flex;justify-content:space-between;gap:10px;margin-top:23px;padding-top:14px;border-top:1px solid rgba(187,198,196,.1);color:rgba(187,198,196,.35);font:7px ui-monospace,monospace;letter-spacing:.11em}.mnq-entry-card-bottom span:first-child{display:flex;align-items:center;gap:7px}.mnq-entry-card-bottom i{width:5px;height:5px}
+.mnq-entry-bottomline{min-height:43px;border-top:1px solid rgba(211,195,170,.14);border-bottom:0}.mnq-entry-bottomline b{color:rgba(211,195,170,.65);font-weight:400}
+@keyframes mnqEntryDraw{to{stroke-dashoffset:0}}@keyframes mnqEntryPulse{0%,100%{opacity:.6;transform:scale(.8)}50%{opacity:1;transform:scale(1.5)}}@keyframes mnqEntrySpin{to{transform:translateY(-50%) rotate(360deg)}}
+@media(max-width:900px){#auth.mnq-entry-shell{width:calc(100% - 34px)}.mnq-entry-layout{gap:30px;grid-template-columns:minmax(0,1.1fr) minmax(300px,.9fr);padding-left:0;padding-right:0}.mnq-entry-headline{font-size:clamp(48px,7vw,75px)}.mnq-entry-card{padding:24px}}
+@media(max-width:700px){#auth.mnq-entry-shell{width:calc(100% - 26px);margin:12px auto}.mnq-entry-topline{min-height:44px}.mnq-entry-topmeta{font-size:6px;letter-spacing:.08em}.mnq-entry-layout{grid-template-columns:1fr;gap:30px;padding:36px 0}.mnq-entry-headline{font-size:clamp(60px,13vw,88px);margin-top:26px}.mnq-entry-intro{font-size:12px;margin:18px 0}.mnq-entry-visual{height:185px}.mnq-entry-pillars{gap:9px}.mnq-entry-pillars b{font-size:9px}.mnq-entry-pillars span{font-size:8px}.mnq-entry-card{max-width:480px;width:100%;margin:auto;padding:24px}.mnq-entry-bottomline{font-size:6px;letter-spacing:.07em;flex-wrap:wrap}.mnq-entry-bottomline span:nth-child(2){display:none}}
+@media(max-width:380px){.mnq-entry-pillars{grid-template-columns:1fr;gap:12px}.mnq-entry-pillars>div{border:0;border-bottom:1px solid rgba(211,195,170,.1);padding-bottom:9px}.mnq-entry-pillars>div:last-child{border:0}.mnq-entry-headline{font-size:56px}}
+@media(prefers-reduced-motion:reduce){.mnq-entry-line,.mnq-entry-pulse,.mnq-entry-orbit{animation:none!important}.mnq-entry-line{stroke-dashoffset:0}}
+
 </style>
 </head>
 <body>
@@ -794,27 +826,34 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
   <div class="top-right"><span id="userLabel" class="muted"></span><button id="logout" class="secondary" hidden>Sign out</button></div>
 </header>
 
-<section id="auth">
-  <div class="auth-visual" aria-hidden="true">
-    <div class="auth-orbit auth-orbit-a"></div><div class="auth-orbit auth-orbit-b"></div>
-    <div class="auth-prism"><i></i><i></i><i></i></div>
-    <div class="auth-cross"></div>
-    <div class="auth-visual-label"><span>MNQ / JOURNAL</span><strong>THE EDGE IS<br>IN THE DETAILS.</strong><small>RISK · EXECUTION · REVIEW</small></div>
-    <div class="auth-coordinate">FIELD 01<br>DISCIPLINE SYSTEM</div>
-  </div>
-  <div class="auth-entry">
-    <div class="auth-kicker">PRIVATE TRADING WORKSPACE <span>01 — 07</span></div>
-    <h1>Your trading workspace.</h1>
-    <p class="muted">Track the process. Respect the risk. Improve every day.</p>
-    <form id="authform" class="authform">
-      <label class="full">Email<input type="email" id="email" autocomplete="email" required></label>
-      <label class="full">Password<input type="password" id="password" autocomplete="current-password" minlength="6" required></label>
-      <button type="submit">Sign in</button>
-      <button type="button" id="signup" class="secondary">Create account</button>
-    </form>
-    <div id="message" role="status"></div>
-    <div class="auth-foot"><span>YOUR DATA. YOUR PROCESS.</span><span>MNQ.JOURNAL ©</span></div>
-  </div>
+<section id="auth" class="mnq-entry-shell">
+ <div class="mnq-entry-topline"><a class="mnq-entry-brand" href="#"><span class="mnq-brand-mark">M</span>mnq<span>.</span>journal</a><div class="mnq-entry-topmeta"><i></i> PRIVATE WORKSPACE <b> / </b> ACCESS NODE 01</div></div>
+ <div class="mnq-entry-layout">
+  <main class="mnq-entry-stage">
+   <div class="mnq-entry-eyebrow"><span>TRADING PERFORMANCE SYSTEM</span><span>EST. 2026 / MNQ</span></div>
+   <h2 class="mnq-entry-headline"><small>LESS NOISE.</small>MORE<br><em>PRECISION.</em></h2>
+   <p class="mnq-entry-intro">A workspace built around what matters: how you execute, manage risk, and learn from every trade.</p>
+   <div class="mnq-entry-visual" aria-hidden="true"><div class="mnq-entry-grid"></div><div class="mnq-entry-orbit"><i></i><i></i><i></i></div><div class="mnq-entry-chart-label"><span>EXECUTION / PERFORMANCE MODEL</span><span>01—04</span></div>
+    <svg viewBox="0 0 680 230" preserveAspectRatio="none"><defs><linearGradient id="entryLine" x1="0" x2="1"><stop stop-color="#48080c"/><stop offset=".55" stop-color="#d3c3aa"/><stop offset="1" stop-color="#bbc6c4"/></linearGradient><linearGradient id="entryFill" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#d3c3aa" stop-opacity=".2"/><stop offset="1" stop-color="#d3c3aa" stop-opacity="0"/></linearGradient></defs><path d="M0 180L35 165 65 174 100 139 130 150 166 111 195 128 230 96 262 111 300 77 333 91 365 63 400 78 435 48 468 63 500 35 535 52 570 20 610 37 650 10 680 18V230H0Z" fill="url(#entryFill)"/><path class="mnq-entry-line" d="M0 180L35 165 65 174 100 139 130 150 166 111 195 128 230 96 262 111 300 77 333 91 365 63 400 78 435 48 468 63 500 35 535 52 570 20 610 37 650 10 680 18" fill="none" stroke="url(#entryLine)" stroke-width="2.4" vector-effect="non-scaling-stroke"/><path d="M0 200H680M0 145H680M0 90H680M0 35H680" stroke="rgba(187,198,196,.13)" stroke-dasharray="3 8"/><circle cx="650" cy="10" r="5" fill="#d3c3aa" class="mnq-entry-pulse"/></svg>
+    <div class="mnq-entry-visual-foot"><span>STRUCTURE · DISCIPLINE · REVIEW</span><span>PROCESS OVER OUTCOME</span></div>
+   </div>
+   <div class="mnq-entry-pillars"><div><small>01</small><b>Track every trade</b><span>Build a complete record.</span></div><div><small>02</small><b>Protect your downside</b><span>Keep risk in focus.</span></div><div><small>03</small><b>Find your patterns</b><span>Turn data into progress.</span></div></div>
+  </main>
+  <aside class="mnq-entry-card">
+   <div class="mnq-entry-card-head"><span class="mnq-entry-card-icon">M.</span><span><i></i> SECURE SIGN IN</span></div>
+   <div class="mnq-entry-card-copy"><small>YOUR NEXT SESSION STARTS HERE</small><h1>Welcome<br>back<span>.</span></h1><p>Sign in to your personal trading command centre.</p></div>
+   <form id="authform" class="authform mnq-entry-form">
+    <label class="full">EMAIL ADDRESS<input type="email" id="email" autocomplete="email" placeholder="you@example.com" required></label>
+    <label class="full">PASSWORD<input type="password" id="password" autocomplete="current-password" minlength="6" placeholder="Enter your password" required></label>
+    <button type="submit">Sign in <span>↗</span></button>
+    <div class="mnq-entry-divider">NEW TO THE WORKSPACE?</div>
+    <button type="button" id="signup" class="secondary">Create your account <span>＋</span></button>
+   </form>
+   <div id="message" role="status"></div>
+   <div class="mnq-entry-card-bottom"><span><i></i> YOUR DATA STAYS YOURS</span><span>MNQ / 001</span></div>
+  </aside>
+ </div>
+ <div class="mnq-entry-bottomline"><span>BUILT FOR BETTER EXECUTION.</span><span>RISK <b>×</b> PROCESS <b>×</b> CONSISTENCY</span><span>© MNQ.JOURNAL</span></div>
 </section>
 
 <div id="app">
