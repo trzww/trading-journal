@@ -885,6 +885,19 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 .day-cell.loss .day-pnl{color:#e0444f!important}
 .day-cell.loss .fingerprint i{background:#e0444f!important}
 
+
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.gallery-card{overflow:hidden;border:1px solid var(--border);border-radius:12px;background:#0c0f14;transition:transform .2s,border-color .2s}
+.gallery-card:hover{transform:translateY(-3px);border-color:#6b6387}
+.gallery-card img{display:block;width:100%;height:185px;object-fit:cover;background:#08090c}
+.gallery-meta{padding:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.gallery-meta strong{display:block;font-size:13px}.gallery-meta small{display:block;color:var(--muted);margin-top:4px}
+.gallery-empty{grid-column:1/-1;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:10px}
+.riskcalc-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:16px;align-items:start}
+.riskcalc-big{font-size:48px;font-weight:850;letter-spacing:-2px;margin:12px 0 2px;color:#d3c3aa}
+.riskcalc-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+.riskcalc-stats strong{display:block;font-size:19px;margin-top:7px}
+@media(max-width:760px){.riskcalc-layout{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
 </style>
 </head>
 <body>
@@ -930,6 +943,8 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
       <button class="nav-btn active" data-page="dashboard"><span class="nav-icon">◫</span>Dashboard</button>
       <button class="nav-btn" data-page="matrix"><span class="nav-icon">▦</span>Performance Map</button>
       <button class="nav-btn" data-page="trades"><span class="nav-icon">↗</span>Trades</button>
+      <button class="nav-btn" data-page="gallery"><span class="nav-icon">▧</span>Screenshot Gallery</button>
+      <button class="nav-btn" data-page="riskcalc"><span class="nav-icon">⌁</span>MNQ Risk Calculator</button>
       <button class="nav-btn" data-page="replay"><span class="nav-icon">⏵</span>Replay & Simulator</button>
       <button class="nav-btn" data-page="analytics"><span class="nav-icon">⌁</span>Analytics</button>
       <button class="nav-btn" data-page="coach"><span class="nav-icon">✦</span>Trading Coach</button>
@@ -1011,7 +1026,19 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
         <section class="panel signature-panel" aria-label="Trade DNA analysis"><div class="signature-head"><div><div class="signature-kicker">02 / Behavior profile</div><div class="signature-title">Trade DNA</div><p class="muted">See which symbols and directions have contributed most to your recorded P&amp;L.</p></div><span class="signature-tag" id="dnaSample">NO SAMPLE</span></div><div class="dna-layout"><div class="dna-bars" id="dnaBars"><div class="empty-state">Log trades to build your trade profile.</div></div><div class="dna-insight" id="dnaInsight"><strong>Profile pending</strong><p class="muted">Your journal needs saved trades before patterns can be compared.</p></div></div></section>
       </section>
 
-      <section class="page" id="page-replay">
+      <section class="page" id="page-gallery">
+<div class="page-head"><div><h1>Screenshot Gallery</h1><div class="muted">Your saved trade charts, all in one place.</div></div><span class="tag" id="galleryCount">0 screenshots</span></div>
+<section class="panel"><div class="toolbar" style="margin-bottom:16px"><select id="gallerySymbol" aria-label="Filter by symbol" style="max-width:190px;margin-top:0"><option value="all">All symbols</option></select><select id="galleryResult" aria-label="Filter by result" style="max-width:190px;margin-top:0"><option value="all">All results</option><option value="win">Wins</option><option value="loss">Losses</option><option value="flat">Break-even</option></select></div><div id="galleryGrid" class="gallery-grid"><div class="empty-state">Your saved chart screenshots will appear here.</div></div></section>
+</section>
+<section class="page" id="page-riskcalc">
+<div class="page-head"><div><h1>MNQ Risk Calculator</h1><div class="muted">Calculate contract size from your stop distance and risk limit.</div></div><span class="tag">MNQ · $2 / point · $0.50 / tick</span></div>
+<div class="riskcalc-layout">
+<section class="panel"><h2>Trade parameters</h2><div class="gridform" style="margin-top:15px">
+<label>Entry price<input type="number" step="0.25" id="riskEntry" placeholder="e.g. 20150.00"></label><label>Stop-loss price<input type="number" step="0.25" id="riskStop" placeholder="e.g. 20140.00"></label><label>Target price <span class="muted">(optional)</span><input type="number" step="0.25" id="riskTarget" placeholder="e.g. 20170.00"></label><label>Maximum risk ($)<input type="number" min="0" step="0.01" id="riskAmount" value="250"></label>
+<div class="full"><button type="button" id="calculateRisk">Calculate position size</button></div></div><p class="muted" id="riskCalcMessage" role="status" style="margin-top:12px">Enter your entry and stop prices to calculate.</p></section>
+<section class="panel riskcalc-results"><div class="label">RECOMMENDED POSITION SIZE</div><div class="riskcalc-big" id="riskContracts">—</div><div class="muted">MNQ contracts, rounded down to stay within risk</div><div class="riskcalc-stats"><div><span class="label">STOP DISTANCE</span><strong id="riskDistance">—</strong></div><div><span class="label">ESTIMATED RISK</span><strong id="riskDollars">—</strong></div><div><span class="label">RISK / REWARD</span><strong id="riskRR">—</strong></div><div><span class="label">POTENTIAL PROFIT</span><strong id="riskPotential">—</strong></div></div><p class="muted" style="margin-top:16px">Excludes commissions, fees and slippage. Confirm contract values with your broker.</p></section>
+</div></section>
+<section class="page" id="page-replay">
         <div class="page-head"><div><h1>Replay & Simulator</h1><div class="muted">Run your real logged trades through hypothetical risk rules.</div></div><span class="tag">Simulation only · no changes to saved trades</span></div>
         <section class="panel"><h2>Rule simulator</h2><p class="muted">Change the rules below and simulate your trades in date order. This does not alter your prop account settings or saved trade data.</p>
           <form id="simForm" class="gridform">
@@ -1121,6 +1148,23 @@ function setText(id,text){const el=$(id);if(el)el.textContent=text}
 function setMessage(id,text){setText(id,text)}
 function pnlClass(n){return Number(n)<0?"negative":Number(n)>0?"positive":""}
 function sortedTrades(){return [...tradesCache].sort((a,b)=>String(a.trade_date||"").localeCompare(String(b.trade_date||""))||String(a.created_at||"").localeCompare(String(b.created_at||"")))}
+function renderGallery(){
+const grid=$("galleryGrid"),symbol=$("gallerySymbol"),result=$("galleryResult");if(!grid||!symbol||!result)return;
+const shots=tradesCache.filter(t=>t.screenshot_url),current=symbol.value||"all",symbols=[...new Set(shots.map(t=>(t.symbol||"Unknown").toUpperCase()))].sort();
+symbol.replaceChildren(new Option("All symbols","all"));symbols.forEach(v=>symbol.add(new Option(v,v)));symbol.value=symbols.includes(current)?current:"all";
+const filtered=shots.filter(t=>(symbol.value==="all"||(t.symbol||"Unknown").toUpperCase()===symbol.value)&&(result.value==="all"||(Number(t.pnl)>0?"win":Number(t.pnl)<0?"loss":"flat")===result.value));
+setText("galleryCount",filtered.length+" / "+shots.length+" screenshots");grid.replaceChildren();
+if(!filtered.length){const empty=document.createElement("div");empty.className="gallery-empty";empty.textContent=shots.length?"No screenshots match these filters.":"No trade screenshots yet. Add a chart when logging a trade.";grid.append(empty);return}
+filtered.forEach(t=>{const card=document.createElement("article");card.className="gallery-card";const link=document.createElement("a");link.href=t.screenshot_url;link.target="_blank";link.rel="noopener noreferrer";const img=document.createElement("img");img.src=t.screenshot_url;img.alt=(t.symbol||"Trade")+" chart from "+(t.trade_date||"unknown date");img.loading="lazy";link.append(img);const meta=document.createElement("div");meta.className="gallery-meta";const info=document.createElement("div"),name=document.createElement("strong"),date=document.createElement("small");name.textContent=(t.symbol||"Trade")+" · "+(t.direction||"");date.textContent=t.trade_date||"";info.append(name,date);const pnl=document.createElement("strong");pnl.textContent=money(Number(t.pnl||0));pnl.className=pnlClass(t.pnl);meta.append(info,pnl);card.append(link,meta);grid.append(card)});
+}
+function calculateMNQRisk(){
+const entryRaw=$("riskEntry").value,stopRaw=$("riskStop").value,targetRaw=$("riskTarget").value,risk=Number($("riskAmount").value),entry=Number(entryRaw),stop=Number(stopRaw),message=$("riskCalcMessage");
+if(entryRaw===""||stopRaw===""||!Number.isFinite(entry)||!Number.isFinite(stop)||entry===stop||!Number.isFinite(risk)||risk<=0){message.textContent="Enter a valid entry, stop and risk amount. Entry and stop cannot be the same.";return}
+const distance=Math.abs(entry-stop),perContract=distance*2,contracts=Math.floor(risk/perContract),actualRisk=contracts*perContract;setText("riskContracts",contracts.toString());setText("riskDistance",distance.toFixed(2)+" points");setText("riskDollars",money(actualRisk));
+let rr="—",potential="—";if(targetRaw!==""){const target=Number(targetRaw),reward=Math.abs(target-entry),rightWay=(entry>stop&&target>entry)||(entry<stop&&target<entry);if(Number.isFinite(target)&&reward>0&&rightWay){rr=(reward/distance).toFixed(2)+"R";potential=money(reward*2*contracts)}else{rr="Check target";potential="—"}}
+setText("riskRR",rr);setText("riskPotential",potential);message.textContent=contracts>0?"Based on $2 per MNQ point per contract. Estimated risk stays within your limit.":"Your risk limit is too small for even 1 MNQ contract at this stop distance.";
+}
+
 function dailyTotals(trades=tradesCache){const days={};trades.forEach(t=>{const d=t.trade_date||"Unknown";days[d]=(days[d]||0)+Number(t.pnl||0)});return days}
 function groupedBySymbol(){const g={};tradesCache.forEach(t=>{const k=(t.symbol||"Unknown").toUpperCase();(g[k] ||= []).push(t)});return g}
 function maxDrawdown(trades){let running=0,peak=0,dd=0;for(const t of trades){running+=Number(t.pnl||0);peak=Math.max(peak,running);dd=Math.max(dd,peak-running)}return dd}
@@ -1129,6 +1173,7 @@ document.querySelectorAll(".nav-btn").forEach(btn=>btn.addEventListener("click",
 function showPage(page){
   document.querySelectorAll(".nav-btn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));
   document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));
+  if(page==="gallery")renderGallery();
   if(page==="matrix")renderMatrix();
   if(page==="analytics")renderAnalytics();
   if(page==="coach")renderTradingCoach();
@@ -1433,6 +1478,7 @@ $("prevMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.ge
 $("nextMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()+1,1);if(selectedDate&&!selectedDate.startsWith(matrixMonth.getFullYear()+"-"+String(matrixMonth.getMonth()+1).padStart(2,"0")))selectedDate=null;renderMatrix()});
 $("currentMonth").addEventListener("click",()=>{matrixMonth=new Date();selectedDate=localDateString(new Date());renderMatrix()});
 $("tradeSearch").addEventListener("input",renderHistory);
+$("gallerySymbol").addEventListener("change",renderGallery);$("galleryResult").addEventListener("change",renderGallery);$("calculateRisk").addEventListener("click",calculateMNQRisk);
 $("simForm").addEventListener("submit",runSimulation);
 $("replayPrev").addEventListener("click",()=>{replayIndex=Math.max(0,replayIndex-1);renderReplay()});
 $("replayNext").addEventListener("click",()=>{replayIndex=Math.min(Math.max(0,sortedTrades().length-1),replayIndex+1);renderReplay()});
