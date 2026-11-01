@@ -733,6 +733,17 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 @media(max-width:700px){.mnq-depth-canvas{opacity:.2}.page.active{animation-duration:.42s}}
 @media(prefers-reduced-motion:reduce){.mnq-depth-canvas{display:none}.page.active,.page.active .page-head,.page.active .stats>.card,.page.active>.panel,.page.active .detail-grid>.panel{animation:none!important}}
 
+
+/* MNQ / FLOWLIGHT — cursor-following ambient glow */
+.mnq-flowlight{position:fixed;left:0;top:0;width:520px;height:520px;border-radius:50%;pointer-events:none;z-index:9985;opacity:0;transform:translate3d(-50%,-50%,0);will-change:transform,opacity;transition:opacity .45s ease;mix-blend-mode:screen;background:radial-gradient(circle,rgba(211,195,170,.13) 0%,rgba(187,198,196,.085) 12%,rgba(48,43,79,.18) 29%,rgba(72,8,12,.13) 47%,rgba(48,43,79,.055) 63%,transparent 73%);filter:blur(13px)}
+.mnq-flowlight.is-visible{opacity:1}
+.mnq-flowlight:before{content:"";position:absolute;left:50%;top:50%;width:150px;height:150px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,rgba(211,195,170,.18),rgba(72,8,12,.08) 38%,transparent 72%);filter:blur(8px)}
+.mnq-flowlight:after{content:"";position:absolute;left:50%;top:50%;width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);border:1px solid rgba(211,195,170,.38);box-shadow:0 0 18px rgba(211,195,170,.28),inset 0 0 12px rgba(187,198,196,.12)}
+.mnq-flowlight-trail{position:fixed;left:0;top:0;width:230px;height:230px;border-radius:50%;pointer-events:none;z-index:9984;opacity:0;transform:translate3d(-50%,-50%,0);will-change:transform,opacity;transition:opacity .8s ease;background:radial-gradient(circle,rgba(72,8,12,.13),rgba(48,43,79,.1) 35%,transparent 72%);filter:blur(22px);mix-blend-mode:screen}
+.mnq-flowlight-trail.is-visible{opacity:.8}
+@media(max-width:760px),(hover:none),(pointer:coarse){.mnq-flowlight,.mnq-flowlight-trail{display:none}}
+@media(prefers-reduced-motion:reduce){.mnq-flowlight,.mnq-flowlight-trail{display:none}}
+
 </style>
 </head>
 <body>
@@ -1414,6 +1425,22 @@ db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>showSession(session)
  if(typeof original==="function"&&!original.__mnqWrapped){const wrapped=function(page){const el=document.getElementById("page-"+page);if(el){el.classList.remove("mnq-arrive");void el.offsetWidth;el.classList.add("mnq-arrive")}return original.apply(this,arguments)};wrapped.__mnqWrapped=true;window.showPage=wrapped;}
  // Add a tiny corner engraving to major panels, never to forms or controls.
  document.querySelectorAll("#page-dashboard>.panel,#page-matrix>.panel,#page-replay>.panel,#page-analytics>.panel,#page-coach>.panel,#page-prop>.panel").forEach(p=>{if(!p.querySelector(".mnq-page-corner")){const c=document.createElement("i");c.className="mnq-page-corner";c.setAttribute("aria-hidden","true");p.appendChild(c)}});
+})();
+
+
+/* FLOWLIGHT cursor aura — smooth lagging glow with a soft trailing bloom */
+(function(){
+ if(matchMedia("(hover:none), (pointer:coarse), (prefers-reduced-motion:reduce)").matches)return;
+ if(document.querySelector(".mnq-flowlight"))return;
+ const aura=document.createElement("div"),trail=document.createElement("div");
+ aura.className="mnq-flowlight";trail.className="mnq-flowlight-trail";
+ aura.setAttribute("aria-hidden","true");trail.setAttribute("aria-hidden","true");
+ document.body.append(trail,aura);
+ let x=-1000,y=-1000,tx=-1000,ty=-1000,active=false,raf=0;
+ function move(e){tx=e.clientX;ty=e.clientY;if(!active){active=true;aura.classList.add("is-visible");trail.classList.add("is-visible")}if(!raf)raf=requestAnimationFrame(draw)}
+ function draw(){raf=0;x+=(tx-x)*.32;y+=(ty-y)*.32;aura.style.transform="translate3d("+x+"px,"+y+"px,0) translate(-50%,-50%)";trail.style.transform="translate3d("+(x-18)+"px,"+(y+22)+"px,0) translate(-50%,-50%)";if(Math.abs(tx-x)+Math.abs(ty-y)>.35)raf=requestAnimationFrame(draw)}
+ function leave(){active=false;aura.classList.remove("is-visible");trail.classList.remove("is-visible")}
+ addEventListener("pointermove",move,{passive:true});document.documentElement.addEventListener("pointerleave",leave,{passive:true});document.addEventListener("visibilitychange",()=>{if(document.hidden)leave()});
 })();
 
 </script>
