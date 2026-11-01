@@ -1006,7 +1006,7 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
         </section>
         <section class="panel">
           <div class="sectionhead"><div><h2>Trade history</h2><p class="muted">Loaded from your existing Supabase trades table.</p></div><input id="tradeSearch" style="max-width:260px;margin-top:0" placeholder="Search symbol or notes..."></div>
-          <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th><th>Notes</th><th>Chart</th></tr></thead><tbody id="history"></tbody></table></div>
+          <div class="table-wrap" style="margin-top:12px"><table><thead><tr><th>Date</th><th>Symbol</th><th>Side</th><th>Entry</th><th>P&L</th><th>Notes</th><th>Chart</th><th>Action</th></tr></thead><tbody id="history"></tbody></table></div>
         </section>
         <section class="panel signature-panel" aria-label="Trade DNA analysis"><div class="signature-head"><div><div class="signature-kicker">02 / Behavior profile</div><div class="signature-title">Trade DNA</div><p class="muted">See which symbols and directions have contributed most to your recorded P&amp;L.</p></div><span class="signature-tag" id="dnaSample">NO SAMPLE</span></div><div class="dna-layout"><div class="dna-bars" id="dnaBars"><div class="empty-state">Log trades to build your trade profile.</div></div><div class="dna-insight" id="dnaInsight"><strong>Profile pending</strong><p class="muted">Your journal needs saved trades before patterns can be compared.</p></div></div></section>
       </section>
@@ -1176,17 +1176,26 @@ async function loadTrades(){
   renderHistory();renderPropStats();renderEquityCurve();renderDashboardStats();renderMatrix();renderAnalytics();renderReplay();renderTradingCoach();renderSignatureFeatures();
   setMessage("trademessage","Trades synced.");
 }
+async function deleteTrade(id,button){
+  if(!confirm("Delete this trade permanently? This will also update your journal statistics and equity curve."))return;
+  button.disabled=true;button.textContent="Deleting...";
+  const {error}=await db.from("trades").delete().eq("id",id);
+  if(error){button.disabled=false;button.textContent="Delete";setMessage("trademessage","Could not delete trade: "+error.message);return}
+  setMessage("trademessage","Trade deleted.");
+  await loadTrades();
+}
 function renderHistory(){
   const history=$("history");history.replaceChildren();
   const query=($("tradeSearch").value||"").trim().toLowerCase();
   const shown=tradesCache.filter(t=>!query||[t.symbol,t.notes,t.direction,t.trade_date].some(v=>String(v||"").toLowerCase().includes(query)));
-  if(!shown.length){const row=history.insertRow(),cell=row.insertCell();cell.colSpan=7;cell.textContent=tradesCache.length?"No trades match your search.":"No trades yet. Log your first trade above.";return}
+  if(!shown.length){const row=history.insertRow(),cell=row.insertCell();cell.colSpan=8;cell.textContent=tradesCache.length?"No trades match your search.":"No trades yet. Log your first trade above.";return}
   shown.forEach(t=>{
     const row=history.insertRow();
     [t.trade_date,t.symbol,t.direction,Number(t.entry_price).toString()].forEach(v=>row.insertCell().textContent=v??"");
     const pnlCell=row.insertCell(),pnl=Number(t.pnl||0);pnlCell.textContent=money(pnl);pnlCell.className=pnlClass(pnl);
     const notes=row.insertCell();notes.textContent=t.notes||"—";notes.style.maxWidth="230px";notes.style.whiteSpace="pre-wrap";
     const chartCell=row.insertCell();if(t.screenshot_url){const link=document.createElement("a");link.href=t.screenshot_url;link.target="_blank";link.rel="noopener noreferrer";link.className="history-shot";link.textContent="View chart";chartCell.appendChild(link)}else{chartCell.textContent="—";chartCell.className="muted"}
+    const actionCell=row.insertCell();const remove=document.createElement("button");remove.type="button";remove.className="ghost";remove.textContent="Delete";remove.style.padding="6px 9px";remove.style.fontSize="11px";remove.addEventListener("click",()=>deleteTrade(t.id,remove));actionCell.appendChild(remove);
   });
 }
 function renderDashboardStats(){
