@@ -893,11 +893,36 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 .gallery-meta{padding:12px;display:flex;justify-content:space-between;gap:10px;align-items:center}
 .gallery-meta strong{display:block;font-size:13px}.gallery-meta small{display:block;color:var(--muted);margin-top:4px}
 .gallery-empty{grid-column:1/-1;padding:30px;text-align:center;color:var(--muted);border:1px dashed var(--border);border-radius:10px}
-.riskcalc-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,.9fr);gap:16px;align-items:start}
-.riskcalc-big{font-size:48px;font-weight:850;letter-spacing:-2px;margin:12px 0 2px;color:#d3c3aa}
-.riskcalc-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
-.riskcalc-stats strong{display:block;font-size:19px;margin-top:7px}
-@media(max-width:760px){.riskcalc-layout{grid-template-columns:1fr}.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
+.gallery-grid{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}}
+
+/* Custom faceted outcome sculpture */
+.outcome-panel{overflow:hidden;position:relative;background:radial-gradient(ellipse at 50% 40%,rgba(48,43,79,.25),transparent 65%),#0c0e13}
+.outcome-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:18px;position:relative;z-index:2}
+.outcome-heading h2{margin:7px 0 4px;font-size:20px}
+.outcome-total{display:flex;flex-direction:column;align-items:flex-end;gap:3px}.outcome-total strong{font-size:28px;color:#d3c3aa;font-variant-numeric:tabular-nums}.outcome-total span{font-size:9px;letter-spacing:.18em;color:var(--muted)}
+.outcome-stage{height:300px;position:relative;display:flex;align-items:flex-end;justify-content:center;gap:clamp(26px,9vw,110px);padding:0 20px 40px;perspective:950px;isolation:isolate}
+.outcome-ground{position:absolute;left:9%;right:9%;bottom:25px;height:95px;transform:rotateX(67deg) rotateZ(-7deg);background:repeating-linear-gradient(90deg,rgba(187,198,196,.10) 0 1px,transparent 1px 42px),repeating-linear-gradient(0deg,rgba(187,198,196,.10) 0 1px,transparent 1px 42px);border:1px solid rgba(187,198,196,.13);box-shadow:0 24px 65px rgba(0,0,0,.45);z-index:-1}
+.outcome-crystal{--level:3px;width:clamp(62px,10vw,104px);height:var(--level);min-height:9px;position:relative;transform-style:preserve-3d;transform:rotateY(-28deg) rotateX(7deg);transform-origin:bottom center;transition:height .9s cubic-bezier(.2,.8,.2,1),filter .3s;filter:drop-shadow(0 16px 16px rgba(0,0,0,.32));animation:crystal-arrive 1.1s cubic-bezier(.2,.8,.2,1) both}
+.outcome-crystal:hover{filter:brightness(1.2) drop-shadow(0 18px 22px rgba(0,0,0,.5));transform:rotateY(-18deg) rotateX(2deg) translateY(-5px)}
+.crystal-front,.crystal-side,.crystal-top,.crystal-glint{position:absolute;inset:0}
+.crystal-front{clip-path:polygon(50% 0,100% 17%,82% 100%,18% 100%,0 17%);background:linear-gradient(155deg,var(--crystal-hi),var(--crystal-main) 48%,var(--crystal-deep));border:1px solid var(--crystal-hi);transform:translateZ(13px);box-shadow:inset 0 0 28px rgba(255,255,255,.12)}
+.crystal-side{clip-path:polygon(100% 17%,100% 75%,82% 100%,82% 100%);background:var(--crystal-deep);transform:translateZ(-1px) translateX(12px) skewY(-18deg);opacity:.95}
+.crystal-top{height:22px;inset:0 0 auto;clip-path:polygon(50% 0,100% 17%,50% 38%,0 17%);background:var(--crystal-hi);transform:translateY(-8px) translateZ(14px);filter:brightness(1.2)}
+.crystal-glint{clip-path:polygon(50% 0,57% 4%,31% 100%,18% 100%);background:linear-gradient(180deg,rgba(255,255,255,.35),rgba(255,255,255,0));transform:translateZ(15px);opacity:.55}
+.win-crystal{--crystal-hi:#d3c3aa;--crystal-main:#81735f;--crystal-deep:#453a31}
+.loss-crystal{--crystal-hi:#a84a53;--crystal-main:#671d27;--crystal-deep:#310d14}
+.flat-crystal{--crystal-hi:#bbc6c4;--crystal-main:#667572;--crystal-deep:#303a39}
+.outcome-axis{position:absolute;bottom:7px;font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:800}
+.axis-win{left:calc(50% - clamp(110px,19vw,205px))}.axis-loss{left:calc(50% - 15px)}.axis-flat{right:calc(50% - clamp(110px,19vw,205px))}
+.outcome-legend{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;border-top:1px solid var(--border);padding-top:16px}
+.outcome-stat{display:grid;grid-template-columns:9px 1fr auto;align-items:center;gap:9px;min-width:0}
+.outcome-dot{width:8px;height:8px;border-radius:50%;box-shadow:0 0 12px currentColor}
+.win-dot{background:#d3c3aa;color:#d3c3aa}.loss-dot{background:#a84a53;color:#a84a53}.flat-dot{background:#bbc6c4;color:#bbc6c4}
+.outcome-stat strong{font-size:12px;display:block}.outcome-stat small{font-size:10px;color:var(--muted);display:block;margin-top:3px;white-space:nowrap}.outcome-stat b{font-size:15px;font-variant-numeric:tabular-nums;color:#e7e2d8}
+.outcome-footnote{font-size:10px;color:var(--muted);margin:13px 0 0}
+@keyframes crystal-arrive{from{opacity:0;transform:rotateY(-55deg) rotateX(18deg) translateY(30px) scale(.82)}to{opacity:1;transform:rotateY(-28deg) rotateX(7deg) translateY(0) scale(1)}}
+@media(max-width:600px){.outcome-stage{height:240px;gap:clamp(20px,8vw,45px)}.outcome-crystal{width:clamp(52px,17vw,75px)}.outcome-legend{gap:6px}.outcome-stat{grid-template-columns:7px 1fr;gap:6px}.outcome-stat b{grid-column:2}.outcome-stat small{font-size:9px}.outcome-ground{left:2%;right:2%}}
+@media(prefers-reduced-motion:reduce){.outcome-crystal{animation:none;transition:none}}
 </style>
 </head>
 <body>
@@ -944,7 +969,6 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
       <button class="nav-btn" data-page="matrix"><span class="nav-icon">▦</span>Performance Map</button>
       <button class="nav-btn" data-page="trades"><span class="nav-icon">↗</span>Trades</button>
       <button class="nav-btn" data-page="gallery"><span class="nav-icon">▧</span>Screenshot Gallery</button>
-      <button class="nav-btn" data-page="riskcalc"><span class="nav-icon">⌁</span>MNQ Risk Calculator</button>
       <button class="nav-btn" data-page="replay"><span class="nav-icon">⏵</span>Replay & Simulator</button>
       <button class="nav-btn" data-page="analytics"><span class="nav-icon">⌁</span>Analytics</button>
       <button class="nav-btn" data-page="coach"><span class="nav-icon">✦</span>Trading Coach</button>
@@ -1028,16 +1052,20 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 
       <section class="page" id="page-gallery">
 <div class="page-head"><div><h1>Screenshot Gallery</h1><div class="muted">Your saved trade charts, all in one place.</div></div><span class="tag" id="galleryCount">0 screenshots</span></div>
+<section class="panel outcome-panel">
+<div class="outcome-heading"><div><div class="label">TRADE OUTCOME DISTRIBUTION</div><h2>Win / Loss / Break-even</h2><p class="muted">A live view of how your trades are distributed.</p></div><div class="outcome-total"><strong id="outcomeTotal">0</strong><span>TRADES</span></div></div>
+<div class="outcome-stage" id="outcomeStage"><div class="outcome-ground"></div>
+<div class="outcome-crystal win-crystal" id="winCrystal"><div class="crystal-top"></div><div class="crystal-front"></div><div class="crystal-side"></div><div class="crystal-glint"></div></div>
+<div class="outcome-crystal loss-crystal" id="lossCrystal"><div class="crystal-top"></div><div class="crystal-front"></div><div class="crystal-side"></div><div class="crystal-glint"></div></div>
+<div class="outcome-crystal flat-crystal" id="flatCrystal"><div class="crystal-top"></div><div class="crystal-front"></div><div class="crystal-side"></div><div class="crystal-glint"></div></div>
+<div class="outcome-axis axis-win">W</div><div class="outcome-axis axis-loss">L</div><div class="outcome-axis axis-flat">BE</div></div>
+<div class="outcome-legend">
+<div class="outcome-stat"><span class="outcome-dot win-dot"></span><div><strong>Wins</strong><small id="winOutcomeCount">0 trades</small></div><b id="winOutcomePct">0%</b></div>
+<div class="outcome-stat"><span class="outcome-dot loss-dot"></span><div><strong>Losses</strong><small id="lossOutcomeCount">0 trades</small></div><b id="lossOutcomePct">0%</b></div>
+<div class="outcome-stat"><span class="outcome-dot flat-dot"></span><div><strong>Break-even</strong><small id="flatOutcomeCount">0 trades</small></div><b id="flatOutcomePct">0%</b></div></div>
+<p class="outcome-footnote">Crystal height represents its share of all recorded trades.</p></section>
 <section class="panel"><div class="toolbar" style="margin-bottom:16px"><select id="gallerySymbol" aria-label="Filter by symbol" style="max-width:190px;margin-top:0"><option value="all">All symbols</option></select><select id="galleryResult" aria-label="Filter by result" style="max-width:190px;margin-top:0"><option value="all">All results</option><option value="win">Wins</option><option value="loss">Losses</option><option value="flat">Break-even</option></select></div><div id="galleryGrid" class="gallery-grid"><div class="empty-state">Your saved chart screenshots will appear here.</div></div></section>
 </section>
-<section class="page" id="page-riskcalc">
-<div class="page-head"><div><h1>MNQ Risk Calculator</h1><div class="muted">Calculate contract size from your stop distance and risk limit.</div></div><span class="tag">MNQ · $2 / point · $0.50 / tick</span></div>
-<div class="riskcalc-layout">
-<section class="panel"><h2>Trade parameters</h2><div class="gridform" style="margin-top:15px">
-<label>Entry price<input type="number" step="0.25" id="riskEntry" placeholder="e.g. 20150.00"></label><label>Stop-loss price<input type="number" step="0.25" id="riskStop" placeholder="e.g. 20140.00"></label><label>Target price <span class="muted">(optional)</span><input type="number" step="0.25" id="riskTarget" placeholder="e.g. 20170.00"></label><label>Maximum risk ($)<input type="number" min="0" step="0.01" id="riskAmount" value="250"></label>
-<div class="full"><button type="button" id="calculateRisk">Calculate position size</button></div></div><p class="muted" id="riskCalcMessage" role="status" style="margin-top:12px">Enter your entry and stop prices to calculate.</p></section>
-<section class="panel riskcalc-results"><div class="label">RECOMMENDED POSITION SIZE</div><div class="riskcalc-big" id="riskContracts">—</div><div class="muted">MNQ contracts, rounded down to stay within risk</div><div class="riskcalc-stats"><div><span class="label">STOP DISTANCE</span><strong id="riskDistance">—</strong></div><div><span class="label">ESTIMATED RISK</span><strong id="riskDollars">—</strong></div><div><span class="label">RISK / REWARD</span><strong id="riskRR">—</strong></div><div><span class="label">POTENTIAL PROFIT</span><strong id="riskPotential">—</strong></div></div><p class="muted" style="margin-top:16px">Excludes commissions, fees and slippage. Confirm contract values with your broker.</p></section>
-</div></section>
 <section class="page" id="page-replay">
         <div class="page-head"><div><h1>Replay & Simulator</h1><div class="muted">Run your real logged trades through hypothetical risk rules.</div></div><span class="tag">Simulation only · no changes to saved trades</span></div>
         <section class="panel"><h2>Rule simulator</h2><p class="muted">Change the rules below and simulate your trades in date order. This does not alter your prop account settings or saved trade data.</p>
@@ -1148,6 +1176,11 @@ function setText(id,text){const el=$(id);if(el)el.textContent=text}
 function setMessage(id,text){setText(id,text)}
 function pnlClass(n){return Number(n)<0?"negative":Number(n)>0?"positive":""}
 function sortedTrades(){return [...tradesCache].sort((a,b)=>String(a.trade_date||"").localeCompare(String(b.trade_date||""))||String(a.created_at||"").localeCompare(String(b.created_at||"")))}
+function renderOutcomeSculpture(){
+const total=tradesCache.length,wins=tradesCache.filter(t=>Number(t.pnl)>0).length,losses=tradesCache.filter(t=>Number(t.pnl)<0).length,flat=total-wins-losses;
+setText("outcomeTotal",total);
+[{count:wins,id:"winCrystal",countId:"winOutcomeCount",pctId:"winOutcomePct"},{count:losses,id:"lossCrystal",countId:"lossOutcomeCount",pctId:"lossOutcomePct"},{count:flat,id:"flatCrystal",countId:"flatOutcomeCount",pctId:"flatOutcomePct"}].forEach(g=>{const pct=total?g.count/total*100:0,el=$(g.id);if(el)el.style.setProperty("--level",Math.max(3,pct*1.65)+"px");setText(g.countId,g.count+" trades");setText(g.pctId,pct.toFixed(1)+"%")});
+}
 function renderGallery(){
 const grid=$("galleryGrid"),symbol=$("gallerySymbol"),result=$("galleryResult");if(!grid||!symbol||!result)return;
 const shots=tradesCache.filter(t=>t.screenshot_url),current=symbol.value||"all",symbols=[...new Set(shots.map(t=>(t.symbol||"Unknown").toUpperCase()))].sort();
@@ -1157,14 +1190,6 @@ setText("galleryCount",filtered.length+" / "+shots.length+" screenshots");grid.r
 if(!filtered.length){const empty=document.createElement("div");empty.className="gallery-empty";empty.textContent=shots.length?"No screenshots match these filters.":"No trade screenshots yet. Add a chart when logging a trade.";grid.append(empty);return}
 filtered.forEach(t=>{const card=document.createElement("article");card.className="gallery-card";const link=document.createElement("a");link.href=t.screenshot_url;link.target="_blank";link.rel="noopener noreferrer";const img=document.createElement("img");img.src=t.screenshot_url;img.alt=(t.symbol||"Trade")+" chart from "+(t.trade_date||"unknown date");img.loading="lazy";link.append(img);const meta=document.createElement("div");meta.className="gallery-meta";const info=document.createElement("div"),name=document.createElement("strong"),date=document.createElement("small");name.textContent=(t.symbol||"Trade")+" · "+(t.direction||"");date.textContent=t.trade_date||"";info.append(name,date);const pnl=document.createElement("strong");pnl.textContent=money(Number(t.pnl||0));pnl.className=pnlClass(t.pnl);meta.append(info,pnl);card.append(link,meta);grid.append(card)});
 }
-function calculateMNQRisk(){
-const entryRaw=$("riskEntry").value,stopRaw=$("riskStop").value,targetRaw=$("riskTarget").value,risk=Number($("riskAmount").value),entry=Number(entryRaw),stop=Number(stopRaw),message=$("riskCalcMessage");
-if(entryRaw===""||stopRaw===""||!Number.isFinite(entry)||!Number.isFinite(stop)||entry===stop||!Number.isFinite(risk)||risk<=0){message.textContent="Enter a valid entry, stop and risk amount. Entry and stop cannot be the same.";return}
-const distance=Math.abs(entry-stop),perContract=distance*2,contracts=Math.floor(risk/perContract),actualRisk=contracts*perContract;setText("riskContracts",contracts.toString());setText("riskDistance",distance.toFixed(2)+" points");setText("riskDollars",money(actualRisk));
-let rr="—",potential="—";if(targetRaw!==""){const target=Number(targetRaw),reward=Math.abs(target-entry),rightWay=(entry>stop&&target>entry)||(entry<stop&&target<entry);if(Number.isFinite(target)&&reward>0&&rightWay){rr=(reward/distance).toFixed(2)+"R";potential=money(reward*2*contracts)}else{rr="Check target";potential="—"}}
-setText("riskRR",rr);setText("riskPotential",potential);message.textContent=contracts>0?"Based on $2 per MNQ point per contract. Estimated risk stays within your limit.":"Your risk limit is too small for even 1 MNQ contract at this stop distance.";
-}
-
 function dailyTotals(trades=tradesCache){const days={};trades.forEach(t=>{const d=t.trade_date||"Unknown";days[d]=(days[d]||0)+Number(t.pnl||0)});return days}
 function groupedBySymbol(){const g={};tradesCache.forEach(t=>{const k=(t.symbol||"Unknown").toUpperCase();(g[k] ||= []).push(t)});return g}
 function maxDrawdown(trades){let running=0,peak=0,dd=0;for(const t of trades){running+=Number(t.pnl||0);peak=Math.max(peak,running);dd=Math.max(dd,peak-running)}return dd}
@@ -1218,7 +1243,7 @@ async function loadTrades(){
   tradesCache=data||[];
   const total=tradesCache.reduce((s,t)=>s+Number(t.pnl||0),0),wins=tradesCache.filter(t=>Number(t.pnl)>0).length;
   setText("total",money(total));$("total").className="value "+pnlClass(total);setText("winrate",(tradesCache.length?wins/tradesCache.length*100:0).toFixed(1)+"%");setText("count",tradesCache.length);setText("tradeCountTag",tradesCache.length+" trades");
-  renderHistory();renderPropStats();renderEquityCurve();renderDashboardStats();renderMatrix();renderAnalytics();renderReplay();renderTradingCoach();renderSignatureFeatures();
+  renderHistory();renderOutcomeSculpture();renderPropStats();renderEquityCurve();renderDashboardStats();renderMatrix();renderAnalytics();renderReplay();renderTradingCoach();renderSignatureFeatures();
   setMessage("trademessage","Trades synced.");
 }
 async function deleteTrade(id,button){
@@ -1478,7 +1503,7 @@ $("prevMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.ge
 $("nextMonth").addEventListener("click",()=>{matrixMonth=new Date(matrixMonth.getFullYear(),matrixMonth.getMonth()+1,1);if(selectedDate&&!selectedDate.startsWith(matrixMonth.getFullYear()+"-"+String(matrixMonth.getMonth()+1).padStart(2,"0")))selectedDate=null;renderMatrix()});
 $("currentMonth").addEventListener("click",()=>{matrixMonth=new Date();selectedDate=localDateString(new Date());renderMatrix()});
 $("tradeSearch").addEventListener("input",renderHistory);
-$("gallerySymbol").addEventListener("change",renderGallery);$("galleryResult").addEventListener("change",renderGallery);$("calculateRisk").addEventListener("click",calculateMNQRisk);
+$("gallerySymbol").addEventListener("change",renderGallery);$("galleryResult").addEventListener("change",renderGallery);
 $("simForm").addEventListener("submit",runSimulation);
 $("replayPrev").addEventListener("click",()=>{replayIndex=Math.max(0,replayIndex-1);renderReplay()});
 $("replayNext").addEventListener("click",()=>{replayIndex=Math.min(Math.max(0,sortedTrades().length-1),replayIndex+1);renderReplay()});
