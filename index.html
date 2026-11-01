@@ -1588,3 +1588,19 @@ db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>showSession(session)
 </script>
 </body>
 </html>
+
+
+/* Calendar outcome colours — keep wins visibly green and losses red */
+.day-cell.win{
+  background:linear-gradient(145deg,rgba(53,184,121,.24),rgba(53,184,121,.08) 58%,#09090a 100%)!important;
+  border-color:rgba(53,184,121,.48)!important;
+  box-shadow:inset 0 1px rgba(53,184,121,.12);
+}
+.day-cell.win .day-pnl{color:#35b879!important}
+.day-cell.win .fingerprint i{background:#35b879!important}
+.day-cell.loss{
+  background:linear-gradient(145deg,rgba(224,68,79,.25),rgba(72,8,12,.2) 58%,#09090a 100%)!important;
+  border-color:rgba(224,68,79,.48)!important;
+}
+.day-cell.loss .day-pnl{color:#e0444f!important}
+.day-cell.loss .fingerprint i{background:#e0444f!important}
