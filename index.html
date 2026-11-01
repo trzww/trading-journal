@@ -601,6 +601,44 @@ body:after{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;opac
 @media(max-width:700px){body:after{display:none}.command-hero{min-height:260px}.command-hero .hero-copy{max-width:100%;z-index:6}.command-hero .hero-mark{right:-24px;top:48%;opacity:.22;transform:translateY(-50%) scale(.82)}.mnq-command-world{width:100%;opacity:.36}.mnq-holo-card{right:-15%;top:22%;width:75%;height:62%;transform:rotateY(-15deg) rotateX(8deg) scale(.8)}.mnq-holo-chip{display:none}.mnq-world-grid{opacity:.4}.mnq-floating-dust{opacity:.4}}
 @media(prefers-reduced-motion:reduce){.mnq-holo-card,.mnq-world-grid,.mnq-world-scan,.mnq-floating-dust i,.mnq-holo-chip,.stats .card:before{animation:none!important}.page.active .panel,.page.active .card{animation:none!important}}
 
+
+/* Distinct visual instruments: risk defence, order flow, and chart scanning */
+.mission-layout{grid-template-columns:170px 140px minmax(0,1fr)!important}
+.risk-shield-stage{height:174px;position:relative;display:grid;place-items:center;isolation:isolate;overflow:hidden;border-radius:12px;background:radial-gradient(ellipse,rgba(72,8,12,.25),transparent 68%)}
+.risk-shield-stage:before{content:"";position:absolute;inset:12px;border:1px solid rgba(211,195,170,.09);border-radius:50%;transform:scaleY(.38) rotate(-20deg);animation:shield-orbit 13s linear infinite}
+.shield-orbit{position:absolute;width:132px;height:132px;border:1px solid rgba(211,195,170,.16);border-radius:50%;transform:rotateX(68deg) rotateZ(25deg)}
+.shield-orbit-a{animation:shield-orbit 17s linear infinite}
+.shield-orbit-b{width:108px;height:150px;transform:rotateY(68deg) rotateZ(-28deg);border-color:rgba(72,8,12,.7);animation:shield-orbit 21s linear infinite reverse}
+.risk-shield{width:86px;position:relative;filter:drop-shadow(0 12px 18px rgba(0,0,0,.55));animation:shield-float 4.8s ease-in-out infinite}
+.risk-shield svg{display:block;width:100%;overflow:visible}
+.shield-fill{fill:rgba(72,8,12,.28);stroke:none}
+.shield-line{fill:none;stroke:#d3c3aa;stroke-opacity:.72;stroke-width:1.2}
+.shield-check{fill:none;stroke:#bbc6c4;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:55;stroke-dashoffset:55;animation:shield-draw 2.6s ease-in-out infinite alternate}
+.shield-readout{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding-top:8px}
+.shield-readout strong{font-size:18px;letter-spacing:-.8px;text-shadow:0 2px 8px #000}
+.shield-readout span,.shield-caption{font:700 7px ui-monospace,monospace;letter-spacing:1.2px;color:#d3c3aa}
+.shield-caption{position:absolute;bottom:5px;color:#89919e;font-size:7px}
+.execution-panel{position:relative}
+.execution-visual{position:relative;margin:-4px 0 18px;padding:10px 12px 8px;border:1px solid rgba(211,195,170,.12);border-radius:9px;background:linear-gradient(100deg,rgba(48,43,79,.17),rgba(8,9,12,.55) 50%,rgba(72,8,12,.13));overflow:hidden}
+.execution-visual:after{content:"";position:absolute;top:0;bottom:0;width:22%;left:-25%;background:linear-gradient(90deg,transparent,rgba(211,195,170,.08),transparent);transform:skewX(-18deg);animation:flow-scan 6s ease-in-out infinite}
+.execution-label{font:700 8px ui-monospace,monospace;letter-spacing:1.4px;color:#8f99a8;margin-bottom:8px}
+.flow-wave{height:42px;display:flex;align-items:center;justify-content:space-between;gap:3px;position:relative}
+.flow-wave:before{content:"";position:absolute;left:0;right:0;top:50%;height:1px;background:rgba(211,195,170,.12)}
+.flow-wave i{position:relative;z-index:1;display:block;width:3px;height:var(--h,16px);border-radius:3px;background:linear-gradient(180deg,#bbc6c4,#48080c);box-shadow:0 0 8px rgba(187,198,196,.12);transform-origin:center;animation:flow-pulse var(--d,1.8s) ease-in-out infinite alternate;animation-delay:var(--delay,0s)}
+.flow-wave i:nth-child(3n){--h:30px;--d:1.5s}.flow-wave i:nth-child(4n){--h:11px;--d:2.2s}.flow-wave i:nth-child(5n){--h:36px;--d:1.7s}.flow-wave i:nth-child(7n){--h:22px;--d:2.5s}
+.flow-wave i:nth-child(1){--delay:-.2s}.flow-wave i:nth-child(2){--delay:-1.1s}.flow-wave i:nth-child(3){--delay:-.7s}.flow-wave i:nth-child(4){--delay:-1.8s}.flow-wave i:nth-child(5){--delay:-.4s}.flow-wave i:nth-child(6){--delay:-1.4s}.flow-wave i:nth-child(7){--delay:-.9s}.flow-wave i:nth-child(8){--delay:-1.7s}.flow-wave i:nth-child(9){--delay:-.5s}.flow-wave i:nth-child(10){--delay:-1.2s}
+.flow-axis{display:flex;justify-content:space-between;gap:6px;color:#727d8c;font:700 7px ui-monospace,monospace;letter-spacing:.7px}
+.chart-wrap{isolation:isolate;overflow:hidden;border-radius:8px}
+.chart-wrap:after{content:"";position:absolute;z-index:2;top:0;bottom:0;left:-18%;width:16%;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(211,195,170,.045),transparent);animation:chart-scan 11s linear infinite}
+@keyframes shield-orbit{to{rotate:360deg}}
+@keyframes shield-float{0%,100%{transform:translateY(0) rotateY(-8deg)}50%{transform:translateY(-5px) rotateY(8deg)}}
+@keyframes shield-draw{0%{stroke-dashoffset:55;opacity:.5}45%,100%{stroke-dashoffset:0;opacity:1}}
+@keyframes flow-scan{0%,18%{left:-25%}75%,100%{left:115%}}
+@keyframes flow-pulse{from{transform:scaleY(.38);opacity:.55}to{transform:scaleY(1);opacity:1}}
+@keyframes chart-scan{0%{left:-18%}100%{left:112%}}
+@media(max-width:700px){.mission-layout{grid-template-columns:1fr!important}.risk-shield-stage{max-width:240px;width:100%;margin:0 auto}.flow-axis{font-size:6px;letter-spacing:.3px}.flow-wave{gap:2px}}
+@media(prefers-reduced-motion:reduce){.risk-shield-stage:before,.shield-orbit-a,.shield-orbit-b,.risk-shield,.shield-check,.execution-visual:after,.flow-wave i,.chart-wrap:after{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -685,7 +723,8 @@ body:after{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;opac
 
       <section class="page" id="page-trades">
         <div class="page-head"><div><h1>Trades</h1><div class="muted">Log executions and review your complete trade history.</div></div><span class="tag" id="tradeCountTag">0 trades</span></div>
-        <section class="panel">
+        <section class="panel execution-panel">
+          <div class="execution-visual" aria-hidden="true"><div class="execution-label">ORDER FLOW / EXECUTION SEQUENCE</div><div class="flow-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="flow-axis"><span>LIQUIDITY</span><span>DISPLACEMENT</span><span>ENTRY</span><span>MANAGE</span></div></div>
           <h2>＋ Log a trade</h2>
           <form id="tradeform" class="gridform">
             <label>Date<input type="date" id="date" required></label>
@@ -785,7 +824,7 @@ body:after{content:"";position:fixed;inset:0;z-index:20;pointer-events:none;opac
           </div>
           <p class="muted" style="margin-top:14px">Estimates based on trades logged here. Verify your actual rules with your prop firm.</p><div id="propmessage" class="muted" role="status"></div>
         </section>
-        <section class="panel signature-panel" aria-label="Prop account mission control"><div class="signature-head"><div><div class="signature-kicker">06 / Account status</div><div class="signature-title">Mission Control</div><p class="muted">Estimated progress against the rules configured for this account.</p></div><span class="signature-tag" id="missionStatus" role="status" aria-live="polite">AWAITING SETTINGS</span></div><div class="mission-layout"><div class="mission-gauge" id="missionGauge"><div class="mission-gauge-inner"><strong id="missionPct">0%</strong><span>TARGET TRACK</span></div></div><div class="mission-readout"><div class="instrument-stat"><span>TO TARGET</span><strong id="missionToTarget">—</strong></div><div class="instrument-stat"><span>LOSS BUFFER</span><strong id="missionLossBuffer">—</strong></div><div class="instrument-stat"><span>BEST DAY SHARE</span><strong id="missionBestDayShare">—</strong></div><div class="instrument-stat"><span>ACCOUNT EQUITY</span><strong id="missionEquity">—</strong></div></div></div></section>
+        <section class="panel signature-panel" aria-label="Prop account mission control"><div class="signature-head"><div><div class="signature-kicker">06 / Account status</div><div class="signature-title">Mission Control</div><p class="muted">Estimated progress against the rules configured for this account.</p></div><span class="signature-tag" id="missionStatus" role="status" aria-live="polite">AWAITING SETTINGS</span></div><div class="mission-layout"><div class="risk-shield-stage" aria-hidden="true"><div class="shield-orbit shield-orbit-a"></div><div class="shield-orbit shield-orbit-b"></div><div class="risk-shield"><svg viewBox="0 0 100 116" role="presentation"><path class="shield-fill" d="M50 5 88 19v31c0 27-15 47-38 60C27 97 12 77 12 50V19Z"/><path class="shield-line" d="M50 5 88 19v31c0 27-15 47-38 60C27 97 12 77 12 50V19Z"/><path class="shield-check" d="m32 57 12 12 25-27"/></svg><div class="shield-readout"><strong id="shieldPct">—</strong><span>BUFFER LEFT</span></div></div><div class="shield-caption">RISK DEFENCE / ACTIVE</div></div><div class="mission-gauge" id="missionGauge"><div class="mission-gauge-inner"><strong id="missionPct">0%</strong><span>TARGET TRACK</span></div></div><div class="mission-readout"><div class="instrument-stat"><span>TO TARGET</span><strong id="missionToTarget">—</strong></div><div class="instrument-stat"><span>LOSS BUFFER</span><strong id="missionLossBuffer">—</strong></div><div class="instrument-stat"><span>BEST DAY SHARE</span><strong id="missionBestDayShare">—</strong></div><div class="instrument-stat"><span>ACCOUNT EQUITY</span><strong id="missionEquity">—</strong></div></div></div></section>
         <section class="panel" id="settingsPanel" hidden><h2>Prop account settings</h2><p class="muted">Set these values to match your actual account rules.</p>
           <form id="propform" class="gridform">
             <label>Prop firm<input id="firm" value="Lucid" required></label>
@@ -971,7 +1010,7 @@ function renderMissionControl(data=null){
   if(!a){setText("missionStatus","AWAITING SETTINGS");setText("missionPct","0%");setText("missionToTarget","—");setText("missionLossBuffer","—");setText("missionBestDayShare","—");setText("missionEquity","—");return}
   const remaining=Math.max(0,a.target-Math.max(0,a.total)),gauge=$("missionGauge");if(gauge){gauge.style.setProperty("--mission-pct",a.progress+"%");gauge.style.setProperty("--mission-color",a.lossLeft<0?"var(--red)":a.progress>=100?"var(--green)":"var(--blue)")}
   setText("missionPct",a.progress.toFixed(0)+"%");setText("missionToTarget",money(remaining));setText("missionLossBuffer",money(a.lossLeft));setText("missionBestDayShare",a.positiveTotal?a.consistency.toFixed(1)+"%":"—");setText("missionEquity",money(a.balance));
-  setText("missionStatus",a.lossLeft<0?"LOSS LIMIT EXCEEDED":a.progress>=100?"TARGET REACHED":a.total<0?"DRAWDOWN WATCH":"TRACKING PROGRESS");
+  setText("missionStatus",a.lossLeft<0?"LOSS LIMIT EXCEEDED":a.progress>=100?"TARGET REACHED":a.total<0?"DRAWDOWN WATCH":"TRACKING PROGRESS");const shieldPct=a.maxLoss>0?Math.max(0,Math.min(100,a.lossLeft/a.maxLoss*100)):0;setText("shieldPct",shieldPct.toFixed(0)+"%");const shield=$("shieldPct");if(shield)shield.style.color=a.lossLeft<0?"var(--red)":shieldPct<25?"var(--amber)":"#bbc6c4";const shieldStage=document.querySelector(".risk-shield-stage");if(shieldStage)shieldStage.style.setProperty("--shield-fill",shieldPct+"%");
 }
 
 function renderTradingCoach(){
