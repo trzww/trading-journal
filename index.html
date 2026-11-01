@@ -501,6 +501,47 @@ tbody tr:hover{transform:translateZ(3px)}
   .panel,.card,.command-hero,.growth-coach,.signature-panel,#auth,button,.nav-btn,.day-cell,.trade-mini{transition:none!important}
 }
 
+
+/* ── REAL 3D trading scene / interactive motion layer ── */
+.command-hero{perspective:1100px;transform-style:preserve-3d;will-change:transform}
+.hero-mark{perspective:900px;transform-style:preserve-3d;isolation:isolate}
+.mnq-3d-scene{position:absolute;inset:0;display:grid;place-items:center;perspective:650px;transform-style:preserve-3d;pointer-events:none;z-index:1}
+.mnq-3d-cube{position:relative;width:78px;height:78px;transform-style:preserve-3d;animation:mnq-cube-float 7s ease-in-out infinite,mnq-cube-spin 19s linear infinite}
+.mnq-3d-face{position:absolute;inset:0;display:grid;place-items:center;border:1px solid rgba(211,195,170,.48);background:linear-gradient(145deg,rgba(187,198,196,.19),rgba(48,43,79,.24) 48%,rgba(72,8,12,.18));box-shadow:inset 0 0 24px rgba(211,195,170,.09),0 0 22px rgba(48,43,79,.12);backface-visibility:visible}
+.mnq-3d-face:after{content:"";width:22px;height:22px;border:1px solid rgba(211,195,170,.55);transform:rotate(45deg);box-shadow:0 0 18px rgba(187,198,196,.22)}
+.mnq-3d-face.front{transform:translateZ(39px)}
+.mnq-3d-face.back{transform:rotateY(180deg) translateZ(39px)}
+.mnq-3d-face.right{transform:rotateY(90deg) translateZ(39px)}
+.mnq-3d-face.left{transform:rotateY(-90deg) translateZ(39px)}
+.mnq-3d-face.top{transform:rotateX(90deg) translateZ(39px)}
+.mnq-3d-face.bottom{transform:rotateX(-90deg) translateZ(39px)}
+.mnq-3d-orbit{position:absolute;width:180px;height:72px;border:1px solid rgba(187,198,196,.42);border-radius:50%;transform:rotateX(68deg) rotateZ(-25deg);box-shadow:0 0 18px rgba(48,43,79,.24);animation:mnq-orbit-turn 13s linear infinite}
+.mnq-3d-orbit.orbit-two{width:150px;height:105px;border-color:rgba(72,8,12,.9);transform:rotateY(64deg) rotateZ(34deg);animation-duration:17s;animation-direction:reverse}
+.mnq-3d-data{position:absolute;inset:0;transform-style:preserve-3d}
+.mnq-3d-bar{position:absolute;bottom:38px;width:7px;border:1px solid rgba(187,198,196,.48);background:linear-gradient(180deg,rgba(187,198,196,.72),rgba(48,43,79,.2));box-shadow:0 0 13px rgba(187,198,196,.15);transform:translateZ(30px);animation:mnq-bars 2.6s ease-in-out infinite alternate}
+.mnq-3d-bar:nth-child(1){height:28px;left:19px;animation-delay:-.4s}
+.mnq-3d-bar:nth-child(2){height:49px;left:34px;animation-delay:-1.1s}
+.mnq-3d-bar:nth-child(3){height:37px;left:49px;animation-delay:-.7s}
+.mnq-3d-bar:nth-child(4){height:66px;left:64px;animation-delay:-1.8s}
+.mnq-3d-bar:nth-child(5){height:52px;left:79px;animation-delay:-.2s}
+.mnq-3d-bar:nth-child(6){height:77px;left:94px;animation-delay:-1.4s}
+.mnq-3d-bar:nth-child(7){height:61px;left:109px;animation-delay:-.9s}
+.mnq-3d-scene-label{position:absolute;bottom:4px;right:0;color:rgba(211,195,170,.6);font:700 7px ui-monospace,monospace;letter-spacing:2px;transform:translateZ(55px)}
+.command-hero .hero-copy,.command-hero .hero-index{transform:translateZ(30px)}
+.command-hero .hero-mark{transform-style:preserve-3d}
+.panel,.card,.command-hero{--tilt-x:0deg;--tilt-y:0deg}
+.mnq-tilt{transform:perspective(1100px) rotateX(var(--tilt-x)) rotateY(var(--tilt-y)) translateZ(0);transform-style:preserve-3d}
+.stats .card{transform-style:preserve-3d}
+.stats .card>*{transform:translateZ(9px);position:relative}
+.panel:after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at var(--glow-x,50%) var(--glow-y,0%),rgba(187,198,196,.09),transparent 42%);opacity:0;transition:opacity .3s}
+.panel:hover:after{opacity:1}
+@keyframes mnq-cube-spin{0%{transform:rotateX(-22deg) rotateY(0) rotateZ(0)}100%{transform:rotateX(338deg) rotateY(360deg) rotateZ(360deg)}}
+@keyframes mnq-cube-float{0%,100%{translate:0 0}50%{translate:0 -12px}}
+@keyframes mnq-orbit-turn{to{rotate:360deg}}
+@keyframes mnq-bars{from{scale:1 .72;opacity:.55}to{scale:1 1.08;opacity:1}}
+@media(max-width:700px){.mnq-3d-cube{width:62px;height:62px}.mnq-3d-face.front{transform:translateZ(31px)}.mnq-3d-face.back{transform:rotateY(180deg) translateZ(31px)}.mnq-3d-face.right{transform:rotateY(90deg) translateZ(31px)}.mnq-3d-face.left{transform:rotateY(-90deg) translateZ(31px)}.mnq-3d-face.top{transform:rotateX(90deg) translateZ(31px)}.mnq-3d-face.bottom{transform:rotateX(-90deg) translateZ(31px)}}
+@media(prefers-reduced-motion:reduce){.mnq-3d-cube,.mnq-3d-orbit,.mnq-3d-bar{animation:none!important}.mnq-tilt{transform:none!important}}
+
 </style>
 </head>
 <body>
@@ -1069,6 +1110,38 @@ $("tradeform").addEventListener("submit",async e=>{
 });
 db.auth.onAuthStateChange((_event,session)=>{setTimeout(()=>showSession(session),0)});
 (async()=>{const {data,error}=await db.auth.getSession();if(error)setMessage("message",error.message);await showSession(data.session)})();
+
+/* Real 3D hero object and pointer parallax; presentation only. */
+(function initMNQ3D(){
+  const mark=document.querySelector(".hero-mark");
+  if(mark&&!mark.querySelector(".mnq-3d-scene")){
+    const scene=document.createElement("div");scene.className="mnq-3d-scene";scene.setAttribute("aria-hidden","true");
+    const orbitA=document.createElement("div");orbitA.className="mnq-3d-orbit";
+    const orbitB=document.createElement("div");orbitB.className="mnq-3d-orbit orbit-two";
+    const cube=document.createElement("div");cube.className="mnq-3d-cube";
+    ["front","back","right","left","top","bottom"].forEach(side=>{const face=document.createElement("div");face.className="mnq-3d-face "+side;cube.appendChild(face)});
+    const data=document.createElement("div");data.className="mnq-3d-data";
+    for(let i=0;i<7;i++){const bar=document.createElement("i");bar.className="mnq-3d-bar";data.appendChild(bar)}
+    const label=document.createElement("div");label.className="mnq-3d-scene-label";label.textContent="MNQ / 3D ENGINE";
+    scene.append(orbitA,orbitB,cube,data,label);mark.prepend(scene);
+  }
+  const finePointer=window.matchMedia&&window.matchMedia("(hover:hover) and (pointer:fine)").matches;
+  if(!finePointer||window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  document.querySelectorAll(".command-hero,.stats .card,.signature-panel,.orb-panel").forEach(el=>{
+    if(el.dataset.mnqTilt)return;el.dataset.mnqTilt="1";el.classList.add("mnq-tilt");
+    let frame=0;
+    el.addEventListener("pointermove",e=>{
+      const r=el.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      const max=el.classList.contains("command-hero")?7:3.5;
+      el.style.setProperty("--tilt-x",((.5-y)*max).toFixed(2)+"deg");
+      el.style.setProperty("--tilt-y",((x-.5)*max).toFixed(2)+"deg");
+      el.style.setProperty("--glow-x",(x*100).toFixed(1)+"%");
+      el.style.setProperty("--glow-y",(y*100).toFixed(1)+"%");
+    });
+    el.addEventListener("pointerleave",()=>{el.style.setProperty("--tilt-x","0deg");el.style.setProperty("--tilt-y","0deg")});
+  });
+})();
+
 </script>
 </body>
 </html>
