@@ -1,0 +1,106 @@
+/* mnq.journal — NIGHTSHIFT 3D depth layer
+   Visual-only enhancement. No markup, data, database, or interaction changes. */
+:root{
+  --depth-shadow:0 28px 70px rgba(0,0,0,.48);
+  --depth-edge:rgba(211,195,170,.2);
+  --depth-glow:rgba(48,43,79,.22);
+  --depth-ease:cubic-bezier(.2,.75,.25,1);
+}
+html{perspective:1400px;perspective-origin:50% 0}
+body{transform-style:preserve-3d}
+header{
+  transform:translateZ(18px);
+  box-shadow:0 14px 42px rgba(0,0,0,.42),inset 0 -1px rgba(211,195,170,.06);
+}
+.sidebar{
+  box-shadow:12px 0 38px rgba(0,0,0,.22),inset -1px 0 rgba(211,195,170,.035);
+  transform:translateZ(8px);
+}
+.workspace{transform-style:preserve-3d}
+.page.active{animation:nightshift-page-in .55s var(--depth-ease) both}
+.panel,.card,.command-hero,.growth-coach,.signature-panel,#auth{
+  transform-style:preserve-3d;
+  backface-visibility:hidden;
+  box-shadow:0 18px 46px rgba(0,0,0,.32),inset 0 1px rgba(211,195,170,.055);
+  transition:transform .32s var(--depth-ease),box-shadow .32s var(--depth-ease),border-color .32s ease,background .32s ease;
+}
+.panel:before,.card:before,.command-hero:after,.signature-panel:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  border-radius:inherit;
+  background:linear-gradient(135deg,rgba(255,255,255,.055),transparent 23%,transparent 72%,rgba(48,43,79,.09));
+  opacity:.55;
+  transform:translateZ(1px);
+}
+.panel:hover,.card:hover{
+  transform:translateY(-4px) rotateX(.45deg);
+  box-shadow:0 28px 62px rgba(0,0,0,.42),0 0 0 1px rgba(211,195,170,.045),inset 0 1px rgba(211,195,170,.08);
+  border-color:rgba(211,195,170,.28);
+}
+.stats .card{transform:translateZ(12px);box-shadow:0 18px 32px rgba(0,0,0,.32),inset 0 1px rgba(211,195,170,.07)}
+.stats .card:hover{transform:translateY(-6px) translateZ(20px) rotateX(1deg);box-shadow:0 30px 48px rgba(0,0,0,.48),0 0 28px rgba(48,43,79,.13)}
+.command-hero{
+  transform:translateZ(16px);
+  box-shadow:0 34px 85px rgba(0,0,0,.48),inset 0 1px rgba(211,195,170,.09),inset 0 -18px 45px rgba(0,0,0,.14);
+}
+.command-hero:after{
+  inset:1px;border:1px solid rgba(211,195,170,.07);
+  background:linear-gradient(115deg,rgba(211,195,170,.09),transparent 32%,transparent 70%,rgba(72,8,12,.12));
+}
+.hero-mark{perspective:700px;transform-style:preserve-3d;filter:drop-shadow(0 18px 25px rgba(0,0,0,.4))}
+.hero-mark-ring{box-shadow:0 0 22px rgba(187,198,196,.055);transform-style:preserve-3d}
+.ring-a{transform:rotateY(28deg) rotateX(18deg) rotateZ(-28deg)}
+.ring-b{transform:rotateY(-32deg) rotateX(24deg) rotateZ(48deg)}
+.ring-c{transform:rotateY(18deg) rotateX(-25deg) rotateZ(-54deg)}
+.hero-mark-core{
+  transform:translateZ(24px);
+  box-shadow:0 18px 40px rgba(0,0,0,.5),0 0 55px rgba(48,43,79,.32),inset 0 2px rgba(211,195,170,.16),inset 0 -12px 24px rgba(0,0,0,.55);
+}
+button{
+  box-shadow:0 5px 0 rgba(23,3,5,.9),0 10px 20px rgba(0,0,0,.24),inset 0 1px rgba(211,195,170,.16);
+  transform:translateY(0) translateZ(5px);
+  transition:transform .18s var(--depth-ease),box-shadow .18s ease,filter .18s ease,background .18s ease;
+}
+button:hover{transform:translateY(-2px) translateZ(8px);box-shadow:0 7px 0 rgba(23,3,5,.85),0 17px 28px rgba(0,0,0,.34),inset 0 1px rgba(211,195,170,.2)}
+button:active{transform:translateY(3px) translateZ(1px);box-shadow:0 2px 0 rgba(23,3,5,.85),0 5px 12px rgba(0,0,0,.25)}
+.nav-btn{transform:translateZ(4px);transition:transform .22s var(--depth-ease),background .22s ease,border-color .22s ease,color .22s ease,box-shadow .22s ease}
+.nav-btn:hover{transform:translateX(4px) translateZ(10px);box-shadow:8px 8px 22px rgba(0,0,0,.22)}
+.nav-btn.active{box-shadow:inset 0 1px rgba(211,195,170,.1),0 8px 22px rgba(0,0,0,.24),0 0 24px rgba(48,43,79,.12)}
+input,select,textarea{box-shadow:inset 0 3px 10px rgba(0,0,0,.42),0 1px rgba(211,195,170,.025)}
+input:focus,select:focus,textarea:focus{transform:translateZ(4px);box-shadow:inset 0 3px 10px rgba(0,0,0,.38),0 0 0 3px rgba(187,198,196,.09),0 8px 22px rgba(0,0,0,.2)}
+.day-cell{box-shadow:inset 0 1px rgba(211,195,170,.035),0 5px 12px rgba(0,0,0,.13);transform:translateZ(2px)}
+.day-cell:hover:not(.empty){transform:translateY(-3px) translateZ(8px);box-shadow:0 13px 24px rgba(0,0,0,.3),inset 0 1px rgba(211,195,170,.08)}
+.day-cell.selected{transform:translateZ(7px);box-shadow:0 0 0 1px rgba(211,195,170,.15),0 12px 25px rgba(0,0,0,.3)}
+.trade-mini{box-shadow:0 9px 20px rgba(0,0,0,.2),inset 0 1px rgba(211,195,170,.04);transition:transform .22s var(--depth-ease),box-shadow .22s ease,border-color .22s ease}
+.trade-mini:hover{transform:translateY(-3px) translateZ(7px);box-shadow:0 17px 28px rgba(0,0,0,.32)}
+.performance-orb{transform:translateZ(18px);filter:drop-shadow(0 22px 26px rgba(0,0,0,.35))}
+.orb-ring,.orb-ring-secondary,.orb-ring-tertiary{transform-style:preserve-3d;filter:drop-shadow(0 4px 10px rgba(187,198,196,.08))}
+.signature-panel{box-shadow:0 24px 58px rgba(0,0,0,.38),inset 0 1px rgba(211,195,170,.07)}
+.instrument-stat,.orb-metric,.dna-insight,.replay-instrument,.growth-chat{
+  box-shadow:inset 0 1px rgba(211,195,170,.055),0 10px 24px rgba(0,0,0,.2);
+}
+.engine-gauge,.mission-gauge{filter:drop-shadow(0 14px 18px rgba(0,0,0,.36));transform:translateZ(10px)}
+#auth{transform:translateZ(18px);box-shadow:0 36px 100px rgba(0,0,0,.62),inset 0 1px rgba(211,195,170,.09)}
+.table-wrap{box-shadow:0 14px 32px rgba(0,0,0,.2)}
+tbody tr:hover{transform:translateZ(3px)}
+@keyframes nightshift-page-in{
+  from{opacity:0;transform:translateY(12px) translateZ(-8px);filter:blur(2px)}
+  to{opacity:1;transform:translateY(0) translateZ(0);filter:blur(0)}
+}
+@media(max-width:700px){
+  html{perspective:none}
+  header,.sidebar,.workspace,.page.active{transform:none}
+  .panel:hover,.card:hover,.stats .card:hover{transform:translateY(-2px)}
+  .command-hero{transform:none}
+  .hero-mark{transform:scale(.9);transform-style:preserve-3d}
+  button:hover,.nav-btn:hover{transform:none}
+}
+@media(hover:none){
+  .panel:hover,.card:hover,.stats .card:hover,.day-cell:hover:not(.empty),.trade-mini:hover{transform:none}
+}
+@media(prefers-reduced-motion:reduce){
+  .page.active{animation:none}
+  .panel,.card,.command-hero,.growth-coach,.signature-panel,#auth,button,.nav-btn,.day-cell,.trade-mini{transition:none!important}
+}
