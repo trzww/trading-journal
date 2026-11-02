@@ -916,16 +916,28 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 .outcome-footnote{font-size:10px;color:var(--muted);margin:13px 0 0}
 @media(max-width:600px){.outcome-legend{gap:6px}.outcome-stat{padding:12px 9px;grid-template-columns:7px 1fr;gap:6px}.outcome-stat strong{font-size:11px}.outcome-stat small{font-size:9px}.outcome-stat b{font-size:18px}}
 @media(prefers-reduced-motion:reduce){.outcome-segment{transition:none}}}
+
+/* Selected burgundy monogram + white .Journal identity */
+.logo{display:flex;align-items:center;gap:11px;letter-spacing:0}
+.logo .mnq-logo-symbol,.mnq-brand-mark{position:relative;display:inline-flex;align-items:center;justify-content:center;gap:2px;width:31px;height:31px;border:0;border-radius:8px;background:linear-gradient(145deg,#64151d,#30070c);box-shadow:0 5px 18px rgba(72,8,12,.28);transform:none;flex:0 0 auto}
+.mnq-logo-symbol i,.mnq-brand-mark i{display:block;width:4px;height:16px;border-radius:3px;background:#d3c3aa;transform:skew(-22deg)}
+.mnq-logo-symbol i:nth-child(2),.mnq-brand-mark i:nth-child(2){height:21px;background:#fff}
+.mnq-logo-symbol i:nth-child(3),.mnq-brand-mark i:nth-child(3){height:13px}
+.logo .mnq-logo-word,.mnq-auth-word{color:#fff!important;font-size:19px;font-weight:800;letter-spacing:-.8px}
+#auth.mnq-entry-shell .mnq-brand-mark{border:0;color:inherit}
+.mnq-entry-brand{display:inline-flex;align-items:center;gap:10px}
+.mnq-auth-word{font-size:20px}
+@media(max-width:700px){.logo .mnq-logo-word{font-size:17px}}
 </style>
 </head>
 <body>
 <header>
-  <div class="logo">mnq<span>.</span>journal</div>
+  <div class="logo"><span class="mnq-logo-symbol" aria-hidden="true"><i></i><i></i><i></i></span><span class="mnq-logo-word">.Journal</span></div>
   <div class="top-right"><span id="userLabel" class="muted"></span><button id="logout" class="secondary" hidden>Sign out</button></div>
 </header>
 
 <section id="auth" class="mnq-entry-shell">
- <div class="mnq-entry-topline"><a class="mnq-entry-brand" href="#"><span class="mnq-brand-mark">M</span>mnq<span>.</span>journal</a><div class="mnq-entry-topmeta"><i></i> PRIVATE WORKSPACE <b> / </b> ACCESS NODE 01</div></div>
+ <div class="mnq-entry-topline"><a class="mnq-entry-brand" href="#"><span class="mnq-brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="mnq-auth-word">.Journal</span></a><div class="mnq-entry-topmeta"><i></i> PRIVATE WORKSPACE <b> / </b> ACCESS NODE 01</div></div>
  <div class="mnq-entry-layout">
   <main class="mnq-entry-stage">
    <div class="mnq-entry-eyebrow"><span>TRADING PERFORMANCE SYSTEM</span><span>EST. 2026 / MNQ</span></div>
