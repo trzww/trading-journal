@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>mnq.journal — Trading Workspace</title>
 <style>
-:root{--bg:#08090c;--sidebar:#0c0e12;--panel:#11141a;--panel2:#151922;--border:#262b36;--text:#f4f5f7;--muted:#858d9d;--green:#22c55e;--red:#ef4444;--amber:#f5b942;--blue:#7aa2ff}
+:root{--bg:#08090c;--sidebar:#0c0e12;--panel:#11141a;--panel2:#151922;--border:#262b36;--text:#f4f5f7;--muted:#858d9d;--green:#d3c3aa;--red:#ef4444;--amber:#f5b942;--blue:#7aa2ff}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,Arial,sans-serif;font-size:14px}
 button,input,select,textarea{font:inherit}
@@ -820,7 +820,7 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 
 
 /* MNQ ENTRY COLOR PASS — obsidian, violet, burgundy & champagne */
-#auth.mnq-entry-shell{--mnq-champagne:#d3c3aa;--mnq-white:#f4f1eb;--mnq-violet:#302b4f;--mnq-burgundy:#48080c;--mnq-sage:#bbc6c4;--mnq-green:#35b879;--mnq-red:#e0444f}
+#auth.mnq-entry-shell{--mnq-champagne:#d3c3aa;--mnq-white:#f4f1eb;--mnq-violet:#302b4f;--mnq-burgundy:#48080c;--mnq-sage:#bbc6c4;--mnq-green:#d3c3aa;--mnq-red:#e0444f}
 #auth.mnq-entry-shell .mnq-entry-brand{color:var(--mnq-white)}
 #auth.mnq-entry-shell .mnq-entry-brand>span:last-child{color:var(--mnq-champagne)}
 #auth.mnq-entry-shell .mnq-brand-mark{border-color:rgba(211,195,170,.48);color:var(--mnq-champagne);box-shadow:0 0 22px rgba(48,43,79,.22)}
@@ -872,12 +872,12 @@ body>*:not(.mnq-depth-canvas){position:relative;z-index:1}
 
 /* Calendar outcome colours — keep wins visibly green and losses red */
 .day-cell.win{
-  background:linear-gradient(145deg,rgba(20,100,58,.72),rgba(10,65,39,.68) 58%,#07351f 100%)!important;
+  background:linear-gradient(145deg,rgba(20,100,58,.72),rgba(10,65,39,.68) 58%,#171218 100%)!important;
   border-color:rgba(53,184,121,.62)!important;
   box-shadow:inset 0 1px rgba(53,184,121,.18),0 5px 16px rgba(0,55,29,.18);
 }
-.day-cell.win .day-pnl{color:#35b879!important}
-.day-cell.win .fingerprint i{background:#35b879!important}
+.day-cell.win .day-pnl{color:#d3c3aa!important}
+.day-cell.win .fingerprint i{background:#d3c3aa!important}
 .day-cell.loss{
   background:linear-gradient(145deg,rgba(224,68,79,.25),rgba(72,8,12,.2) 58%,#09090a 100%)!important;
   border-color:rgba(224,68,79,.48)!important;
@@ -1393,7 +1393,7 @@ function renderCoachPriority({all=sortedTrades(),recent=all.slice(-10),total=0,r
   if(all.length){if(streakType==="loss"&&streak>=2){title="Review the losing streak";desc=streak+" consecutive losses are recorded. Pause, check rule adherence, and respect your daily loss cap.";tag="RISK REVIEW";accent="#ef4444"}
     else if(total<0){title="Protect downside first";desc="Your last "+recent.length+" trades total "+money(total)+". Review execution before changing size or strategy.";tag="DOWNSIDE CHECK";accent="#ef4444"}
     else if(recent.length>=5&&rate<40){title="Audit entry quality";desc="Recent win rate is "+rate.toFixed(1)+"%. Compare setup quality and average win/loss before changing rules.";tag="EXECUTION REVIEW";accent="#f5b942"}
-    else if(total>0){title="Preserve what is working";desc="Your recent sample is net positive by "+money(total)+". Keep risk and entry criteria consistent; do not infer a guaranteed edge.";tag="PROCESS POSITIVE";accent="#22c55e"}
+    else if(total>0){title="Preserve what is working";desc="Your recent sample is net positive by "+money(total)+". Keep risk and entry criteria consistent; do not infer a guaranteed edge.";tag="PROCESS POSITIVE";accent="#d3c3aa"}
     else{title="Focus on repeatability";desc="Recent results are close to flat. Compare trades against your written plan rather than forcing more activity.";tag="PROCESS CHECK";accent="#7aa2ff"}}
   setText("coachRadarTag",tag);el.style.setProperty("--coach-accent",accent);const strong=document.createElement("strong");strong.textContent=title;const p=document.createElement("p");p.className="muted";p.textContent=desc;el.append(strong,p);
 }
@@ -1453,7 +1453,7 @@ function renderPerformanceOrb(){
   const wins=tradesCache.filter(t=>Number(t.pnl)>0).length;
   const losses=tradesCache.filter(t=>Number(t.pnl)<0).length;
   const rate=tradesCache.length?wins/tradesCache.length*100:0;
-  const color=total>0?"#22c55e":total<0?"#ef4444":"#8b93a2";
+  const color=total>0?"#d3c3aa":total<0?"#ef4444":"#8b93a2";
   const orb=$("performanceOrb"),stage=$("orbStage"),net=$("orbNetPnl");
   if(orb)orb.style.setProperty("--orb-color",color);if(stage)stage.style.setProperty("--orb-color",color);
   setText("orbCorePnl",money(total));setText("orbNetPnl",money(total));if(net)net.style.color=color;
